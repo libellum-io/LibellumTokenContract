@@ -9,18 +9,20 @@ async function LibellumTestValuesUsing (accounts) {
     this.founder = accounts[1];
 
     this.founderTimelockReleaseTime = (await latestTime()) + duration.years(1);
-    this.founderTimelockContract = await LibellumTokenTimelock.new(this.beneficiary, this.founderTimelockReleaseTime);
+    this.founderTimelockContract = await LibellumTokenTimelock.new(this.founder, this.founderTimelockReleaseTime);
 
     this.libellumCoinContract = await LibellumCoin.new(
         this.founder,
         this.founderTimelockContract.address,
         {from: this.owner}
     );
+
+    return this;
 }
 
 function LibellumConstants() {
     this.LIB = (10 ** 18);
-    this._10_LIBs = 10 * LIB;
+    this.LIB_10 = 10 * LIB;
 
     this.totalCoins = 100000000 * LIB;
 
@@ -28,6 +30,8 @@ function LibellumConstants() {
     this.founderCoinsAfterRelease = 10000000 * LIB;
 
     this.ownerCoins = 90000000 * LIB;
+
+    return this;
 }
 
 module.exports = {

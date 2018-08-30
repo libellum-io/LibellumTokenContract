@@ -1,4 +1,4 @@
-const { LibellumTestValuesUsing, LibellumConstants } = artifacts.require("TestFactory.js");
+const { LibellumTestValuesUsing, LibellumConstants } = require("./TestFactory.js");
 const { increaseTimeTo, duration } = require('zeppelin-solidity/test/helpers/increaseTime');
 const { expectThrow } = require('zeppelin-solidity/test/helpers/expectThrow.js');
 
@@ -11,7 +11,7 @@ require('chai')
 contract('LibellumTokenTimelock against LibellumCoin', function (accounts) {
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
-        this.consts = await LibellumConstants();
+        this.consts = LibellumConstants();
     });
 
     it('cannot be released before time limit', async function () {

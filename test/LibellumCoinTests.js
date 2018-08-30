@@ -1,4 +1,4 @@
-const { LibellumTestValuesUsing, LibellumConstants } = artifacts.require("TestFactory.js");
+const { LibellumTestValuesUsing, LibellumConstants } = require("./TestFactory.js");
 const BigNumber = web3.BigNumber;
 
 require('chai')
@@ -9,7 +9,7 @@ contract('LibellumCoin', function (accounts) {
     var contract;
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
-        this.consts = await LibellumConstants();
+        this.consts = LibellumConstants();
     });
 
     describe('total supply', function () {
@@ -21,10 +21,10 @@ contract('LibellumCoin', function (accounts) {
     describe('transfer', function () {
         describe('when the sender is owner and recepient is founder', function () {
             it('10 LIB moved from owner to founder', async function () {
-                (await this.token.transfer(this.values.founder, this.consts._10_LIBs, {from: this.consts.owner}));
+                (await this.values.libellumCoinContract.transfer(this.values.founder, this.consts.LIB_10, {from: this.consts.owner}));
     
-                (await this.token.balanceOf(this.values.owner)).should.be.bignumber.equal(this.consts.ownerCoins - this.const._10_LIBs);
-                (await this.token.balanceOf(this.values.founder)).should.be.bignumber.equal(this.consts.founderCoins + this.const._10_LIBs);
+                (await this.values.libellumCoinContract.balanceOf(this.values.owner)).should.be.bignumber.equal(this.consts.ownerCoins - this.consts.LIB_10);
+                (await this.values.libellumCoinContract.balanceOf(this.values.founder)).should.be.bignumber.equal(this.consts.founderCoins + this.consts.LIB_10);
             });
         });
     });
