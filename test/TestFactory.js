@@ -27,7 +27,8 @@ function LibellumConstants() {
     this.totalCoins = 100000000 * LIB;
 
     this.founderCoins = 5000000 * LIB;
-    this.founderCoinsAfterRelease = 10000000 * LIB;
+    this.founderTokenTimelockCoins = 5000000 * LIB;
+    this.founderCoinsAfterRelease = founderCoins + founderTokenTimelockCoins;
 
     this.ownerCoins = 90000000 * LIB;
 
