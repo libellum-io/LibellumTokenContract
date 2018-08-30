@@ -1,7 +1,5 @@
-var LibellumCoin = artifacts.require("./LibellumCoin.sol");
+const { LibellumTestValuesUsing, LibellumConstants } = artifacts.require("TestFactory.js");
 const BigNumber = web3.BigNumber;
-
-const TOTAL_SUPPLY = 100000000 * (10 ** 18);
 
 require('chai')
   .use(require('chai-bignumber')(BigNumber))
@@ -10,23 +8,23 @@ require('chai')
 contract('LibellumCoin', function (accounts) {
     var contract;
     beforeEach(async function () {
-        this.token = await LibellumCoin.new();
+        this.values = await LibellumTestValuesUsing(accounts);
+        this.consts = await LibellumConstants();
     });
 
     describe('total supply', function () {
         it('returns the total amount of tokens', async function () {
-            (await this.token.totalSupply()).should.be.bignumber.equal(TOTAL_SUPPLY);
+            (await this.values.libellumCoinContract.totalSupply()).should.be.bignumber.equal(this.consts.totalCoins);
         });
     });
 
     describe('transfer', function () {
-        describe('when the recepient is valid address', function () {
-            it('10 LIB moved from sender to recepient', async function () {
-                let amountToTransfer = 10 * (10 ** 18);
-                (await this.token.transfer(accounts[1], amountToTransfer, {from: accounts[0]}));
+        describe('when the sender is owner and recepient is founder', function () {
+            it('10 LIB moved from owner to founder', async function () {
+                (await this.token.transfer(this.values.founder, this.consts._10_LIBs, {from: this.consts.owner}));
     
-                (await this.token.balanceOf(accounts[0])).should.be.bignumber.equal(TOTAL_SUPPLY - amountToTransfer);
-                (await this.token.balanceOf(accounts[1])).should.be.bignumber.equal(amountToTransfer);
+                (await this.token.balanceOf(this.values.owner)).should.be.bignumber.equal(this.consts.ownerCoins - this.const._10_LIBs);
+                (await this.token.balanceOf(this.values.founder)).should.be.bignumber.equal(this.consts.founderCoins + this.const._10_LIBs);
             });
         });
     });

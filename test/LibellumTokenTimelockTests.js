@@ -1,7 +1,4 @@
-var LibellumCoin = artifacts.require("./LibellumCoin.sol");
-var LibellumTokenTimelock = artifacts.require("./LibellumTokenTimelock.sol");
-
-const { latestTime } = require('zeppelin-solidity/test/helpers/latestTime');
+const { LibellumTestValuesUsing, LibellumConstants } = artifacts.require("TestFactory.js");
 const { increaseTimeTo, duration } = require('zeppelin-solidity/test/helpers/increaseTime');
 const { expectThrow } = require('zeppelin-solidity/test/helpers/expectThrow.js');
 
@@ -12,40 +9,32 @@ require('chai')
     .should();
 
 contract('LibellumTokenTimelock against LibellumCoin', function (accounts) {
-    const amount = new BigNumber(100);
-
     beforeEach(async function () {
-        this.owner = accounts[0];
-        this.beneficiary = accounts[1];
-        this.releaseTime = (await latestTime()) + duration.years(1);
-
-        this.timelock = await LibellumTokenTimelock.new(this.beneficiary, this.releaseTime);
-        this.token = await LibellumCoin.new({from: this.owner});
-
-        await this.token.transfer(this.timelock.address, amount, { from: this.owner });
+        this.values = await LibellumTestValuesUsing(accounts);
+        this.consts = await LibellumConstants();
     });
 
     it('cannot be released before time limit', async function () {
-        await expectThrow(this.timelock.releaseOn(this.token.address));
+        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
     });
 
     it('cannot be released just before time limit', async function () {
-        await increaseTimeTo(this.releaseTime - duration.seconds(3));
-        await expectThrow(this.timelock.releaseOn(this.token.address));
+        await increaseTimeTo(this.values.founderTimelockReleaseTime - duration.seconds(3));
+        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
     });
 
     it('can be released just after limit', async function () {
-        await increaseTimeTo(this.releaseTime + duration.seconds(1));
-        await this.timelock.releaseOn(this.token.address);
-        const balance = await this.token.balanceOf(this.beneficiary, {from: this.owner});
-        balance.should.be.bignumber.equal(amount);
+        await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.seconds(1));
+        await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
+        const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
+        balance.should.be.bignumber.equal(this.consts.founderCoinsAfterRelease);
     });
 
     it('cannot be released twice', async function () {
-        await increaseTimeTo(this.releaseTime + duration.years(1));
-        await this.timelock.releaseOn(this.token.address);
-        await expectThrow(this.timelock.releaseOn(this.token.address));
-        const balance = await this.token.balanceOf(this.beneficiary);
-        balance.should.be.bignumber.equal(amount);
+        await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.years(1));
+        await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
+        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
+        const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
+        balance.should.be.bignumber.equal(this.consts.founderCoinsAfterRelease);
     });
 });
