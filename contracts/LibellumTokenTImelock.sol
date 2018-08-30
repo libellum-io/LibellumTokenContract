@@ -30,9 +30,9 @@ contract LibellumTokenTimelock {
     }
 
     /**
-    * @notice Transfers tokens held by timelock to beneficiary.
+    * @notice Transfers tokens on specified token contract held by timelock to beneficiary.
     */
-    function release(ERC20Basic token) public {
+    function releaseOn(ERC20Basic token) public {
         // solium-disable-next-line security/no-block-members
         require(block.timestamp >= releaseTime);
 
