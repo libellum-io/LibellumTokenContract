@@ -20,22 +20,12 @@ async function LibellumTestValuesUsing (accounts) {
     return this;
 }
 
-function LibellumConstants() {
-    this.LIB = (10 ** 18);
-    this.LIB_10 = 10 * LIB;
+LIB = (10 ** 18);
+Mio = 1000000;
 
-    this.totalCoins = 100000000 * LIB;
-
-    this.founderCoins = 5000000 * LIB;
-    this.founderTokenTimelockCoins = 5000000 * LIB;
-    this.founderCoinsAfterRelease = founderCoins + founderTokenTimelockCoins;
-
-    this.ownerCoins = 90000000 * LIB;
-
-    return this;
-}
 
 module.exports = {
     LibellumTestValuesUsing,
-    LibellumConstants
+    LIB,
+    Mio
 };

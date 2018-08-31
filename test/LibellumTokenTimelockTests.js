@@ -1,4 +1,4 @@
-const { LibellumTestValuesUsing, LibellumConstants } = require("./TestFactory.js");
+const { LibellumTestValuesUsing, LIB, Mio } = require("./TestFactory.js");
 const { increaseTimeTo, duration } = require('zeppelin-solidity/test/helpers/increaseTime');
 const { expectThrow } = require('zeppelin-solidity/test/helpers/expectThrow.js');
 
@@ -11,7 +11,6 @@ require('chai')
 contract('LibellumTokenTimelock against LibellumCoin', function (accounts) {
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
-        this.consts = LibellumConstants();
     });
 
     it('cannot be released before time limit', async function () {
@@ -27,7 +26,7 @@ contract('LibellumTokenTimelock against LibellumCoin', function (accounts) {
         await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.seconds(1));
         await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
         const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
-        balance.should.be.bignumber.equal(this.consts.founderCoinsAfterRelease);
+        balance.should.be.bignumber.equal(10 * Mio * LIB);
     });
 
     it('cannot be released twice', async function () {
@@ -35,6 +34,6 @@ contract('LibellumTokenTimelock against LibellumCoin', function (accounts) {
         await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
         await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
         const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
-        balance.should.be.bignumber.equal(this.consts.founderCoinsAfterRelease);
+        balance.should.be.bignumber.equal(10 * Mio * LIB);
     });
 });
