@@ -1,4 +1,4 @@
-const LibellumTokenTimelock = artifacts.require('./contracts/LibellumTokenTimelock.sol');
+const TokenTimelockBase = artifacts.require('./contracts/Timelock/TokenTimelockBase.sol');
 const LibellumCoin = artifacts.require('./contracts/LibellumCoin.sol');
 
 module.exports = function(deployer, network, accounts) {
@@ -9,7 +9,7 @@ module.exports = function(deployer, network, accounts) {
     return deployer
         .then(() => {
             return deployer.deploy(
-                LibellumTokenTimelock,
+                TokenTimelockBase,
                 founder,
                 _1_1_2019_time, 
                 {from: owner});
@@ -21,5 +21,4 @@ module.exports = function(deployer, network, accounts) {
                 founderTokenTimelock.address,
                 {from: owner});
         });
-        
 };

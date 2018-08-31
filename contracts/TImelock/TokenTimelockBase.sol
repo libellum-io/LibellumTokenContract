@@ -3,12 +3,12 @@ pragma solidity ^0.4.23;
 import "zeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 
 /**
- * @title LibellumTokenTimelock
+ * @title TokenTimelockBase
  * @dev Token contract can be dynamically specified when releasing tokens.
  * With this approach we can create timelock contracts before ERC20 Libellum contract,
  * that will allow us to hardcode timelock's address directly into the Libellum contract.
  */
-contract LibellumTokenTimelock { 
+contract TokenTimelockBase { 
     using SafeERC20 for ERC20Basic;
 
     // beneficiary of tokens after they are released

@@ -1,5 +1,5 @@
 var LibellumCoin = artifacts.require("./LibellumCoin.sol");
-var LibellumTokenTimelock = artifacts.require("./LibellumTokenTimelock.sol");
+var LibellumTokenTimelock = artifacts.require("./Timelock/TokenTimelockBase.sol");
 
 const { latestTime } = require('zeppelin-solidity/test/helpers/latestTime');
 const { duration } = require('zeppelin-solidity/test/helpers/increaseTime');

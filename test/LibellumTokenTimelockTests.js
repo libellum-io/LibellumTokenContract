@@ -8,7 +8,7 @@ require('chai')
   .use(require('chai-bignumber')(BigNumber))
     .should();
 
-contract('LibellumTokenTimelock against LibellumCoin', function (accounts) {
+contract('TokenTimelockBase against LibellumCoin', function (accounts) {
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
     });
