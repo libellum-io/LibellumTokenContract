@@ -1,4 +1,4 @@
-const { LibellumTestValuesUsing, LIB, Mio } = require("./TestFactory.js");
+const { LibellumTestValuesUsing, LIB, Mio } = require("../TestFactory.js");
 const { increaseTimeTo, duration } = require('zeppelin-solidity/test/helpers/increaseTime');
 const { expectThrow } = require('zeppelin-solidity/test/helpers/expectThrow.js');
 

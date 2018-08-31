@@ -1,5 +1,5 @@
 var LibellumCoin = artifacts.require("./LibellumCoin.sol");
-var LibellumTokenTimelock = artifacts.require("./Timelock/TokenTimelockBase.sol");
+var FounderTokenTimelock = artifacts.require("./Timelock/FounderTokenTimelock.sol");
 
 const { latestTime } = require('zeppelin-solidity/test/helpers/latestTime');
 const { duration } = require('zeppelin-solidity/test/helpers/increaseTime');
@@ -8,8 +8,8 @@ async function LibellumTestValuesUsing (accounts) {
     this.owner = accounts[0];
     this.founder = accounts[1];
 
-    this.founderTimelockReleaseTime = (await latestTime()) + duration.years(1);
-    this.founderTimelockContract = await LibellumTokenTimelock.new(this.founder, this.founderTimelockReleaseTime);
+    this.founderTimelockContract = await FounderTokenTimelock.new(this.founder);
+    this.founderTimelockReleaseTime = await this.founderTimelockContract.releaseDate();
 
     this.libellumCoinContract = await LibellumCoin.new(
         this.founder,
@@ -20,12 +20,16 @@ async function LibellumTestValuesUsing (accounts) {
     return this;
 }
 
+function UtcDateFrom (day, month, year) {
+    return Math.round(new Date(Date.UTC(year, month-1, day, 0, 0, 0, 0)).getTime() / 1000);
+}
+
 LIB = (10 ** 18);
 Mio = 1000000;
 
-
 module.exports = {
     LibellumTestValuesUsing,
+    UtcDateFrom,
     LIB,
     Mio
 };
