@@ -12,7 +12,8 @@ contract FounderTokenTimelock is TokenTimelockBase {
     constructor(address founderAddress) TokenTimelockBase(founderAddress, releaseDate()) public {
     }
 
-    function releaseDate() public view returns (uint256) {
+    function releaseDate() public pure returns (uint256) 
+    {
         return 1567296000; // 01-Sep-19
     } 
 }
