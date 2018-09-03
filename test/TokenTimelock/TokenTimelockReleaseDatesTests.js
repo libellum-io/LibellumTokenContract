@@ -1,5 +1,4 @@
 const { LibellumTestValuesUsing, UtcDateFrom } = require("../TestFactory.js");
-const { duration } = require('zeppelin-solidity/test/helpers/increaseTime');
 const BigNumber = web3.BigNumber;
 
 require('chai')

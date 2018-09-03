@@ -1,6 +1,6 @@
 const { LibellumTestValuesUsing, LIB, Mio } = require("../TestFactory.js");
-const { increaseTimeTo, duration } = require('zeppelin-solidity/test/helpers/increaseTime');
-const { expectThrow } = require('zeppelin-solidity/test/helpers/expectThrow.js');
+const { increaseTimeTo, duration } = require('../helpers/increaseTime');
+const { expectThrow } = require('../helpers/expectThrow.js');
 
 const BigNumber = web3.BigNumber;
 

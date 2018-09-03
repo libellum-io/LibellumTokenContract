@@ -17,19 +17,15 @@ contract('LibellumCoin', function (accounts) {
         });
     });
 
-    describe('amount', function () {
+    describe('amount per address', function () {
         it('90Mio belongs to contract owner', async function () {
             (await this.values.libellumCoinContract.balanceOf(this.values.owner)).should.be.bignumber.equal(90 * Mio * LIB);
         });
-    });
 
-    describe('amount', function () {
         it('5Mio belongs to founder', async function () {
             (await this.values.libellumCoinContract.balanceOf(this.values.founder)).should.be.bignumber.equal(5 * Mio * LIB);
         });
-    });
 
-    describe('amount', function () {
         it('5Mio belongs to founder TokenTimelock contract', async function () {
             (await this.values.libellumCoinContract.balanceOf(this.values.founderTimelockContract.address)).should.be.bignumber.equal(5 * Mio * LIB);
         });

@@ -1,9 +1,6 @@
 var LibellumCoin = artifacts.require("./LibellumCoin.sol");
 var FounderTokenTimelock = artifacts.require("./Timelock/FounderTokenTimelock.sol");
 
-const { latestTime } = require('zeppelin-solidity/test/helpers/latestTime');
-const { duration } = require('zeppelin-solidity/test/helpers/increaseTime');
-
 async function LibellumTestValuesUsing (accounts) {
     this.owner = accounts[0];
     this.founder = accounts[1];
