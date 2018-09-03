@@ -8,7 +8,7 @@ require('chai')
   .use(require('chai-bignumber')(BigNumber))
     .should();
 
-contract('TokenTimelockBase against LibellumCoin', function (accounts) {
+contract('TokenTimelockBase (basic)', function (accounts) {
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
     });
@@ -27,6 +27,12 @@ contract('TokenTimelockBase against LibellumCoin', function (accounts) {
         await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
         const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
         balance.should.be.bignumber.equal(10 * Mio * LIB);
+    });
+});
+
+contract('TokenTimelockBase (additional)', function (accounts) {
+    beforeEach(async function () {
+        this.values = await LibellumTestValuesUsing(accounts);
     });
 
     it('cannot be released twice', async function () {
