@@ -30,7 +30,7 @@ contract('TokenTimelockBase against LibellumCoin', function (accounts) {
     });
 
     it('cannot be released twice', async function () {
-        await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.years(1));
+        await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.hours(1));
         await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
         await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
         const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
