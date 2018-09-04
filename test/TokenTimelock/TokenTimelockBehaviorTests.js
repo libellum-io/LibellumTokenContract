@@ -8,7 +8,7 @@ require('chai')
   .use(require('chai-bignumber')(BigNumber))
     .should();
 
-contract('TokenTimelockBase (basic)', function (accounts) {
+contract('TokenTimelockBase (1)', function (accounts) {
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
     });
@@ -21,6 +21,12 @@ contract('TokenTimelockBase (basic)', function (accounts) {
         await increaseTimeTo(this.values.founderTimelockReleaseTime - duration.seconds(3));
         await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumTokenContract.address));
     });
+});
+
+contract('TokenTimelockBase (2)', function (accounts) {
+    beforeEach(async function () {
+        this.values = await LibellumTestValuesUsing(accounts);
+    });
 
     it('can be released just after limit', async function () {
         await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.seconds(1));
@@ -30,7 +36,7 @@ contract('TokenTimelockBase (basic)', function (accounts) {
     });
 });
 
-contract('TokenTimelockBase (additional)', function (accounts) {
+contract('TokenTimelockBase (3)', function (accounts) {
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
     });
