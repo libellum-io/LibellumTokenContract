@@ -5,6 +5,7 @@ var LibellumCrowdsale = artifacts.require("./LibellumCrowdsale.sol");
 async function LibellumTestValuesUsing (accounts) {
     this.owner = accounts[0];
     this.founder = accounts[1];
+    this.beneficiary = accounts[2];
     this.fundsWallet = accounts[9];
 
     this.founderTimelockContract = await FounderTokenTimelock.new(this.founder);
@@ -21,6 +22,8 @@ async function LibellumTestValuesUsing (accounts) {
         this.libellumTokenContract.address,
         {from: this.owner}
     );
+
+    await this.libellumTokenContract.transfer(this.libellumCrowdsaleContract.address, 90 * Mio * LIB, {from: this.owner});
 
     return this;
 }

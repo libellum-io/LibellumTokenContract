@@ -6,7 +6,7 @@ require('chai')
     .should();
 
 contract('LibellumToken', function (accounts) {
-    var contract;
+    
     beforeEach(async function () {
         this.values = await LibellumTestValuesUsing(accounts);
     });

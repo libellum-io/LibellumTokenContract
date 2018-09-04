@@ -25,4 +25,14 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
     public
     {
     }
+
+    /**
+    * @dev Whitelists a beneficiary with his maximum contribution.
+    * @param _beneficiary Address to be whitelisted
+    * @param _cap Wei limit for individual contribution
+    */
+    function addToWhitelist(address _beneficiary, uint256 _cap) external onlyOwner {
+        addAddressToWhitelist(_beneficiary);
+        caps[_beneficiary] = _cap;
+    }
 }
