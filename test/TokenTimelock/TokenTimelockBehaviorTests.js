@@ -14,18 +14,18 @@ contract('TokenTimelockBase (basic)', function (accounts) {
     });
 
     it('cannot be released before time limit', async function () {
-        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
+        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumTokenContract.address));
     });
 
     it('cannot be released just before time limit', async function () {
         await increaseTimeTo(this.values.founderTimelockReleaseTime - duration.seconds(3));
-        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
+        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumTokenContract.address));
     });
 
     it('can be released just after limit', async function () {
         await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.seconds(1));
-        await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
-        const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
+        await this.values.founderTimelockContract.releaseOn(this.values.libellumTokenContract.address);
+        const balance = await this.values.libellumTokenContract.balanceOf(this.values.founder);
         balance.should.be.bignumber.equal(10 * Mio * LIB);
     });
 });
@@ -37,9 +37,9 @@ contract('TokenTimelockBase (additional)', function (accounts) {
 
     it('cannot be released twice', async function () {
         await increaseTimeTo(this.values.founderTimelockReleaseTime + duration.hours(1));
-        await this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address);
-        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumCoinContract.address));
-        const balance = await this.values.libellumCoinContract.balanceOf(this.values.founder);
+        await this.values.founderTimelockContract.releaseOn(this.values.libellumTokenContract.address);
+        await expectThrow(this.values.founderTimelockContract.releaseOn(this.values.libellumTokenContract.address));
+        const balance = await this.values.libellumTokenContract.balanceOf(this.values.founder);
         balance.should.be.bignumber.equal(10 * Mio * LIB);
     });
 });

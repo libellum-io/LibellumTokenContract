@@ -1,4 +1,4 @@
-var LibellumCoin = artifacts.require("./LibellumCoin.sol");
+var LibellumToken = artifacts.require("./LibellumToken.sol");
 var FounderTokenTimelock = artifacts.require("./Timelock/FounderTokenTimelock.sol");
 
 async function LibellumTestValuesUsing (accounts) {
@@ -8,7 +8,7 @@ async function LibellumTestValuesUsing (accounts) {
     this.founderTimelockContract = await FounderTokenTimelock.new(this.founder);
     this.founderTimelockReleaseTime = await this.founderTimelockContract.releaseDate();
 
-    this.libellumCoinContract = await LibellumCoin.new(
+    this.libellumTokenContract = await LibellumToken.new(
         this.founder,
         this.founderTimelockContract.address,
         {from: this.owner}
