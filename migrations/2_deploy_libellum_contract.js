@@ -15,18 +15,10 @@ module.exports = function(deployer, network, accounts) {
                 founder,
                 _1_1_2019_time, 
                 {from: owner});
-        })
-        .then((founderTokenTimelock) => {
-            return deployer.deploy(
-                LibellumToken,
-                founder,
-                founderTokenTimelock.address,
-                {from: owner});
-        }).then((libellumToken) => {
+        }).then(() => {
             return deployer.deploy(
                 LibellumCrowdsale,
                 fundsWallet,
-                libellumToken.address,
                 {from: owner});
         });
 };
