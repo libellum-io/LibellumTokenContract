@@ -12,16 +12,16 @@ import "./LibellumToken.sol";
 contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, IndividuallyCappedCrowdsale, WhitelistedCrowdsale {
     uint256 constant ETH = 10 ** 18;
 
-    uint256 constant GOAL = 2 * ETH;
+    uint256 constant GOAL = 200 * ETH;
     
     uint256 constant START_TIME = 1538265600; // 30-Sep-18
     uint256 constant END_TIME = 1543536000; // 30-Nov-18 - end date is still not known
     uint256 constant BEGINNING_RATE = 2;
 
-    constructor(address _wallet, LibellumToken _token)
+    constructor(address _wallet)
         RefundableCrowdsale(GOAL)
         TimedCrowdsale(START_TIME, END_TIME)
-        Crowdsale(BEGINNING_RATE, _wallet, _token)
+        Crowdsale(BEGINNING_RATE, _wallet, new LibellumToken())
     public
     {
     }
@@ -34,5 +34,20 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
     function addToWhitelist(address _beneficiary, uint256 _cap) external onlyOwner {
         addAddressToWhitelist(_beneficiary);
         caps[_beneficiary] = _cap;
+    }
+
+    /**
+    * @dev Method overriden to use mint function insted of transfer
+    * @param _beneficiary Address performing the token purchase
+    * @param _tokenAmount Number of tokens to be emitted
+    */
+    function _deliverTokens(
+        address _beneficiary,
+        uint256 _tokenAmount
+    )
+        internal
+    {
+        require(goalReached(), "Goal is not reached, can't mint tokens!");
+        MintableToken(token).mint(_beneficiary, _tokenAmount);
     }
 }

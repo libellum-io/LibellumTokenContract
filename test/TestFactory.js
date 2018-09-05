@@ -11,19 +11,10 @@ async function LibellumTestValuesUsing (accounts) {
     this.founderTimelockContract = await FounderTokenTimelock.new(this.founder);
     this.founderTimelockReleaseTime = await this.founderTimelockContract.releaseDate();
 
-    this.libellumTokenContract = await LibellumToken.new(
-        this.founder,
-        this.founderTimelockContract.address,
-        {from: this.owner}
-    );
+    this.libellumCrowdsaleContract = await LibellumCrowdsale.new(this.fundsWallet, {from: this.owner});
 
-    this.libellumCrowdsaleContract = await LibellumCrowdsale.new(
-        this.fundsWallet,
-        this.libellumTokenContract.address,
-        {from: this.owner}
-    );
-
-    await this.libellumTokenContract.transfer(this.libellumCrowdsaleContract.address, 90 * Mio * LIB, {from: this.owner});
+    const tokenAddress = await libellumCrowdsaleContract.token.call();
+    this.libellumTokenContract = LibellumToken.at(tokenAddress);
 
     return this;
 }
