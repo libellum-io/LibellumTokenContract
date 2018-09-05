@@ -1,4 +1,4 @@
-const { LibellumTestValuesUsing, LIB } = require("./TestFactory.js");
+var LibellumToken = artifacts.require("./LibellumToken.sol");
 const BigNumber = web3.BigNumber;
 
 require('chai')
@@ -6,28 +6,23 @@ require('chai')
     .should();
 
 contract('LibellumToken', function (accounts) {
+    let owner = accounts[0];     
     
     beforeEach(async function () {
-        this.values = await LibellumTestValuesUsing(accounts);
+        this.libbelumToken = await LibellumToken.new({from: owner});
     });
 
-    describe('total supply', function () {
-        it('should be 100Mio of LIB tokens', async function () {
-            (await this.values.libellumTokenContract.totalSupply()).should.be.bignumber.equal(100 * Mio * LIB);
-        });
-    });
-
-    describe('amount per address', function () {
-        it('90Mio belongs to contract owner', async function () {
-            (await this.values.libellumTokenContract.balanceOf(this.values.owner)).should.be.bignumber.equal(90 * Mio * LIB);
+    describe('basic info', function () {
+        it('should have 18 decimals', async function () {
+            (await this.libbelumToken.decimals()).should.be.bignumber.equal(18);
         });
 
-        it('5Mio belongs to founder', async function () {
-            (await this.values.libellumTokenContract.balanceOf(this.values.founder)).should.be.bignumber.equal(5 * Mio * LIB);
+        it('should have name Libellum Token', async function () {
+            (await this.libbelumToken.name()).should.be.equal("Libellum Token");
         });
 
-        it('5Mio belongs to founder TokenTimelock contract', async function () {
-            (await this.values.libellumTokenContract.balanceOf(this.values.founderTimelockContract.address)).should.be.bignumber.equal(5 * Mio * LIB);
+        it('should have symbol LIB', async function () {
+            (await this.libbelumToken.symbol()).should.be.equal("LIB");
         });
     });
 });

@@ -1,4 +1,4 @@
-1. October         ---->            15. September   (Private PreSale)
+1. October         ---->            15. October   (Private PreSale)
             I phase (Private PreSale)
             minimum amount 5 ETH
   WhiteList lookup (hardcoded) / added by owner
