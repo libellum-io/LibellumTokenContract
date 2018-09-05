@@ -1,7 +1,6 @@
-const { LibellumTestValuesUsing, UtcDateFrom, LIB } = require("./TestFactory.js");
+const { LibellumCrowdsaleValuesFrom, UtcDateFrom, LIB } = require("./TestFactory.js");
 const { expectThrow } = require('./helpers/expectThrow.js');
 const { ether } = require('./helpers/ether.js');
-const { increaseTimeTo, duration } = require('./helpers/increaseTime');
 const BigNumber = web3.BigNumber;
 
 require('chai')
@@ -9,46 +8,38 @@ require('chai')
     .should();
 
 contract('LibellumCrowdsale', function (accounts) {
-    const beneficiaryCap = ether(50);
-    const etherAmount = ether(42);
+    let goal = ether(20);
 
     beforeEach(async function () {
-        this.values = await LibellumTestValuesUsing(accounts);
+        this.values = await LibellumCrowdsaleValuesFrom(accounts, goal);
     });
 
-    describe('buy tokens when user is whitelisted', function () {
-        beforeEach(async function () {
-            await this.values.libellumCrowdsaleContract.addToWhitelist(this.values.beneficiary, beneficiaryCap, {from: this.values.owner})
+    describe('when crowdsale has not started', function () {
+        it('whitelisted beneficiary is not able to buy', async function () {
+            await expectThrow(this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary}));
+        });
+    });
+
+    describe('when crowdsale has started', function () {
+        it('whitelisted beneficiary is able to buy tokens but tokens are not avaialble before finish', async function () {
+            await this.values.increaseTimeToPhase1();
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
+            (await this.values.libellumToken.balanceOf(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(0 * LIB);
         });
 
-        describe('when crowdsale has not started', function () {
-            it('beneficiary is not able to buy', async function () {
-                await expectThrow(this.values.libellumCrowdsaleContract.buyTokens(this.values.beneficiary, {value: etherAmount, from: this.values.beneficiary}));
-            });
+        it('whitelisted beneficiary is able to buy tokens but not able to withdraw tokens since the goal is not reached even if end date is reached', async function () {
+            await this.values.increaseTimeToPhase1();
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
+            await this.values.increaseTimeToAfterTheEnd();
+            await expectThrow(this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary}));
         });
 
-        describe('when crowdsale has started', function () {
-            it('beneficiary is able to buy tokens but tokens are not avaialble before finish', async function () {
-                await increaseTimeTo(UtcDateFrom(1, 10, 2018));
-                await this.values.libellumCrowdsaleContract.buyTokens(this.values.beneficiary, {value: etherAmount, from: this.values.beneficiary});
-                (await this.values.libellumTokenContract.balanceOf(this.values.beneficiary)).should.be.bignumber.equal(0 * LIB);
-            });
-
-            it('beneficiary is able to buy tokens and they are still not available if goal is not reached even if end date is reached', async function () {
-                await increaseTimeTo(UtcDateFrom(3, 10, 2018));
-                await this.values.libellumCrowdsaleContract.buyTokens(this.values.beneficiary, {value: etherAmount, from: this.values.beneficiary});
-                await increaseTimeTo(UtcDateFrom(1, 12, 2019));
-                await this.values.libellumCrowdsaleContract.withdrawTokens({from: this.values.beneficiary});
-                (await this.values.libellumTokenContract.balanceOf(this.values.beneficiary)).should.be.bignumber.equal(0 * LIB);
-            });
-
-            it('beneficiary is able to buy tokens and they are available if goal is reached if end date is reached', async function () {
-                await increaseTimeTo(UtcDateFrom(3, 10, 2018));
-                await this.values.libellumCrowdsaleContract.buyTokens(this.values.beneficiary, {value: ether(200), from: this.values.beneficiary});
-                await increaseTimeTo(UtcDateFrom(1, 12, 2019));
-                await this.values.libellumCrowdsaleContract.withdrawTokens({from: this.values.beneficiary});
-                (await this.values.libellumTokenContract.balanceOf(this.values.beneficiary)).should.be.bignumber.equal(400 * LIB);
-            });
+        it('whitelisted beneficiary is able to buy tokens and they are available if goal is reached if end date is reached', async function () {
+            await this.values.increaseTimeToPhase1();
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
+            await this.values.increaseTimeToAfterTheEnd();
+            await this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary});
+            (await this.values.libellumToken.balanceOf(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(80 * LIB);
         });
     });
 });

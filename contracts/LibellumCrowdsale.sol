@@ -56,7 +56,7 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
         internal
     {
         super._preValidatePurchase(_beneficiary, _weiAmount);
-        require(minWeisByPhase[resolveCurrentPhase()] >= _weiAmount, "Insufficient _weiAmount for investment");
+        require(minWeisByPhase[resolveCurrentPhase()] <= _weiAmount, "Insufficient _weiAmount for investment");
     }
 
     /**
