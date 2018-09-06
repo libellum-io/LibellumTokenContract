@@ -4,9 +4,9 @@ import "openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol";
 
 import "./LibellumToken.sol";
-import "./IndividuallyCappedWhitelistedCrowdsale.sol";
-import "./PostDeliveryRefundableCrowdsale.sol";
-import "./ThreePhaseTimedCrowdsale.sol";
+import "./libellumCrowdsaleParts/IndividuallyCappedWhitelistedCrowdsale.sol";
+import "./libellumCrowdsaleParts/PostDeliveryRefundableCrowdsale.sol";
+import "./libellumCrowdsaleParts/ThreePhaseTimedCrowdsale.sol";
 
 contract LibellumCrowdsale is
     PostDeliveryRefundableCrowdsale,
