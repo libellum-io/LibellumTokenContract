@@ -5,6 +5,12 @@ import "openzeppelin-solidity/contracts/crowdsale/distribution/PostDeliveryCrowd
 
 contract PostDeliveryRefundableCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale {
 
+    constructor(uint256 _goal)
+        RefundableCrowdsale(_goal)
+    public
+    {
+    }
+
     /**
     * @dev Override is needed to prevent minting of tokens in case if goal is not reached,
     * since there is possibility that someone will try to withdraw funds when crowdsale is ended.
