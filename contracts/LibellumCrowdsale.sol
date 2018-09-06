@@ -72,13 +72,13 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
 
     /**
     * @dev Override is needed to prevent minting of tokens in case if goal is not reached,
-    * since there is possibility that someone will try to withdrow funds when crowdsale is ended.
+    * since there is possibility that someone will try to withdraw funds when crowdsale is ended.
     */
-    function _deliverTokens(address _beneficiary, uint256 _tokenAmount)
-        internal
+    function withdrawTokens() 
+    public
     {
         require(goalReached(), "Goal is not reached, can't mint tokens!");
-        super._deliverTokens(_beneficiary, _tokenAmount);
+        super.withdrawTokens();
     }
 
     function resolveCurrentPhase()
