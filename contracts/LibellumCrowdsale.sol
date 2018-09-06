@@ -4,12 +4,12 @@ import "openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/validation/TimedCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/distribution/RefundableCrowdsale.sol";
-import "openzeppelin-solidity/contracts/crowdsale/distribution/PostDeliveryCrowdsale.sol";
 
 import "./LibellumToken.sol";
 import "./IndividuallyCappedWhitelistedCrowdsale.sol";
+import "./PostDeliveryRefundableCrowdsale.sol";
 
-contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, IndividuallyCappedWhitelistedCrowdsale, MintedCrowdsale {
+contract LibellumCrowdsale is PostDeliveryRefundableCrowdsale, IndividuallyCappedWhitelistedCrowdsale, MintedCrowdsale {
     uint8 constant PHASE1 = 1;
     uint8 constant PHASE2 = 2;
     uint8 constant PHASE3 = 3;
@@ -53,37 +53,27 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
     /**
     * @dev Appending purchase validation with checking minimal amount of wei invested.
     */
-    function _preValidatePurchase(address _beneficiary, uint256 _weiAmount)
-        internal
+    function _preValidatePurchase(
+        address _beneficiary,
+        uint256 _weiAmount)
+    internal
     {
         super._preValidatePurchase(_beneficiary, _weiAmount);
         require(minWeisByPhase[resolveCurrentPhase()] <= _weiAmount, "Insufficient _weiAmount for investment");
     }
 
     /**
-    * @dev Overriding token amount calculation since rate changes when
-    * phases change.
+    * @dev Overriding token amount calculation since rate changes when phases change.
     */
     function _getTokenAmount(uint256 _weiAmount)
-        internal view returns (uint256)
+    internal view returns (uint256)
     {
         uint256 currentRate = ratesByPhase[resolveCurrentPhase()];
         return _weiAmount.mul(currentRate);
     }
 
-    /**
-    * @dev Override is needed to prevent minting of tokens in case if goal is not reached,
-    * since there is possibility that someone will try to withdraw funds when crowdsale is ended.
-    */
-    function withdrawTokens() 
-    public
-    {
-        require(goalReached(), "Goal is not reached, can't withdraw tokens!");
-        super.withdrawTokens();
-    }
-
     function resolveCurrentPhase()
-        internal view returns (uint8)
+    internal view returns (uint8)
     {
         uint256 currentTimestamp = block.timestamp;
         if (currentTimestamp < phase1ToPhase2Date) return PHASE1;

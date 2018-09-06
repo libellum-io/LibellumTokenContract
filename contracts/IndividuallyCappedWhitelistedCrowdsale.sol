@@ -8,18 +8,18 @@ contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, 
     uint256 individualCap;
     
     constructor(uint256 _individualCap)
-        public
+    public
     {
         require(_individualCap > 0, "Individual cap has to be greater than zero");
         individualCap = _individualCap;
     }
     
     /**
-    * @dev 
+    * @dev Overrides base behaviour so that together with whitelisting
+    * a beneficiary individual cap is set for that beneficiary.
     */
     function addAddressToWhitelist(address _operator)
-        public
-        onlyOwner
+    public onlyOwner
     {
         super.addAddressToWhitelist(_operator);
         caps[_operator] = individualCap;
@@ -30,10 +30,8 @@ contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, 
     */
     function setUserCap(
         address _beneficiary,
-        uint256 _cap
-    ) 
-        external
-        onlyOwner 
+        uint256 _cap) 
+    external onlyOwner 
     {
         // NOP
     }
@@ -43,10 +41,8 @@ contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, 
     */
     function setGroupCap(
         address[] _beneficiaries,
-        uint256 _cap
-    )
-        external
-        onlyOwner
+        uint256 _cap)
+    external onlyOwner
     {
         // NOP
     }
