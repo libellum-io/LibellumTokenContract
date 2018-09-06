@@ -1,7 +1,8 @@
 const LibellumCrowdsale = artifacts.require('./contracts/LibellumCrowdsale.sol');
 
 module.exports = function(deployer, network, accounts) {
-    let goal = 200000000000000000000; // 200 ethers
+    let goal = 200000000000000000000; // 200 ether
+    let individualCap = 10000000000000000000; // 10 ether
     let _1_10_2018_time = 1538352000;
     let _15_10_2018_time = 1539561600;
     let _1_11_2018_time = 1541030400;
@@ -15,6 +16,7 @@ module.exports = function(deployer, network, accounts) {
             return deployer.deploy(
                 LibellumCrowdsale,
                 goal,
+                individualCap,
                 _1_10_2018_time,
                 _15_10_2018_time,
                 _1_11_2018_time,

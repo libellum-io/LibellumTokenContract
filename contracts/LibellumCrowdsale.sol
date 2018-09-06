@@ -2,15 +2,14 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol";
-import "openzeppelin-solidity/contracts/crowdsale/validation/WhitelistedCrowdsale.sol";
-import "openzeppelin-solidity/contracts/crowdsale/validation/IndividuallyCappedCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/validation/TimedCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/distribution/RefundableCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/distribution/PostDeliveryCrowdsale.sol";
 
 import "./LibellumToken.sol";
+import "./IndividuallyCappedWhitelistedCrowdsale.sol";
 
-contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, IndividuallyCappedCrowdsale, WhitelistedCrowdsale, MintedCrowdsale {
+contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, IndividuallyCappedWhitelistedCrowdsale, MintedCrowdsale {
     uint8 constant PHASE1 = 1;
     uint8 constant PHASE2 = 2;
     uint8 constant PHASE3 = 3;
@@ -23,6 +22,7 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
 
     constructor(
         uint256 _goal,
+        uint256 _individualCap,
         uint256 _startDate,
         uint256 _phase1ToPhase2Date,
         uint256 _phase2ToPhase3Date,
@@ -30,6 +30,7 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
         address _wallet)
         RefundableCrowdsale(_goal)
         TimedCrowdsale(_startDate, _endDate)
+        IndividuallyCappedWhitelistedCrowdsale(_individualCap)
         Crowdsale(1, _wallet, new LibellumToken())
     public
     {
@@ -77,7 +78,7 @@ contract LibellumCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale, Indivi
     function withdrawTokens() 
     public
     {
-        require(goalReached(), "Goal is not reached, can't mint tokens!");
+        require(goalReached(), "Goal is not reached, can't withdraw tokens!");
         super.withdrawTokens();
     }
 

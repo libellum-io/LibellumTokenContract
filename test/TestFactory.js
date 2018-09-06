@@ -5,11 +5,12 @@ const { latestTime } = require('./helpers/latestTime');
 const { increaseTimeTo, duration } = require('./helpers/increaseTime');
 const { ether } = require('./helpers/ether.js');
 
-async function LibellumCrowdsaleValuesFrom(accounts, goal) {
+async function LibellumCrowdsaleValuesFrom(accounts, goal, individualCap) {
     let currentTime = await latestTime();
     let values = await LibellumCrowdsaleValuesFromInternal(
         accounts,
         goal,
+        individualCap,
         currentTime + duration.days(10),
         currentTime + duration.days(20),
         currentTime + duration.days(30),
@@ -26,6 +27,7 @@ async function LibellumCrowdsaleValuesFrom(accounts, goal) {
 async function LibellumCrowdsaleValuesFromInternal (
     accounts,
     goal,
+    individualCap,
     startDate,
     phase1ToPhase2Date,
     phase2ToPhase3Date,
@@ -39,6 +41,7 @@ async function LibellumCrowdsaleValuesFromInternal (
 
     this.libellumCrowdsale = await LibellumCrowdsale.new(
         goal,
+        individualCap,
         startDate,
         phase1ToPhase2Date,
         phase2ToPhase3Date,
@@ -47,7 +50,6 @@ async function LibellumCrowdsaleValuesFromInternal (
         {from: this.owner});
 
     await this.libellumCrowdsale.addAddressToWhitelist(this.whitelistedBeneficiary, {from: this.owner});
-    await this.libellumCrowdsale.setUserCap(this.whitelistedBeneficiary, this.whitelistedBeneficiaryCap, {from: this.owner})
 
     const tokenAddress = await libellumCrowdsale.token.call();
     this.libellumToken = LibellumToken.at(tokenAddress);

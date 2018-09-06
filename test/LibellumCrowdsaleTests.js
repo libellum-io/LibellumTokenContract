@@ -9,9 +9,10 @@ require('chai')
 
 contract('LibellumCrowdsale', function (accounts) {
     let goal = ether(20);
+    let individualCap = ether(40);
 
     beforeEach(async function () {
-        this.values = await LibellumCrowdsaleValuesFrom(accounts, goal);
+        this.values = await LibellumCrowdsaleValuesFrom(accounts, goal, individualCap);
     });
 
     describe('when crowdsale has not started', function () {
@@ -34,7 +35,7 @@ contract('LibellumCrowdsale', function (accounts) {
             await expectThrow(this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary}));
         });
 
-        it('whitelisted beneficiary is able to buy tokens and they are available if goal is reached if end date is reached', async function () {
+        it('whitelisted beneficiary is able to buy tokens and they are available if goal is reached and if end date is reached', async function () {
             await this.values.increaseTimeToPhase1();
             await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
             await this.values.increaseTimeToAfterTheEnd();
