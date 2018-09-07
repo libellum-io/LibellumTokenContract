@@ -21,4 +21,15 @@ contract PostDeliveryRefundableCrowdsale is PostDeliveryCrowdsale, RefundableCro
         require(goalReached(), "Goal is not reached, can't withdraw tokens!");
         super.withdrawTokens();
     }
+
+    /**
+    * @dev Override is needed to prevent distributing of tokens to founders, advisors and other
+    * in case if goal is not reached and crowdsale end time is reached.
+    */
+    function finalization() 
+    internal
+    {
+        require(goalReached(), "Goal is not reach, unable to finalize.");
+        super.finalization();
+    }
 }
