@@ -1,14 +1,14 @@
 pragma solidity ^0.4.24;
 
-import "../LibellumToken.sol";
+import "../crowdsale/LibellumCrowdsale.sol";
 import "./DistributionBase.sol";
 import "./LockedTokenDistribution.sol";
 
 contract LibellumTokenDistribution is LockedTokenDistribution {
 
-    constructor (LibellumToken _token, uint256 _crowdsaleClosingTime)
-        LockedTokenDistribution(_crowdsaleClosingTime)
-        DistributionBase(token)
+    constructor (LibellumCrowdsale _libellumCrowdsale)
+        LockedTokenDistribution(_libellumCrowdsale.closingTime())
+        DistributionBase(_libellumCrowdsale)
     public
     {
     }

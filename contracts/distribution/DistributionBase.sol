@@ -1,17 +1,19 @@
 pragma solidity ^0.4.24;
 
 import "../LibellumToken.sol";
+import "../crowdsale/LibellumCrowdsale.sol";
 
 contract DistributionBase {
 
+    LibellumCrowdsale libellumCrowdsale;
     LibellumToken token;
 
     bool isDistributed;
     
-    constructor (LibellumToken _token) 
+    constructor (LibellumCrowdsale _libellumCrowdsale) 
     public
     {
-        token = _token;
+        token = LibellumToken(_libellumCrowdsale.token());
     }
 
     /**
@@ -21,6 +23,7 @@ contract DistributionBase {
     public
     {
         require(!isDistributed, "Tokens are already distributed");
+        require(libellumCrowdsale.isFinalized(), "Can't distribute tokens since crowdsale is not finalized.");
         _distribute();
         isDistributed = true;
     }

@@ -1,4 +1,5 @@
-const LibellumCrowdsale = artifacts.require('./contracts/LibellumCrowdsale.sol');
+const LibellumCrowdsale = artifacts.require('./contracts/crowdsale/LibellumCrowdsale.sol');
+const LibellumTokenDistribution = artifacts.require('./contracts/distribution/LibellumTokenDistribution.sol');
 
 module.exports = function(deployer, network, accounts) {
     let goal = 200000000000000000000; // 200 ether
@@ -25,5 +26,11 @@ module.exports = function(deployer, network, accounts) {
                 _1_12_2018_time,
                 fundsWallet,
                 {from: owner});
-        });
+        })
+        .then((libellumCrowdsale) => {
+            return deployer.deploy(
+                LibellumTokenDistribution,
+                libellumCrowdsale.address,
+                {from: owner});
+        });;
 };
