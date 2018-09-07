@@ -3,9 +3,9 @@ pragma solidity ^0.4.24;
 import "openzeppelin-solidity/contracts/crowdsale/distribution/FinalizableCrowdsale.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
 
-contract FounderTokensDistributionCrowdsale is FinalizableCrowdsale {
-    uint256 constant UNLOCKED_TOKENS_FOR_FOUNDER = 5000000000000000000000000; // 5 Mio LIB
-    uint256 constant LOCKED_TOKENS_FOR_FOUNDER = 5000000000000000000000000; // 5 Mio LIB
+contract FounderTokenDistributionCrowdsale is FinalizableCrowdsale {
+    uint256 constant UNLOCKED_TOKENS_FOR_FOUNDERS = 5000000000000000000000000; // 5 Mio LIB
+    uint256 constant LOCKED_TOKENS_FOR_FOUNDERS = 5000000000000000000000000; // 5 Mio LIB
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
 
     address founder1;
@@ -31,9 +31,13 @@ contract FounderTokensDistributionCrowdsale is FinalizableCrowdsale {
     internal
     {
         super.finalization();
-        _deliverTokens(founder1, UNLOCKED_TOKENS_FOR_FOUNDER);
-        _deliverTokens(founder1TokenTimelock, LOCKED_TOKENS_FOR_FOUNDER);
-        _deliverTokens(founder2, UNLOCKED_TOKENS_FOR_FOUNDER);
-        _deliverTokens(founder2, LOCKED_TOKENS_FOR_FOUNDER);
+
+        uint256 unlockedTokensPerFounder = UNLOCKED_TOKENS_FOR_FOUNDERS / 2;
+        _deliverTokens(founder1, unlockedTokensPerFounder);
+        _deliverTokens(founder2, unlockedTokensPerFounder);
+
+        uint256 lockedTokensPerFounder = LOCKED_TOKENS_FOR_FOUNDERS / 2;
+        _deliverTokens(founder1TokenTimelock, lockedTokensPerFounder);
+        _deliverTokens(founder2TokenTimelock, lockedTokensPerFounder);
     }
 }
