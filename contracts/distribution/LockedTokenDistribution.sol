@@ -1,11 +1,14 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/crowdsale/distribution/FinalizableCrowdsale.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
+import "./DistributionBase.sol";
 
-contract LockedTokenDistributionCrowdsale is FinalizableCrowdsale {
+contract LockedTokenDistribution is DistributionBase, Ownable {
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
     uint256 constant ADVISOR_LOCK_TIME = 15768000; // 6 months
+
+    uint256 crowdsaleClosingTime;
 
     bool areAddressesSet = false;
     address[] addresses;
@@ -26,6 +29,12 @@ contract LockedTokenDistributionCrowdsale is FinalizableCrowdsale {
         ADVISOR_LOCK_TIME, // advisor 1
         ADVISOR_LOCK_TIME  // advisor 2
     ];
+
+    constructor (uint256 _crowdsaleClosingTime) 
+    public
+    {
+        crowdsaleClosingTime = _crowdsaleClosingTime;
+    }
 
     function setFounderAndAdvisorAddresses(address[] _founderAddresses, address[] _advisorsAddresses)
     public onlyOwner
@@ -52,22 +61,20 @@ contract LockedTokenDistributionCrowdsale is FinalizableCrowdsale {
         areAddressesSet = true;
     }
 
-    /**
-    * @dev Distribute all tokens to registered parties.
-    */
-    function finalization()
+    function _distribute()
     internal
     {
-        super.finalization();
         require(areAddressesSet, "Founders and advisors addresses need to be set before token distribution happens");
-
+        
         for (uint256 i = 0; i < addresses.length; i++)
         {
-            TokenTimelock tokenLockAddress = new TokenTimelock(token, addresses[i], closingTime.add(lockTimes[i]));
+            TokenTimelock tokenLockAddress = new TokenTimelock(token, addresses[i], crowdsaleClosingTime + lockTimes[i]);
             tokenTimelocks.push(tokenLockAddress);
 
-            _deliverTokens(addresses[i], halfTokenAmounts[i]);
-            _deliverTokens(tokenLockAddress, halfTokenAmounts[i]);
+            _mintTokens(addresses[i], halfTokenAmounts[i]);
+            _mintTokens(tokenLockAddress, halfTokenAmounts[i]);
         }
+
+        super._distribute();
     }
 }
