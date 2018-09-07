@@ -9,6 +9,8 @@ module.exports = function(deployer, network, accounts) {
     let _1_12_2018_time = 1543622400;
 
     let owner = accounts[0];
+    let founders = [accounts[1], accounts[2]]
+    let advisors = [accounts[3], accounts[4]];
     let fundsWallet = accounts[9];
 
     return deployer

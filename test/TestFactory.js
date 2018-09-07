@@ -1,5 +1,5 @@
 var LibellumToken = artifacts.require("./LibellumToken.sol");
-var LibellumCrowdsale = artifacts.require("./LibellumCrowdsale.sol");
+var LibellumCrowdsale = artifacts.require("./crowdsale/LibellumCrowdsale.sol");
 
 const { latestTime } = require('./helpers/latestTime');
 const { increaseTimeTo, duration } = require('./helpers/increaseTime');
@@ -33,10 +33,13 @@ async function LibellumCrowdsaleValuesFromInternal (
     phase2ToPhase3Date,
     endDate) {
     this.owner = accounts[0];
-
-    this.whitelistedBeneficiary = accounts[2];
+    this.founder1 = accounts[1];
+    this.founder2 = accounts[2];
+    this.advisor1 = accounts[3];
+    this.advisor2 = accounts[4];
+    this.whitelistedBeneficiary = accounts[5];
     this.whitelistedBeneficiaryCap = ether(20);
-    this.unwhitelistedBeneficiary = accounts[3];
+    this.unwhitelistedBeneficiary = accounts[6];
     this.fundsWallet = accounts[9];
 
     this.libellumCrowdsale = await LibellumCrowdsale.new(

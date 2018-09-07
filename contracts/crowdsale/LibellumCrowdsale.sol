@@ -3,10 +3,10 @@ pragma solidity ^0.4.24;
 import "openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol";
 
-import "./LibellumToken.sol";
-import "./libellumCrowdsaleParts/IndividuallyCappedWhitelistedCrowdsale.sol";
-import "./libellumCrowdsaleParts/PostDeliveryRefundableCrowdsale.sol";
-import "./libellumCrowdsaleParts/ThreePhaseTimedCrowdsale.sol";
+import "../LibellumToken.sol";
+import "./IndividuallyCappedWhitelistedCrowdsale.sol";
+import "./PostDeliveryRefundableCrowdsale.sol";
+import "./ThreePhaseTimedCrowdsale.sol";
 
 contract LibellumCrowdsale is
     PostDeliveryRefundableCrowdsale,
