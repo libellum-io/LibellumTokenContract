@@ -3,6 +3,8 @@
 Total supply: 100’000’000  
 Hard cap: 50’000’000 (private presale, public presale, public sale)  
 Soft cap: 50’000$  
+>to be calculated
+
 Contribution cap: 1’000 ETH (check for bigger pools during private pre sale → max 6’000 ETH)  
 Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.  
 
@@ -11,7 +13,6 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 * Set Stage III end date
 * Override stage exchange rate
 * Collect ETH after TGE
-
 
 ## Stage Phases
 ![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline.PNG?raw=true)
@@ -57,3 +58,4 @@ do nothing
 ### *Case 4: -*
 If GOAL is not met and Crowdsale is not finished:
 do nothing
+
