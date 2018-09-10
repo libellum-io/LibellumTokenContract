@@ -1,8 +1,9 @@
 # LIB Specifications
 ## Token Contract Construction
-Total supply: 100’000’000  
-Hard cap: 50’000’000 (private presale, public presale, public sale)  
-Soft cap: 50’000$ (*to be calculated in LIB*)  
+Total supply: 100’000’000 tokens  
+Total tokens for sale: 50’000’000 tokens (private presale, public presale, public sale)  
+Hard Cap: 3’700’000$  
+Soft cap: 50’000$  
 Contribution cap: 1’000 ETH (check for bigger pools during private pre sale → max 6’000 ETH)  
 Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.  
 
