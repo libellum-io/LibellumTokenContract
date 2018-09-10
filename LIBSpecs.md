@@ -1,10 +1,10 @@
 # LIB Specifications
 ## Token Contract Construction
-Total supply: 100’000’000
-Hard cap: 50’000’000 (private presale, public presale, public sale)
-Soft cap: 50’000$
-Contribution cap: 1’000 ETH (check for bigger pools during private pre sale → max 6’000 ETH)
-Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.
+Total supply: 100’000’000  
+Hard cap: 50’000’000 (private presale, public presale, public sale)  
+Soft cap: 50’000$  
+Contribution cap: 1’000 ETH (check for bigger pools during private pre sale → max 6’000 ETH)  
+Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.  
 
 ## Contract Owner Functions
 * Change owner
@@ -15,24 +15,24 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 
 ## Stage Phases
 ### I Stage: 1. October ----> 15. October (Private PreSale)
-minimum amount 5 ETH
-WhiteList lookup (hardcoded) / added by owner
-Rate: ETH tbd (0.05$)
+minimum amount 5 ETH  
+WhiteList lookup (hardcoded) / added by owner  
+Rate: ETH tbd (0.05$)  
 
 ### II Stage: 16. October ----> 31. October (Public PreSale)
-minimum amount 0.1 ETH
-Whitelist can only be added by owner
-Rate: ETH tbd (0.08$)
+minimum amount 0.1 ETH  
+Whitelist can only be added by owner  
+Rate: ETH tbd (0.08$)  
 
 ### III Stage: 1. November ----> tbd	(Public Sale)
-End of public sale to be set until the 31. Oct - If no public sale, the date is set to the start date.
-minimum amount 0.1 ETH
-Whitelist can only be added by owner
-Rate:  ETH tbd (0.10$)
+End of public sale to be set until the 31. Oct - If no public sale, the date is set to the start date.  
+minimum amount 0.1 ETH  
+Whitelist can only be added by owner  
+Rate:  ETH tbd (0.10$)  
 
 ## Token Generation Event
 ### *Case 1: TGE*
-Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finishPresale() only by contract owner;
+Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finishPresale() only by contract owner;  
 
 -- Distribution of tokens:
 1. 10M total - to all founders (1/2 locked for 12 month)
