@@ -15,7 +15,7 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 * Collect ETH after TGE
 
 ## Stage Phases
-![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline2.PNG?raw=true)
+![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline3.PNG?raw=true)
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
 minimum amount 5 ETH  
