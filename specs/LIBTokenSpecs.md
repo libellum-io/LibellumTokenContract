@@ -3,17 +3,19 @@
 Total supply: 100’000’000 tokens  
 Total tokens for sale: 50’000’000 tokens (private presale, public presale, public sale)  
 Hard Cap: 3’700’000$  
+
 Contribution cap: 1’000 ETH (check for bigger pools during private pre sale → max 6’000 ETH)  
 Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.  
 
 ## Contract Owner Functions
 * Change owner
-* Set Stage III end date
+* ~~Set Stage III end date~~
+* Initiate TGE finishPresale()
 * Override stage exchange rate
 * Collect ETH after TGE
 
 ## Stage Phases
-![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline.PNG?raw=true)
+![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline2.PNG?raw=true)
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
 minimum amount 5 ETH  
@@ -25,7 +27,7 @@ minimum amount 0.1 ETH
 Whitelist can only be added by owner  
 Rate: ETH tbd (0.08$)  
 
-### III Stage: 1. November ----> tbd	(Public Sale)
+### III Stage: 1. November ----> 20. November (Public Sale)
 End of public sale to be set until the 31. Oct - If no public sale, the date is set to the start date.  
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
