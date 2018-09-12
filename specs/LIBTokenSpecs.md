@@ -10,7 +10,7 @@
 | Token Generation | Minted at TGE |
 | Vesting | None |
 | Pausable | Not Possible |
-| Whitelist | Add & Remove for Pre-Sale & Sale, Airdrop |
+| Whitelist | Add & Remove for Pre-Sale & Sale |
 
 ## Token Contract Construction
 Total supply: 100’000’000 tokens  
@@ -53,7 +53,7 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
 1. 10M total - to all founders (1/2 locked for 12 month)
 2. 5M total - to all advisors (1/2 locked for 6 month)
 3. 2.5M total - to all airdrop beneficiaries (not locked)
-   1. Whitelist with address and number of tokens -  added by owner
+   1. Function to distribute to addresses with number of tokens -  added by owner
    1. Burn function for rest of tokens
 4. 2.5M total - to bounty account (1 hardcoded address, not locked)
 5. 15M total - to r&d account (1 hardcoded address, not locked)
@@ -72,4 +72,3 @@ do nothing
 ### *Case 4: -*
 If GOAL is not met and Crowdsale is not finished:
 do nothing
-
