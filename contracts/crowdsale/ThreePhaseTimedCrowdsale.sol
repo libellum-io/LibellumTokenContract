@@ -5,6 +5,10 @@ import "openzeppelin-solidity/contracts/crowdsale/distribution/RefundableCrowdsa
 
 import "./PostDeliveryRefundableCrowdsale.sol";
 
+/**
+* @dev Splits the TimedCrowdsale into three phases where each phase has its own
+* rate and minimal amount of WEIs investor is allowed to pay.
+*/
 contract ThreePhaseTimedCrowdsale is TimedCrowdsale {
 
     uint8 constant PHASE1 = 1;
@@ -26,9 +30,8 @@ contract ThreePhaseTimedCrowdsale is TimedCrowdsale {
     public
     {
         require(_startDate <= _phase1ToPhase2Date, "_startDate > _phase1ToPhase2Date");
-        require(_startDate <= _phase2ToPhase3Date, "_startDate > _phase2ToPhase3Date");
-        require(_endDate >= _phase1ToPhase2Date, "_endDate < _phase1ToPhase2Date");
-        require(_endDate >= _phase2ToPhase3Date, "_endDate < _phase2ToPhase3Date");
+        require(_phase1ToPhase2Date <= _phase2ToPhase3Date, "_phase1ToPhase2Date > _phase2ToPhase3Date");
+        require(_phase2ToPhase3Date <= _endDate, "_phase2ToPhase3Date > _endDate");
         phase1ToPhase2Date = _phase1ToPhase2Date;
         phase2ToPhase3Date = _phase2ToPhase3Date;
 

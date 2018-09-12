@@ -3,6 +3,9 @@ pragma solidity ^0.4.24;
 import "openzeppelin-solidity/contracts/crowdsale/validation/WhitelistedCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/validation/IndividuallyCappedCrowdsale.sol";
 
+/**
+* @dev Uses the same individual cap for each whitelisted member and frobits owner to set custom cap.
+*/
 contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, WhitelistedCrowdsale {
 
     uint256 individualCap;
