@@ -1,6 +1,6 @@
-const { LibellumTestValuesFrom, UtcDateFrom, LIB } = require("./TestFactory.js");
-const { expectThrow } = require('./helpers/expectThrow.js');
-const { ether } = require('./helpers/ether.js');
+const { LibellumTestValuesFrom, UtcDateFrom, LIB } = require("../TestFactory.js");
+const { expectThrow } = require('../helpers/expectThrow.js');
+const { ether } = require('../helpers/ether.js');
 const BigNumber = web3.BigNumber;
 
 require('chai')

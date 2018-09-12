@@ -58,6 +58,13 @@ contract LibellumCrowdsale is
     internal
     {
         super.finalization();
-        libellumTokenDistribution.distribute(LibellumToken(token));
+
+        LibellumToken libellumToken = LibellumToken(token);
+
+        // Before token distribution is triggered make sure to transfer the ownership
+        // of token to the distribution contract. Only in that case contract will be able to
+        // to distribute (mint) new tokens.
+        libellumToken.transferOwnership(address(libellumTokenDistribution));
+        libellumTokenDistribution.distribute(libellumToken, closingTime);
     }
 }

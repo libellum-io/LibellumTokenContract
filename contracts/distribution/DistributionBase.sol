@@ -6,18 +6,21 @@ import "../crowdsale/LibellumCrowdsale.sol";
 contract DistributionBase {
 
     LibellumToken token;
+    uint256 crowdsaleClosingTime;
+
     bool isDistributed = false;
 
     /**
-    * @dev Don't override this function to prevent loosing the validation.
+    * @dev Don't override this function to prevent loosing of validation.
     */
-    function distribute(LibellumToken _token)
+    function distribute(LibellumToken _token, uint256 _crowdsaleClosingTime)
     public
     {
         require(!isDistributed, "Tokens are already distributed");
         require(_token != address(0), "Passed token can't have 0 address.");
         require(_token.owner() == address(this), "Contract needs to be the owner of the token to be able to distribute tokens.");
         token = _token;
+        crowdsaleClosingTime = _crowdsaleClosingTime;
         _distribute();
         isDistributed = true;
     }

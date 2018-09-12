@@ -61,7 +61,7 @@ async function LibellumTestValuesFromInternal (
 
     await this.libellumCrowdsale.addAddressToWhitelist(this.whitelistedBeneficiary, {from: this.owner});
 
-    const tokenAddress = await libellumCrowdsale.token.call();
+    const tokenAddress = await this.libellumCrowdsale.token.call();
     this.libellumToken = LibellumToken.at(tokenAddress);
 
     return this;

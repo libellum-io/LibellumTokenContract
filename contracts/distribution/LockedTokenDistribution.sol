@@ -8,10 +8,8 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
     uint256 constant ADVISOR_LOCK_TIME = 15768000; // 6 months
 
-    uint256 crowdsaleClosingTime;
-
-    address[] addresses;
-    TokenTimelock[] tokenTimelocks;
+    address[] public addresses;
+    address[] public tokenTimelocks;
 
     uint256[] halfTokenAmounts = 
     [
@@ -57,7 +55,7 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
         for (uint256 i = 0; i < addresses.length; i++)
         {
             TokenTimelock tokenLockAddress = new TokenTimelock(token, addresses[i], crowdsaleClosingTime + lockTimes[i]);
-            tokenTimelocks.push(tokenLockAddress);
+            tokenTimelocks.push(address(tokenLockAddress));
 
             _mintTokens(addresses[i], halfTokenAmounts[i]);
             _mintTokens(tokenLockAddress, halfTokenAmounts[i]);
