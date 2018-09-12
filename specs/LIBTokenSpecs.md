@@ -1,4 +1,17 @@
 # LIB Specifications
+| Token Name & Symbol | Libellum Token, LIB |
+| ------------- | -----:|
+| Phases | Private Presale, Public Presale, Crowdsale |
+| Refund | yes, if soft cap is not reached |
+| Tokens issued | Set at contract creation |
+| Minimum contribution | Set for each phase |
+| Maximum contribution | 1’000 ETH |
+| Token Type | Utility Token |
+| Token Generation | Minted at TGE |
+| Vesting | None |
+| Pausable | Not Possible |
+| Whitelist | Add & Remove for Pre-Sale & Sale, Airdrop |
+
 ## Token Contract Construction
 Total supply: 100’000’000 tokens  
 Total tokens for sale: 50’000’000 tokens (private presale, public presale, public sale)  
@@ -9,7 +22,6 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 
 ## Contract Owner Functions
 * Change owner
-* ~~Set Stage III end date~~
 * Initiate TGE finishPresale()
 * Override stage exchange rate
 * Collect ETH after TGE
@@ -44,7 +56,7 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
    1. Whitelist with address and number of tokens -  added by owner
    1. Burn function for rest of tokens
 4. 2.5M total - to bounty account (1 hardcoded address, not locked)
-5. 15M total - to all r&d account (1 hardcoded address, not locked)
+5. 15M total - to r&d account (1 hardcoded address, not locked)
 6. 15M total - to reserve fund account (1 hardcoded address, not locked)
 1. 50M total - funding beneficiaries (private presale, public presale, public sale)
    1. Beneficiaries need to call withdrawTokens()
