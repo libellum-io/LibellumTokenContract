@@ -40,10 +40,12 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
 -- Distribution of tokens:
 1. 10M total - to all founders (1/2 locked for 12 month)
 2. 5M total - to all advisors (1/2 locked for 6 month)
-3. 2.5M total - to all airdrop beneficiaries (hardcoded / added by owner?)
-4. 15M total - to all r&d account (not locked)
-5. 15M total - to reserve fund account (not locked)
-6. 2.5M total - to bounty account (not locked)
+3. 2.5M total - to all airdrop beneficiaries (not locked)
+   1. Whitelist with address and number of tokens -  added by owner
+   1. Burn function for rest of tokens
+4. 2.5M total - to bounty account (1 hardcoded address, not locked)
+5. 15M total - to all r&d account (1 hardcoded address, not locked)
+6. 15M total - to reserve fund account (1 hardcoded address, not locked)
 1. 50M total - funding beneficiaries (private presale, public presale, public sale)
    1. Beneficiaries need to call withdrawTokens()
    1. Rest of the tokens will be burned
