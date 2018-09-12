@@ -3,6 +3,11 @@ pragma solidity ^0.4.24;
 import "openzeppelin-solidity/contracts/crowdsale/distribution/RefundableCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/distribution/PostDeliveryCrowdsale.sol";
 
+/**
+* @dev Merges zeppelin's PostDeliveryCrowdsale and RefundableCrowdsale contracts
+* so it includes both contract behaviours. Additionally, it adds validation to prevent
+* tokens withdraw in case if goal is not reached and crowdsale has ended.
+*/
 contract PostDeliveryRefundableCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale {
 
     constructor(uint256 _goal)
@@ -20,16 +25,5 @@ contract PostDeliveryRefundableCrowdsale is PostDeliveryCrowdsale, RefundableCro
     {
         require(goalReached(), "Goal is not reached, can't withdraw tokens!");
         super.withdrawTokens();
-    }
-
-    /**
-    * @dev Override is needed to prevent distributing of tokens to founders, advisors and other
-    * in case if goal is not reached and crowdsale end time is reached.
-    */
-    function finalization() 
-    internal
-    {
-        require(goalReached(), "Goal is not reach, unable to finalize.");
-        super.finalization();
     }
 }

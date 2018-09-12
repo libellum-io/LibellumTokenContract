@@ -1,6 +1,7 @@
 const { LibellumTestValuesFrom, UtcDateFrom, LIB } = require("../TestFactory.js");
 const { expectThrow } = require('../helpers/expectThrow.js');
 const { ether } = require('../helpers/ether.js');
+const { ethGetBalance } = require('../helpers/web3');
 const BigNumber = web3.BigNumber;
 
 require('chai')
@@ -41,6 +42,19 @@ contract('LibellumCrowdsale', function (accounts) {
             await this.values.increaseTimeToAfterTheEnd();
             await this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary});
             (await this.values.libellumToken.balanceOf(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(80 * LIB);
+        });
+
+        it('whitelisted beneficiary is able to buy tokens and he is able to claim refund if goal is not reached', async function () {
+            await this.values.increaseTimeToPhase1();
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
+            await this.values.increaseTimeToAfterTheEnd();
+            await this.values.libellumCrowdsale.finalize({from: this.values.owner});
+
+            const pre = await ethGetBalance(this.values.whitelistedBeneficiary);
+            await this.values.libellumCrowdsale.claimRefund({from: this.values.whitelistedBeneficiary, gasPrice: 0});
+            const post = await ethGetBalance(this.values.whitelistedBeneficiary);
+
+            post.minus(pre).should.be.bignumber.equal(ether(10));
         });
     });
 });
