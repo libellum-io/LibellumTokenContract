@@ -22,7 +22,24 @@ contract('LockedTokenDistribution', function (accounts) {
         (await this.values.libellumTokenDistribution.addresses.call(3)).should.be.equal(this.values.advisor2);
     });
 
-    describe('when corwdsale is finalized (tokens are distributed)', function () {
+    describe('when crowdsale is finalized and goal is not reached', function ()
+    {
+        beforeEach(async function () {
+            await this.values.increaseTimeToPhase1();
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
+            await this.values.increaseTimeToAfterTheEnd();
+            await this.values.libellumCrowdsale.finalize();
+        });
+
+        it('founders and advisors balances contain zero LIBs', async function () {
+            (await this.values.libellumToken.balanceOf(this.values.founder1)).should.be.bignumber.equal(0 * LIB);
+            (await this.values.libellumToken.balanceOf(this.values.founder2)).should.be.bignumber.equal(0 * LIB);
+            (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(0 * LIB);
+            (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(0 * LIB);
+        });
+    });
+
+    describe('when corwdsale is finalized and goal is reached', function () {
         beforeEach(async function () {
             await this.values.increaseTimeToPhase1();
             await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
@@ -30,7 +47,7 @@ contract('LockedTokenDistribution', function (accounts) {
             await this.values.libellumCrowdsale.finalize();
         });
 
-        it('founders and advisors balances contain correct funds', async function () {
+        it('founders and advisors balances contain correct number of LIBs', async function () {
             (await this.values.libellumToken.balanceOf(this.values.founder1)).should.be.bignumber.equal(2.5 * Mio * LIB);
             (await this.values.libellumToken.balanceOf(this.values.founder2)).should.be.bignumber.equal(2.5 * Mio * LIB);
             (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(1.25 * Mio * LIB);
