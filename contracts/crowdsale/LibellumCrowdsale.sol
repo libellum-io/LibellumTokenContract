@@ -4,6 +4,7 @@ import "openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol";
 
 import "../LibellumToken.sol";
+import "../distribution/LibellumTokenDistribution.sol";
 import "./IndividuallyCappedWhitelistedCrowdsale.sol";
 import "./PostDeliveryRefundableCrowdsale.sol";
 import "./ThreePhaseTimedCrowdsale.sol";
@@ -13,6 +14,8 @@ contract LibellumCrowdsale is
     ThreePhaseTimedCrowdsale,
     IndividuallyCappedWhitelistedCrowdsale,
     MintedCrowdsale {
+
+    LibellumTokenDistribution libellumTokenDistribution;
 
     uint256 constant INVESTMENT_TOKEN_POOL = 60000000000000000000000000; // 60 Mio LIB
     uint256 currentlyMintedInvestmentTokens;
@@ -24,13 +27,16 @@ contract LibellumCrowdsale is
         uint256 _phase1ToPhase2Date,
         uint256 _phase2ToPhase3Date,
         uint256 _endDate,
-        address _wallet)
+        address _wallet,
+        LibellumTokenDistribution _libellumTokenDistribution)
         PostDeliveryRefundableCrowdsale(_goal)
         ThreePhaseTimedCrowdsale(_startDate, _phase1ToPhase2Date, _phase2ToPhase3Date, _endDate)
         IndividuallyCappedWhitelistedCrowdsale(_individualCap)
         Crowdsale(1, _wallet, new LibellumToken())
     public
     {
+        require(_libellumTokenDistribution != address(0), "Libellum token distribution can't have 0 address");
+        libellumTokenDistribution = _libellumTokenDistribution;
     }
 
     /**
@@ -43,5 +49,15 @@ contract LibellumCrowdsale is
         currentlyMintedInvestmentTokens = currentlyMintedInvestmentTokens.add(_tokenAmount);
         require(currentlyMintedInvestmentTokens <= INVESTMENT_TOKEN_POOL, "LIB pool reserved for investments is burned");
         super._processPurchase(_beneficiary, _tokenAmount);
+    }
+
+    /**
+    * @dev As the last step of finalization is to trigger distribution of tokens.
+    */
+    function finalization() 
+    internal
+    {
+        super.finalization();
+        libellumTokenDistribution.distribute(LibellumToken(token));
     }
 }

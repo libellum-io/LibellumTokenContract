@@ -1,4 +1,4 @@
-const { LibellumCrowdsaleValuesFrom, UtcDateFrom, LIB } = require("./TestFactory.js");
+const { LibellumTestValuesFrom, UtcDateFrom, LIB } = require("./TestFactory.js");
 const { expectThrow } = require('./helpers/expectThrow.js');
 const { ether } = require('./helpers/ether.js');
 const BigNumber = web3.BigNumber;
@@ -12,7 +12,7 @@ contract('LibellumCrowdsale', function (accounts) {
     let individualCap = ether(40);
 
     beforeEach(async function () {
-        this.values = await LibellumCrowdsaleValuesFrom(accounts, goal, individualCap);
+        this.values = await LibellumTestValuesFrom(accounts, goal, individualCap);
     });
 
     describe('when crowdsale has not started', function () {

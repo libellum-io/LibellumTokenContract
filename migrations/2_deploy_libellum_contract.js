@@ -17,6 +17,14 @@ module.exports = function(deployer, network, accounts) {
     return deployer
         .then(() => {
             return deployer.deploy(
+                LibellumTokenDistribution,
+                founders,
+                advisors,
+                {from: owner}
+            );
+        })
+        .then((libellumTokenDistribution) => {
+            return deployer.deploy(
                 LibellumCrowdsale,
                 goal,
                 individualCap,
@@ -25,12 +33,7 @@ module.exports = function(deployer, network, accounts) {
                 _1_11_2018_time,
                 _1_12_2018_time,
                 fundsWallet,
+                libellumTokenDistribution.address,
                 {from: owner});
-        })
-        .then((libellumCrowdsale) => {
-            return deployer.deploy(
-                LibellumTokenDistribution,
-                libellumCrowdsale.address,
-                {from: owner});
-        });;
+        });
 };

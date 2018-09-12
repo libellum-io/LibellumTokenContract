@@ -10,7 +10,6 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
 
     uint256 crowdsaleClosingTime;
 
-    bool areAddressesSet = false;
     address[] addresses;
     TokenTimelock[] tokenTimelocks;
 
@@ -30,16 +29,9 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
         ADVISOR_LOCK_TIME  // advisor 2
     ];
 
-    constructor (uint256 _crowdsaleClosingTime) 
+    constructor (address[] _founderAddresses, address[] _advisorsAddresses) 
     public
     {
-        crowdsaleClosingTime = _crowdsaleClosingTime;
-    }
-
-    function setFounderAndAdvisorAddresses(address[] _founderAddresses, address[] _advisorsAddresses)
-    public onlyOwner
-    {
-        require(!areAddressesSet, "Addresses already set");
         require(_founderAddresses.length == 2, "Only 2 founders are allowed");
         require(_advisorsAddresses.length == 2, "Only 2 advisors are allowed");
 
@@ -57,15 +49,11 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
 
         require (addresses.length == halfTokenAmounts.length, "halfTokenAmounts needs to have the same length as _addresses");
         require (addresses.length == lockTimes.length, "lockTimes needs to have the same length as _addresses");
-
-        areAddressesSet = true;
     }
 
     function _distribute()
     internal
     {
-        require(areAddressesSet, "Founders and advisors addresses need to be set before token distribution happens");
-        
         for (uint256 i = 0; i < addresses.length; i++)
         {
             TokenTimelock tokenLockAddress = new TokenTimelock(token, addresses[i], crowdsaleClosingTime + lockTimes[i]);

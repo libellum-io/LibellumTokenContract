@@ -1,13 +1,14 @@
 var LibellumToken = artifacts.require("./LibellumToken.sol");
 var LibellumCrowdsale = artifacts.require("./crowdsale/LibellumCrowdsale.sol");
+var LibellumTokenDistribution = artifacts.require("./distribution/LibellumTokenDistribution.sol");
 
 const { latestTime } = require('./helpers/latestTime');
 const { increaseTimeTo, duration } = require('./helpers/increaseTime');
 const { ether } = require('./helpers/ether.js');
 
-async function LibellumCrowdsaleValuesFrom(accounts, goal, individualCap) {
+async function LibellumTestValuesFrom(accounts, goal, individualCap) {
     let currentTime = await latestTime();
-    let values = await LibellumCrowdsaleValuesFromInternal(
+    let values = await LibellumTestValuesFromInternal(
         accounts,
         goal,
         individualCap,
@@ -24,7 +25,7 @@ async function LibellumCrowdsaleValuesFrom(accounts, goal, individualCap) {
     return values;
 }
 
-async function LibellumCrowdsaleValuesFromInternal (
+async function LibellumTestValuesFromInternal (
     accounts,
     goal,
     individualCap,
@@ -42,6 +43,11 @@ async function LibellumCrowdsaleValuesFromInternal (
     this.unwhitelistedBeneficiary = accounts[6];
     this.fundsWallet = accounts[9];
 
+    this.libellumTokenDistribution = await LibellumTokenDistribution.new(
+        [this.founder1, this.founder2],
+        [this.advisor1, this.advisor2],
+        {from: this.owner});
+
     this.libellumCrowdsale = await LibellumCrowdsale.new(
         goal,
         individualCap,
@@ -50,6 +56,7 @@ async function LibellumCrowdsaleValuesFromInternal (
         phase2ToPhase3Date,
         endDate,
         this.fundsWallet,
+        this.libellumTokenDistribution.address,
         {from: this.owner});
 
     await this.libellumCrowdsale.addAddressToWhitelist(this.whitelistedBeneficiary, {from: this.owner});
@@ -68,7 +75,7 @@ LIB = (10 ** 18);
 Mio = 1000000;
 
 module.exports = {
-    LibellumCrowdsaleValuesFrom,
+    LibellumTestValuesFrom,
     UtcDateFrom,
     LIB,
     Mio

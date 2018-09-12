@@ -5,25 +5,19 @@ import "../crowdsale/LibellumCrowdsale.sol";
 
 contract DistributionBase {
 
-    LibellumCrowdsale libellumCrowdsale;
     LibellumToken token;
-
-    bool isDistributed;
-    
-    constructor (LibellumCrowdsale _libellumCrowdsale) 
-    public
-    {
-        token = LibellumToken(_libellumCrowdsale.token());
-    }
+    bool isDistributed = false;
 
     /**
     * @dev Don't override this function to prevent loosing the validation.
     */
-    function distribute()
+    function distribute(LibellumToken _token)
     public
     {
         require(!isDistributed, "Tokens are already distributed");
-        require(libellumCrowdsale.isFinalized(), "Can't distribute tokens since crowdsale is not finalized.");
+        require(_token != address(0), "Passed token can't have 0 address.");
+        require(_token.owner() == address(this), "Contract needs to be the owner of the token to be able to distribute tokens.");
+        token = _token;
         _distribute();
         isDistributed = true;
     }
