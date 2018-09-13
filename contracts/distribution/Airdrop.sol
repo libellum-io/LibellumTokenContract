@@ -1,12 +1,9 @@
 pragma solidity ^0.4.24;
 
 import "../LibellumToken.sol";
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 
 contract Airdrop is Ownable {
-  using SafeMath for uint256;
-
   LibellumToken token;
 
   constructor(LibellumToken _token)
