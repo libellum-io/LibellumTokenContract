@@ -1,6 +1,4 @@
-const { LibellumTestValuesFrom, UtcDateFrom, LIB, Mio } = require("../TestFactory.js");
 const { expectThrow } = require('../helpers/expectThrow.js');
-const { ether } = require('../helpers/ether.js');
 const BigNumber = web3.BigNumber;
 var LibellumToken = artifacts.require("./LibellumToken.sol");
 var Airdrop = artifacts.require("./distribution/Airdrop.sol");

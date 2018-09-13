@@ -1,4 +1,4 @@
-const { LibellumTestValuesFrom, UtcDateFrom, LIB, Mio, ZeroAddress } = require("../TestFactory.js");
+const { LibellumTestValuesFrom, LIB, Mio, ZeroAddress } = require("../TestFactory.js");
 var Airdrop = artifacts.require("./distribution/Airdrop.sol");
 const { expectThrow } = require('../helpers/expectThrow.js');
 const { ether } = require('../helpers/ether.js');
@@ -54,7 +54,7 @@ contract('UnlockedTokenDistribution', function (accounts) {
                 (await this.values.libellumToken.balanceOf(this.values.airdropRecepient)).should.be.bignumber.equal(200);
             });
 
-            it('Non owner is not able to distribute Airdrop funds', async function () {
+            it('Non-owner is not able to distribute Airdrop funds', async function () {
                 await expectThrow(this.airdrop.doAirdrop([this.values.airdropRecepient], [200], {from: this.values.airdropRecepient}));
             });
         });

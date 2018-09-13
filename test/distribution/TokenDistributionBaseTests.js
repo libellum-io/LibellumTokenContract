@@ -11,11 +11,13 @@ require('chai')
   .use(require('chai-bignumber')(BigNumber))
     .should();
 
-contract('LockedTokenDistribution', function (accounts) {
+contract('TokenDistributionBase', function (accounts) {
     let owner = accounts[0];
 
     beforeEach(async function () {
         this.distributionBase = await DistributionBase.new({from: owner});
+        this.timeFromPast = await latestTime() - duration.seconds(30);
+        this.timeFromFuture = await latestTime() + duration.seconds(30);
     });
 
     describe('when distribution is not triggered', function () {
@@ -36,29 +38,29 @@ contract('LockedTokenDistribution', function (accounts) {
         it('distribution passes if all parameters are valid', async function () {
             this.libellumToken = await LibellumToken.new({from: owner});
             this.libellumToken.transferOwnership(this.distributionBase.address, {from: owner});
-            await this.distributionBase.distribute(this.libellumToken.address, await latestTime());
+            await this.distributionBase.distribute(this.libellumToken.address, this.timeFromPast);
         });
 
-        it('if crowdsaleClosingtime is from the past transaction is reverted', async function () {
+        it('if crowdsaleClosingtime is from the future transaction is reverted', async function () {
             this.libellumToken = await LibellumToken.new({from: owner});
             this.libellumToken.transferOwnership(this.distributionBase.address, {from: owner});
-            await expectThrow(this.distributionBase.distribute(this.libellumToken.address, await latestTime() - duration.seconds(10)));
+            await expectThrow(this.distributionBase.distribute(this.libellumToken.address, this.timeFromFuture));
         });
 
         it('if token address is zero transaction is reverted', async function () {
-            await expectThrow(this.distributionBase.distribute(ZeroAddress, await latestTime()));
+            await expectThrow(this.distributionBase.distribute(ZeroAddress, this.timeFromPast));
         });
 
         it('if token is not owned by the contract transaction is reverted', async function () {
             this.libellumToken = await LibellumToken.new({from: owner});
-            await expectThrow(this.distributionBase.distribute(this.libellumToken.address, await latestTime()));
+            await expectThrow(this.distributionBase.distribute(this.libellumToken.address, this.timeFromPast));
         });
 
         it('if distribution is triggered for second time transaction is reverted', async function () {
             this.libellumToken = await LibellumToken.new({from: owner});
             this.libellumToken.transferOwnership(this.distributionBase.address, {from: owner});
-            await this.distributionBase.distribute(this.libellumToken.address, await latestTime());
-            await expectThrow(this.distributionBase.distribute(this.libellumToken.address, await latestTime()));
+            await this.distributionBase.distribute(this.libellumToken.address, this.timeFromPast);
+            await expectThrow(this.distributionBase.distribute(this.libellumToken.address, this.timeFromPast));
         });
     });
 
@@ -66,7 +68,7 @@ contract('LockedTokenDistribution', function (accounts) {
         beforeEach(async function () {
             this.libellumToken = await LibellumToken.new({from: owner});
             this.libellumToken.transferOwnership(this.distributionBase.address, {from: owner});
-            this.crowdsaleClosingTime = await latestTime();
+            this.crowdsaleClosingTime = this.timeFromPast;
             await this.distributionBase.distribute(this.libellumToken.address, this.crowdsaleClosingTime);
         });
 

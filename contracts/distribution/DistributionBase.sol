@@ -20,7 +20,7 @@ contract DistributionBase is Ownable {
         require(!isDistributed, "Tokens are already distributed");
         require(_token != address(0), "Passed token can't have 0 address");
         require(_token.owner() == address(this), "Contract needs to be the owner of the token to be able to distribute tokens");
-        require(_crowdsaleClosingTime >= block.timestamp, "Crowdsale closing time is from the past");
+        require(_crowdsaleClosingTime <= block.timestamp, "Crowdsale closing time is from the future");
         token = _token;
         crowdsaleClosingTime = _crowdsaleClosingTime;
         _distribute();
