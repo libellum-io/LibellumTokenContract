@@ -6,10 +6,10 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 contract DistributionBase is Ownable {
 
-    LibellumToken token;
-    uint256 crowdsaleClosingTime;
+    LibellumToken public token;
+    uint256 public crowdsaleClosingTime;
 
-    bool isDistributed = false;
+    bool public isDistributed = false;
 
     /**
     * @dev Don't override this function to prevent loosing of validation.
@@ -18,8 +18,9 @@ contract DistributionBase is Ownable {
     public
     {
         require(!isDistributed, "Tokens are already distributed");
-        require(_token != address(0), "Passed token can't have 0 address.");
-        require(_token.owner() == address(this), "Contract needs to be the owner of the token to be able to distribute tokens.");
+        require(_token != address(0), "Passed token can't have 0 address");
+        require(_token.owner() == address(this), "Contract needs to be the owner of the token to be able to distribute tokens");
+        require(_crowdsaleClosingTime >= block.timestamp, "Crowdsale closing time is from the past");
         token = _token;
         crowdsaleClosingTime = _crowdsaleClosingTime;
         _distribute();
