@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
 
-import "./DistributionBase.sol";
+import "./TokenDistributionBase.sol";
 import "./Airdrop.sol";
 
-contract UnlockedTokenDistribution is DistributionBase {
+contract UnlockedTokenDistribution is TokenDistributionBase {
     uint256 constant AIRDROP_TOKENS = 2500000000000000000000000; // 2.5 Mio LIB
 
     Airdrop public airdrop;

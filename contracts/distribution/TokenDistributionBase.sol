@@ -4,7 +4,7 @@ import "../LibellumToken.sol";
 import "../crowdsale/LibellumCrowdsale.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
-contract DistributionBase is Ownable {
+contract TokenDistributionBase is Ownable {
 
     LibellumToken public token;
     uint256 public crowdsaleClosingTime;

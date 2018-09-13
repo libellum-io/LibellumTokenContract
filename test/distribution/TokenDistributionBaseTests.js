@@ -1,5 +1,5 @@
 var LibellumToken = artifacts.require("./LibellumToken.sol");
-var DistributionBase = artifacts.require("./distribution/DistributionBase.sol");
+var TokenDistributionBase = artifacts.require("./distribution/TokenDistributionBase.sol");
 
 const { ZeroAddress } = require("../TestFactory.js");
 const { latestTime } = require('../helpers/latestTime');
@@ -15,7 +15,7 @@ contract('TokenDistributionBase', function (accounts) {
     let owner = accounts[0];
 
     beforeEach(async function () {
-        this.distributionBase = await DistributionBase.new({from: owner});
+        this.distributionBase = await TokenDistributionBase.new({from: owner});
         this.timeFromPast = await latestTime() - duration.seconds(30);
         this.timeFromFuture = await latestTime() + duration.seconds(30);
     });

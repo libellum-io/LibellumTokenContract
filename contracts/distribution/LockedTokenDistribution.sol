@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
-import "./DistributionBase.sol";
+import "./TokenDistributionBase.sol";
 
-contract LockedTokenDistribution is DistributionBase {
+contract LockedTokenDistribution is TokenDistributionBase {
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
     uint256 constant ADVISOR_LOCK_TIME = 15768000; // 6 months
 
