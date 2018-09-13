@@ -41,6 +41,7 @@ async function LibellumTestValuesFromInternal (
     this.whitelistedBeneficiary = accounts[5];
     this.whitelistedBeneficiaryCap = ether(20);
     this.unwhitelistedBeneficiary = accounts[6];
+    this.airdropRecepient = accounts[7];
     this.fundsWallet = accounts[9];
 
     this.libellumTokenDistribution = await LibellumTokenDistribution.new(
@@ -73,10 +74,12 @@ function UtcDateFrom (day, month, year) {
 
 LIB = (10 ** 18);
 Mio = 1000000;
+ZeroAddress = '0x0000000000000000000000000000000000000000';
 
 module.exports = {
     LibellumTestValuesFrom,
     UtcDateFrom,
     LIB,
-    Mio
+    Mio,
+    ZeroAddress
 };

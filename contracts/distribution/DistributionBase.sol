@@ -2,8 +2,9 @@ pragma solidity ^0.4.24;
 
 import "../LibellumToken.sol";
 import "../crowdsale/LibellumCrowdsale.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
-contract DistributionBase {
+contract DistributionBase is Ownable {
 
     LibellumToken token;
     uint256 crowdsaleClosingTime;

@@ -1,10 +1,9 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
 import "./DistributionBase.sol";
 
-contract LockedTokenDistribution is DistributionBase, Ownable {
+contract LockedTokenDistribution is DistributionBase {
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
     uint256 constant ADVISOR_LOCK_TIME = 15768000; // 6 months
 
@@ -52,6 +51,8 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
     function _distribute()
     internal
     {
+        super._distribute();
+
         for (uint256 i = 0; i < addresses.length; i++)
         {
             TokenTimelock tokenLockAddress = new TokenTimelock(token, addresses[i], crowdsaleClosingTime + lockTimes[i]);
@@ -60,7 +61,5 @@ contract LockedTokenDistribution is DistributionBase, Ownable {
             _mintTokens(addresses[i], halfTokenAmounts[i]);
             _mintTokens(tokenLockAddress, halfTokenAmounts[i]);
         }
-
-        super._distribute();
     }
 }

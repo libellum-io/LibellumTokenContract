@@ -1,10 +1,9 @@
 pragma solidity ^0.4.24;
 
-import "../LibellumToken.sol";
-import "./DistributionBase.sol";
 import "./LockedTokenDistribution.sol";
+import "./UnlockedTokenDistribution.sol";
 
-contract LibellumTokenDistribution is LockedTokenDistribution {
+contract LibellumTokenDistribution is LockedTokenDistribution, UnlockedTokenDistribution {
 
     constructor (address[] _founderAddresses, address[] _advisorsAddresses)
         LockedTokenDistribution(_founderAddresses, _advisorsAddresses)
