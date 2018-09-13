@@ -12,6 +12,9 @@ module.exports = function(deployer, network, accounts) {
     let owner = accounts[0];
     let founders = [accounts[1], accounts[2]]
     let advisors = [accounts[3], accounts[4]];
+    let bountyPool = accounts[5];
+    let rAndDPoolAddress = accounts[6];
+    let teamReserveFundAddress = accounts[7];
     let fundsWallet = accounts[9];
 
     return deployer
@@ -20,6 +23,7 @@ module.exports = function(deployer, network, accounts) {
                 LibellumTokenDistribution,
                 founders,
                 advisors,
+                bountyPool, rAndDPoolAddress, teamReserveFundAddress,
                 {from: owner}
             );
         })

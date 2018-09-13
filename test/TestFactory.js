@@ -42,11 +42,17 @@ async function LibellumTestValuesFromInternal (
     this.whitelistedBeneficiaryCap = ether(20);
     this.unwhitelistedBeneficiary = accounts[6];
     this.airdropRecepient = accounts[7];
-    this.fundsWallet = accounts[9];
+    this.bountyPool = accounts[8];
+    this.rAndDPool = accounts[9];
+    this.teamReserveFund = accounts[10];
+    this.fundsWallet = accounts[11];
 
     this.libellumTokenDistribution = await LibellumTokenDistribution.new(
         [this.founder1, this.founder2],
         [this.advisor1, this.advisor2],
+        this.bountyPool,
+        this.rAndDPool,
+        this.teamReserveFund,
         {from: this.owner});
 
     this.libellumCrowdsale = await LibellumCrowdsale.new(

@@ -1,4 +1,4 @@
-var LibellumTokenDistribution = artifacts.require("./distribution/LibellumTokenDistribution.sol");
+var LockedTokenDistribution = artifacts.require("./distribution/LockedTokenDistribution.sol");
 
 const { LibellumTestValuesFrom, LIB, Mio, ZeroAddress } = require("../TestFactory.js");
 const { expectThrow } = require('../helpers/expectThrow.js');
@@ -17,33 +17,33 @@ contract('LockedTokenDistribution', function (accounts) {
         it('when two valid founders and advisors are passed contract is created', async function () {
             let founders = [accounts[1], accounts[2]];
             let advisors = [accounts[3], accounts[4]];
-            this.libellumTokenDistribution = await LibellumTokenDistribution.new(founders, advisors, {from: owner});
+            this.lockedTokenDistribution = await LockedTokenDistribution.new(founders, advisors, {from: owner});
 
-            this.libellumTokenDistribution.should.not.equal(ZeroAddress);
+            this.lockedTokenDistribution.should.not.equal(ZeroAddress);
         });
 
         it('when founders array length is not 2 transaction is reverted', async function () {
             let founders = [accounts[1]];
             let advisors = [accounts[3], accounts[4]];
-            await expectThrow(LibellumTokenDistribution.new(founders, advisors, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
         });
 
         it('when advisors array length is not 2 transaction is reverted', async function () {
             let founders = [accounts[1], accounts[2]];
             let advisors = [accounts[3], accounts[4], accounts[5]];
-            await expectThrow(LibellumTokenDistribution.new(founders, advisors, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
         });
 
         it('when founders array contains zero address transaction is reverted', async function () {
             let founders = [accounts[1], ZeroAddress];
             let advisors = [accounts[3], accounts[4]];
-            await expectThrow(LibellumTokenDistribution.new(founders, advisors, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
         });
 
         it('when founders array contains zero address transaction is reverted', async function () {
             let founders = [accounts[1], accounts[2]];
             let advisors = [ZeroAddress, accounts[4]];
-            await expectThrow(LibellumTokenDistribution.new(founders, advisors, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
         });
     });
 
