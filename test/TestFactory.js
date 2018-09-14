@@ -82,10 +82,17 @@ LIB = (10 ** 18);
 Mio = 1000000;
 ZeroAddress = '0x0000000000000000000000000000000000000000';
 
+Phase1Rate = 4175;
+Phase2Rate = 2609;
+Phase3Rate = 2087;
+
 module.exports = {
     LibellumTestValuesFrom,
     UtcDateFrom,
     LIB,
     Mio,
-    ZeroAddress
+    ZeroAddress,
+    Phase1Rate,
+    Phase2Rate,
+    Phase3Rate
 };
