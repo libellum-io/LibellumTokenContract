@@ -17,7 +17,7 @@ contract LibellumCrowdsale is
 
     LibellumTokenDistribution libellumTokenDistribution;
 
-    uint256 constant INVESTMENT_TOKEN_POOL = 60000000000000000000000000; // 60 Mio LIB
+    uint256 constant INVESTMENT_TOKEN_POOL = 50000000000000000000000000; // 50 Mio LIB
     uint256 currentlyMintedInvestmentTokens;
     
     constructor(
