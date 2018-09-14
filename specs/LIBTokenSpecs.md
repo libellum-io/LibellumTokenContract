@@ -10,7 +10,7 @@
 | Token Generation | Minted at TGE |
 | Vesting | None |
 | Pausable | Not Possible |
-| Whitelist | Add & Remove for Pre-Sale & Sale |
+| KYC | Whitelist |
 
 ## Token Contract Construction
 Total supply: 100’000’000 tokens  
@@ -72,3 +72,4 @@ do nothing
 ### *Case 4: -*
 If GOAL is not met and Crowdsale is not finished:
 do nothing
+
