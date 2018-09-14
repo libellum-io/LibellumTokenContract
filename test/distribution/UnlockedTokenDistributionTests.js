@@ -77,12 +77,12 @@ contract('UnlockedTokenDistribution', function (accounts) {
                 });
                 
                 it('LibellumTokenDistribution owner is able to distribute Airdrop funds', async function () {
-                    await this.airdrop.doAirdrop([this.values.airdropRecepient], [200], {from: this.values.owner});
-                    (await this.values.libellumToken.balanceOf(this.values.airdropRecepient)).should.be.bignumber.equal(200);
+                    await this.airdrop.doAirdrop([this.values.airdropRecipient], [200], {from: this.values.owner});
+                    (await this.values.libellumToken.balanceOf(this.values.airdropRecipient)).should.be.bignumber.equal(200);
                 });
     
                 it('Non-owner is not able to distribute Airdrop funds', async function () {
-                    await expectThrow(this.airdrop.doAirdrop([this.values.airdropRecepient], [200], {from: this.values.airdropRecepient}));
+                    await expectThrow(this.airdrop.doAirdrop([this.values.airdropRecipient], [200], {from: this.values.airdropRecipient}));
                 });
             });
     

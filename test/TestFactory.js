@@ -41,7 +41,7 @@ async function LibellumTestValuesFromInternal (
     this.whitelistedBeneficiary = accounts[5];
     this.whitelistedBeneficiaryCap = ether(20);
     this.unwhitelistedBeneficiary = accounts[6];
-    this.airdropRecepient = accounts[7];
+    this.airdropRecipient = accounts[7];
     this.bountyPool = accounts[8];
     this.rAndDPool = accounts[9];
     this.teamReserveFund = accounts[10];
