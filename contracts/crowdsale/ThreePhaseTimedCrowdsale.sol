@@ -22,16 +22,16 @@ contract ThreePhaseTimedCrowdsale is TimedCrowdsale {
     uint256 phase2ToPhase3Date;
 
     constructor(
-        uint256 _startDate,
+        uint256 _openingTime,
         uint256 _phase1ToPhase2Date,
         uint256 _phase2ToPhase3Date,
-        uint256 _endDate)
-        TimedCrowdsale(_startDate, _endDate)
+        uint256 _closingTime)
+        TimedCrowdsale(_openingTime, _closingTime)
     public
     {
-        require(_startDate <= _phase1ToPhase2Date, "_startDate > _phase1ToPhase2Date");
+        require(_openingTime <= _phase1ToPhase2Date, "_openingTime > _phase1ToPhase2Date");
         require(_phase1ToPhase2Date <= _phase2ToPhase3Date, "_phase1ToPhase2Date > _phase2ToPhase3Date");
-        require(_phase2ToPhase3Date <= _endDate, "_phase2ToPhase3Date > _endDate");
+        require(_phase2ToPhase3Date <= _closingTime, "_phase2ToPhase3Date > _closingTime");
         phase1ToPhase2Date = _phase1ToPhase2Date;
         phase2ToPhase3Date = _phase2ToPhase3Date;
 
