@@ -1,4 +1,4 @@
-const { LibellumTestValuesFrom, UtcDateFrom, LIB } = require("../TestFactory.js");
+const { LibellumTestValuesFrom, LIB } = require("../TestFactory.js");
 const { expectThrow } = require('../helpers/expectThrow.js');
 const { ether } = require('../helpers/ether.js');
 const { ethGetBalance } = require('../helpers/web3');

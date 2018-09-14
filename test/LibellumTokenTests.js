@@ -1,4 +1,5 @@
 var LibellumToken = artifacts.require("./LibellumToken.sol");
+const { Mio, LIB } = require("./TestFactory.js");
 const BigNumber = web3.BigNumber;
 
 require('chai')
@@ -23,6 +24,10 @@ contract('LibellumToken', function (accounts) {
 
         it('should have symbol LIB', async function () {
             (await this.libbelumToken.symbol()).should.be.equal("LIB");
+        });
+
+        it('should have minting cap of 100 Mio LIB', async function () {
+            (await this.libbelumToken.cap()).should.be.bignumber.equal(100 * Mio * LIB);
         });
     });
 });
