@@ -4,11 +4,13 @@ import "../LibellumToken.sol";
 import "../crowdsale/LibellumCrowdsale.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
+/**
+* @dev Base class for all distribution sub-contracts. Exposes distribute() method which performs
+* validation and executes all internal _distribute() function of all sub-contracts.
+*/
 contract TokenDistributionBase is Ownable {
-
     LibellumToken public token;
     uint256 public crowdsaleClosingTime;
-
     bool public isDistributed = false;
 
     /**

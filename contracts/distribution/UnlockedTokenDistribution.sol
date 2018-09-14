@@ -3,12 +3,19 @@ pragma solidity ^0.4.24;
 import "./TokenDistributionBase.sol";
 import "./Airdrop.sol";
 
+/**
+* @dev Distributes the tokens directly to addresses without any TokenTimelocks (35 Mio LIB overall).
+* All recepient addresses are pass thru constructor instead of Airdrop contract address, that is created implicitly
+* and exposed as public variable.
+*/
 contract UnlockedTokenDistribution is TokenDistributionBase {
     uint256 constant AIRDROP_TOKENS = 2500000000000000000000000; // 2.5 Mio LIB
     uint256 constant BOUNTY_TOKENS = 2500000000000000000000000; // 2.5 Mio LIB
     uint256 constant R_AND_D_TOKENS = 15000000000000000000000000; // 15 Mio LIB
     uint256 constant TEAM_RESERVE_FUND_TOKENS = 15000000000000000000000000; // 15 Mio LIB
 
+    // Defined after distribution is executed. It is exposed as public variable
+    // so owner is able to execute airdrop by calling doAirdrop against list of recepients.
     Airdrop public airdrop;
 
     address bountyPoolAddress;
@@ -39,7 +46,7 @@ contract UnlockedTokenDistribution is TokenDistributionBase {
 
     /**
     * @dev Creates an Airdrop contract, delivers the tokens to it
-    * and as the last step ownership of the contract is transfer to
+    * and as the last step transfers the ownership of the contract to
     * distribution contract's owner.
     */
     function distributeAirdropTokens()

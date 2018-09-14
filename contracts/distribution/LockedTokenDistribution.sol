@@ -3,13 +3,22 @@ pragma solidity ^0.4.24;
 import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
 import "./TokenDistributionBase.sol";
 
+/**
+* @dev Distributes the tokens to founders and advisors (15 Mio LIB overall).
+* In order to lock half of the distributed tokens zeppelin's TokenTimelock contract is used.
+* After lock time elapses all interested parties can retrieve addresses of Timelock contracts
+* and they can release the funds to founders or advisors.
+*/
 contract LockedTokenDistribution is TokenDistributionBase {
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
     uint256 constant ADVISOR_LOCK_TIME = 15768000; // 6 months
 
+    
+    
+    // To simplify process of distribution both founders and advisors are put in single array.
+    // Also each party has its token amount set in halfTokenAmounts array (one half goes directly to
+    // founder or advisor and second half goes to TokenTimelock).
     address[] public addresses;
-    address[] public tokenTimelocks;
-
     uint256[] halfTokenAmounts = 
     [
         2500000000000000000000000, // founder 1: 2.5 Mio LIB (unlocked) => 5 Mio LIB overall
@@ -17,6 +26,10 @@ contract LockedTokenDistribution is TokenDistributionBase {
         1250000000000000000000000, // advisor 1: 1.25 Mio LIB (unlocked) => 2.5 Mio LIB overall
         1250000000000000000000000  // advisor 2: 1.25 Mio LIB (unlocked) => 2.5 Mio LIB overall
     ];
+
+    // Array where TokenTimelock contract addresses are kept.
+    // This array is filled after distribute() function is executed.
+    address[] public tokenTimelocks;
 
     uint256[] lockTimes = 
     [
@@ -48,6 +61,10 @@ contract LockedTokenDistribution is TokenDistributionBase {
         require (addresses.length == lockTimes.length, "lockTimes needs to have the same length as _addresses");
     }
 
+    /**
+    * @dev Goes thru addresses array and distribute (mint) half of the tokens for a party directly to the address
+    * and second half goes to newly created TokenTimelock.
+    */
     function _distribute()
     internal
     {

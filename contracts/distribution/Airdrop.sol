@@ -3,6 +3,10 @@ pragma solidity ^0.4.24;
 import "../LibellumToken.sol";
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 
+/**
+* @dev Created after crowdsale during token distribution. This will help owner
+* to trigger airdrop on multiple recepients.
+*/
 contract Airdrop is Ownable {
   LibellumToken token;
 
