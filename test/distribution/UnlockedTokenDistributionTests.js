@@ -12,7 +12,7 @@ require('chai')
 
 contract('UnlockedTokenDistribution', function (accounts) {
     let goal = ether(20);
-    let individualCap = ether(40);
+    let defaultIndividualCap = ether(40);
 
     describe('validation during construction', function () {
         let owner = accounts[0];
@@ -40,7 +40,7 @@ contract('UnlockedTokenDistribution', function (accounts) {
 
     describe("token distribution", function () {
         beforeEach(async function () {
-            this.values = await LibellumTestValuesFrom(accounts, goal, individualCap);
+            this.values = await LibellumTestValuesFrom(accounts, goal, defaultIndividualCap);
             await this.values.increaseTimeToPhase1();
             await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
             await this.values.increaseTimeToAfterTheEnd();

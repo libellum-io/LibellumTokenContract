@@ -49,10 +49,10 @@ contract('LockedTokenDistribution', function (accounts) {
 
     describe("token distribution", function () {
         let goal = ether(20);
-        let individualCap = ether(40);
+        let defaultIndividualCap = ether(40);
 
         beforeEach(async function () {
-            this.values = await LibellumTestValuesFrom(accounts, goal, individualCap);
+            this.values = await LibellumTestValuesFrom(accounts, goal, defaultIndividualCap);
         });
     
         it ('founders and advisors addresses are correct', async function () {

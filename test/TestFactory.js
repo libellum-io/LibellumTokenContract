@@ -6,12 +6,12 @@ const { latestTime } = require('./helpers/latestTime');
 const { increaseTimeTo, duration } = require('./helpers/increaseTime');
 const { ether } = require('./helpers/ether.js');
 
-async function LibellumTestValuesFrom(accounts, goal, individualCap) {
+async function LibellumTestValuesFrom(accounts, goal, defaultIndividualCap) {
     let currentTime = await latestTime();
     let values = await LibellumTestValuesFromInternal(
         accounts,
         goal,
-        individualCap,
+        defaultIndividualCap,
         currentTime + duration.days(10),
         currentTime + duration.days(20),
         currentTime + duration.days(30),
@@ -28,7 +28,7 @@ async function LibellumTestValuesFrom(accounts, goal, individualCap) {
 async function LibellumTestValuesFromInternal (
     accounts,
     goal,
-    individualCap,
+    defaultIndividualCap,
     startDate,
     phase1ToPhase2Date,
     phase2ToPhase3Date,
@@ -57,7 +57,7 @@ async function LibellumTestValuesFromInternal (
 
     this.libellumCrowdsale = await LibellumCrowdsale.new(
         goal,
-        individualCap,
+        defaultIndividualCap,
         startDate,
         phase1ToPhase2Date,
         phase2ToPhase3Date,

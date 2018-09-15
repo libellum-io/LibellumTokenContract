@@ -9,10 +9,10 @@ require('chai')
 
 contract('IndividuallyCappedWhitelistedCrowdsale', function (accounts) {
     let goal = ether(20);
-    let individualCap = ether(40);
+    let defaultIndividualCap = ether(40);
 
     beforeEach(async function () {
-        this.values = await LibellumTestValuesFrom(accounts, goal, individualCap);
+        this.values = await LibellumTestValuesFrom(accounts, goal, defaultIndividualCap);
         await this.values.increaseTimeToPhase1();
         this.beneficiary = this.values.unwhitelistedBeneficiary;
     });
@@ -39,7 +39,7 @@ contract('IndividuallyCappedWhitelistedCrowdsale', function (accounts) {
                 (await this.values.libellumCrowdsale.balances.call(this.beneficiary)).should.not.bignumber.equal(0);
             });
 
-            it('individual cap for beneficiary is set correctly', async function () {
+            it('individual cap for beneficiary is set to default individual cap', async function () {
                 (await this.values.libellumCrowdsale.caps.call(this.beneficiary)).should.be.bignumber.equal(ether(40));
             });
 
@@ -55,14 +55,25 @@ contract('IndividuallyCappedWhitelistedCrowdsale', function (accounts) {
             await this.values.libellumCrowdsale.addAddressToWhitelist(this.beneficiary, {from: this.values.owner});
         });
 
-        it("setting custom cap is not allowed", async function () {
-            await expectThrow(this.values.libellumCrowdsale.setUserCap(this.beneficiary, ether(50), {from: this.values.owner}));
-            (await this.values.libellumCrowdsale.caps.call(this.beneficiary)).should.be.bignumber.equal(ether(40));
+        it("setting custom cap correctly modifies the cap", async function () {
+            await this.values.libellumCrowdsale.setUserCap(this.beneficiary, ether(50), {from: this.values.owner});
+            (await this.values.libellumCrowdsale.caps.call(this.beneficiary)).should.be.bignumber.equal(ether(50));
         });
 
-        it("setting custom group cap is not allowed", async function () {
-            await expectThrow(this.values.libellumCrowdsale.setGroupCap([this.beneficiary, this.values.whitelistedBeneficiary], ether(50), {from: this.values.owner}));
-            (await this.values.libellumCrowdsale.caps.call(this.beneficiary)).should.be.bignumber.equal(ether(40));
+        it("setting custom group cap correctly modifies the cap", async function () {
+            await this.values.libellumCrowdsale.setGroupCap([this.beneficiary, this.values.whitelistedBeneficiary], ether(50), {from: this.values.owner});
+            (await this.values.libellumCrowdsale.caps.call(this.beneficiary)).should.be.bignumber.equal(ether(50));
+            (await this.values.libellumCrowdsale.caps.call(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(ether(50));
+        });
+    });
+
+    describe("checking individual cap when beneficiary is whitelisted with custom individual cap", function () {
+        beforeEach(async function () {
+            await this.values.libellumCrowdsale.addAddressToWhitelistWithCustomIndividualCap(this.beneficiary, ether(50), {from: this.values.owner});
+        });
+
+        it("individual cap for beneficiary should not be default", async function () {
+            (await this.values.libellumCrowdsale.caps.call(this.beneficiary)).should.be.bignumber.equal(ether(50));
         });
     });
 });

@@ -8,45 +8,32 @@ import "openzeppelin-solidity/contracts/crowdsale/validation/IndividuallyCappedC
 */
 contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, WhitelistedCrowdsale {
 
-    uint256 individualCap;
+    uint256 defaultIndividualCap;
     
-    constructor(uint256 _individualCap)
+    constructor(uint256 _defaultIndividualCap)
     public
     {
-        require(_individualCap > 0, "Individual cap has to be greater than zero");
-        individualCap = _individualCap;
+        defaultIndividualCap = _defaultIndividualCap;
     }
     
     /**
     * @dev Overrides base behaviour so that together with whitelisting
-    * a beneficiary individual cap is set for that beneficiary.
+    * a beneficiary default individual cap is set for that beneficiary.
     */
     function addAddressToWhitelist(address _operator)
     public onlyOwner
     {
         super.addAddressToWhitelist(_operator);
-        caps[_operator] = individualCap;
+        caps[_operator] = defaultIndividualCap;
     }
 
     /**
-    * @dev Forbid setting custom beneficiary cap.
+    * @dev Adding beneficiary to whitelist with specific individual cap.
     */
-    function setUserCap(
-        address _beneficiary,
-        uint256 _cap) 
-    external onlyOwner 
+    function addAddressToWhitelistWithCustomIndividualCap(address _operator, uint256 _specificIndividualCap)
+    public onlyOwner
     {
-        revert("User cap can't be changed");
-    }
-
-    /**
-    * @dev Forbid setting custom beneficiary cap.
-    */
-    function setGroupCap(
-        address[] _beneficiaries,
-        uint256 _cap)
-    external onlyOwner
-    {
-        revert("Group cap can't be changed");
+        super.addAddressToWhitelist(_operator);
+        caps[_operator] = _specificIndividualCap;
     }
 }

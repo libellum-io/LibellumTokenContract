@@ -9,10 +9,10 @@ require('chai')
 
 contract('MinimumWeiAmountsTests', function (accounts) {
     let goal = ether(20);
-    let individualCap = ether(40);
+    let defaultIndividualCap = ether(40);
 
     beforeEach(async function () {
-        this.values = await LibellumTestValuesFrom(accounts, goal, individualCap);
+        this.values = await LibellumTestValuesFrom(accounts, goal, defaultIndividualCap);
     });
 
     describe('during entire crowdsale', function () {

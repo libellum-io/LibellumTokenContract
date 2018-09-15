@@ -27,7 +27,7 @@ contract LibellumCrowdsale is
     
     /**
     * @param _goal Goal of crowdsale campaign represented in WEI.
-    * @param _individualCap Individual cap for each investor represented in WEI.
+    * @param _defaultIndividualCap Default individual cap for each investor represented in WEI.
     * @param _openingTime Crowdsale start date.
     * @param _phase1ToPhase2Date Transition date between crowdsale's phase 1 and phase 2.
     * @param _phase2ToPhase3Date Transition date between crowdsale's phase 2 and phase 3.
@@ -37,7 +37,7 @@ contract LibellumCrowdsale is
     */
     constructor(
         uint256 _goal,
-        uint256 _individualCap,
+        uint256 _defaultIndividualCap,
         uint256 _openingTime,
         uint256 _phase1ToPhase2Date,
         uint256 _phase2ToPhase3Date,
@@ -46,7 +46,7 @@ contract LibellumCrowdsale is
         LibellumTokenDistribution _libellumTokenDistribution)
         PostDeliveryRefundableCrowdsale(_goal)
         ThreePhaseTimedCrowdsale(_openingTime, _phase1ToPhase2Date, _phase2ToPhase3Date, _closingTime)
-        IndividuallyCappedWhitelistedCrowdsale(_individualCap)
+        IndividuallyCappedWhitelistedCrowdsale(_defaultIndividualCap)
         Crowdsale(1, _wallet, new LibellumToken())
     public
     {
