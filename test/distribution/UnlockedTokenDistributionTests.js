@@ -119,17 +119,17 @@ contract('UnlockedTokenDistribution', function (accounts) {
             });
 
             it('airdropTokens is successfully updated for 2 Mio LIB', async function () {
-                await this.values.libellumTokenDistribution.updatedTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner});
+                await this.values.libellumTokenDistribution.updateTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner});
                 (await this.values.libellumTokenDistribution.airdropTokens.call()).should.be.bignumber.equal(2 * Mio * LIB);
             });
 
             it('transaction reverted if update is tried with value above 2.5 Mio LIB', async function () {
-                await expectThrow(this.values.libellumTokenDistribution.updatedTokenAmountForAirdrop(2.6 * Mio * LIB, {from: this.values.owner}));
+                await expectThrow(this.values.libellumTokenDistribution.updateTokenAmountForAirdrop(2.6 * Mio * LIB, {from: this.values.owner}));
                 (await this.values.libellumTokenDistribution.airdropTokens.call()).should.be.bignumber.equal(2.5 * Mio * LIB);
             });
 
             it('after crowdsale has been finished updated amount of airdrop tokens are actually delivered to airdrop contract', async function () {
-                await this.values.libellumTokenDistribution.updatedTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner});
+                await this.values.libellumTokenDistribution.updateTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner});
                 await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
                 await this.values.increaseTimeToAfterTheEnd();
                 await this.values.libellumCrowdsale.finalize();
@@ -144,7 +144,7 @@ contract('UnlockedTokenDistribution', function (accounts) {
             });
 
             it('transaction is reverted for 2 Mio LIB (or any other)', async function () {
-                await expectThrow(this.values.libellumTokenDistribution.updatedTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner}));
+                await expectThrow(this.values.libellumTokenDistribution.updateTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner}));
             });
         });
         

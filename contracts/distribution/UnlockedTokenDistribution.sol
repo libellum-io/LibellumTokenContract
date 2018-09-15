@@ -49,7 +49,7 @@ contract UnlockedTokenDistribution is TokenDistributionBase {
     /**
     * @dev Updates the amount of tokens that will be distributed to airdrop contract.
     */
-    function updatedTokenAmountForAirdrop(uint256 _airdropTokens)
+    function updateTokenAmountForAirdrop(uint256 _airdropTokens)
     public onlyOwner
     {
         require(_airdropTokens <= MAX_AIRDROP_TOKENS, "Tokens for airdrop can't exceed MAX_AIRDROP_TOKENS");
