@@ -55,8 +55,8 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
 1. 10M total - to all founders (1/2 locked for 12 month)
 2. 5M total - to all advisors (1/2 locked for 6 month)
 3. 2.5M total - to all airdrop beneficiaries (not locked)
-   1. Function to distribute to addresses with number of tokens -  added by owner
-   1. Burn function for rest of tokens
+   1. Owner function to define total amount of tokens required (rest will not be minted)
+   1. Owner function to distribute to addresses with number of tokens
 4. 2.5M total - to bounty account (1 hardcoded address, not locked)
 5. 15M total - to r&d account (1 hardcoded address, not locked)
 6. 15M total - to reserve fund account (1 hardcoded address, not locked)
