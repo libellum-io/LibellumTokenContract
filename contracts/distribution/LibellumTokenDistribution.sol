@@ -21,11 +21,12 @@ contract LibellumTokenDistribution is LockedTokenDistribution, UnlockedTokenDist
     constructor (
         address[] _founderAddresses,
         address[] _advisorsAddresses,
+        uint256 _updateAirdropTokenAmountEndDate,
         address _bountyPoolAddress,
         address _rAndDPoolAddress,
         address _teamReserveFundAddress)
         LockedTokenDistribution(_founderAddresses, _advisorsAddresses)
-        UnlockedTokenDistribution(_bountyPoolAddress, _rAndDPoolAddress, _teamReserveFundAddress)
+        UnlockedTokenDistribution(_updateAirdropTokenAmountEndDate, _bountyPoolAddress, _rAndDPoolAddress, _teamReserveFundAddress)
     public
     {
     }

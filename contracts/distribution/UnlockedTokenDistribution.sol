@@ -9,7 +9,7 @@ import "./Airdrop.sol";
 * and exposed as public variable.
 */
 contract UnlockedTokenDistribution is TokenDistributionBase {
-    uint256 constant AIRDROP_TOKENS = 2500000000000000000000000; // 2.5 Mio LIB
+    uint256 constant MAX_AIRDROP_TOKENS = 2500000000000000000000000; // 2.5 Mio LIB
     uint256 constant BOUNTY_TOKENS = 2500000000000000000000000; // 2.5 Mio LIB
     uint256 constant R_AND_D_TOKENS = 15000000000000000000000000; // 15 Mio LIB
     uint256 constant TEAM_RESERVE_FUND_TOKENS = 15000000000000000000000000; // 15 Mio LIB
@@ -18,22 +18,43 @@ contract UnlockedTokenDistribution is TokenDistributionBase {
     // so owner is able to execute airdrop by calling doAirdrop against list of recepients.
     Airdrop public airdrop;
 
+    // Amount of LIB tokens that will be distributed to Airdrop contract.
+    // By default it is set to MAX_AIRDROP_TOKENS, but owner can change it.
+    uint256 public airdropTokens = MAX_AIRDROP_TOKENS;
+
+    // end date after which airdropTokens can't be updated anymore
+    uint256 updateAirdropTokenAmountEndDate;
+
     address bountyPoolAddress;
     address rAndDPoolAddress;
     address teamReserveFundAddress;
     
     constructor (
+        uint256 _updateAirdropTokenAmountEndDate,
         address _bountyPoolAddress,
         address _rAndDPoolAddress,
         address _teamReserveFundAddress) 
     public
     {
+        require(_updateAirdropTokenAmountEndDate >= block.timestamp, "_updateAirdropTokenAmountEndDate can't be from the past");
         require(_bountyPoolAddress != address(0), "_bountyPoolAddress can't be 0");
         require(_rAndDPoolAddress != address(0), "_rAndDPoolAddress can't be 0");
         require(_teamReserveFundAddress != address(0), "_teamReserveFundAddress can't be 0");
+        updateAirdropTokenAmountEndDate = _updateAirdropTokenAmountEndDate;
         bountyPoolAddress = _bountyPoolAddress;
         rAndDPoolAddress = _rAndDPoolAddress;
         teamReserveFundAddress = _teamReserveFundAddress;
+    }
+
+    /**
+    * @dev Updates the amount of tokens that will be distributed to airdrop contract.
+    */
+    function updatedTokenAmountForAirdrop(uint256 _airdropTokens)
+    public onlyOwner
+    {
+        require(_airdropTokens <= MAX_AIRDROP_TOKENS, "Tokens for airdrop can't exceed MAX_AIRDROP_TOKENS");
+        require(updateAirdropTokenAmountEndDate >= block.timestamp, "updateAirdropTokenAmountEndDate reached, can't update anymore");
+        airdropTokens = _airdropTokens;
     }
 
     function _distribute()
@@ -53,7 +74,7 @@ contract UnlockedTokenDistribution is TokenDistributionBase {
     internal
     {
         airdrop = new Airdrop(token);
-        _mintTokens(address(airdrop), AIRDROP_TOKENS);
+        _mintTokens(address(airdrop), airdropTokens);
         airdrop.transferOwnership(owner);
     }
 

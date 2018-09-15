@@ -50,6 +50,7 @@ async function LibellumTestValuesFromInternal (
     this.libellumTokenDistribution = await LibellumTokenDistribution.new(
         [this.founder1, this.founder2],
         [this.advisor1, this.advisor2],
+        phase2ToPhase3Date,
         this.bountyPool,
         this.rAndDPool,
         this.teamReserveFund,
