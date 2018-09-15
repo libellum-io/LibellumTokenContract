@@ -1,5 +1,6 @@
 pragma solidity ^0.4.24;
 
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/crowdsale/validation/TimedCrowdsale.sol";
 import "openzeppelin-solidity/contracts/crowdsale/distribution/RefundableCrowdsale.sol";
 
@@ -9,8 +10,9 @@ import "./PostDeliveryRefundableCrowdsale.sol";
 * @dev Splits the TimedCrowdsale into three phases where each phase has its own
 * rate and minimal amount of WEIs investor is allowed to pay.
 */
-contract ThreePhaseTimedCrowdsale is TimedCrowdsale {
+contract ThreePhaseTimedCrowdsale is Ownable, TimedCrowdsale {
 
+    uint8 constant INVALID_PHASE = 0;
     uint8 constant PHASE1 = 1;
     uint8 constant PHASE2 = 2;
     uint8 constant PHASE3 = 3;
@@ -45,6 +47,30 @@ contract ThreePhaseTimedCrowdsale is TimedCrowdsale {
     }
 
     /**
+    * @dev In case if ETH exchange rate changes, owner should have ability to update the
+    * phase 2 rate during phase 1.
+    */
+    function updatePhase2Rate(uint256 _newPhase2Rate)
+    public onlyOwner
+    {
+        require(_newPhase2Rate > 0, "_newPhase2Rate has to be positive number");
+        require(resolveCurrentPhase() == PHASE1, "Phase 2 rate can be updated only when phase 1 is executing");
+        ratesByPhase[PHASE2] = _newPhase2Rate;
+    }
+
+    /**
+    * @dev In case if ETH exchange rate changes, owner should have ability to update the
+    * phase 3 rate during phase 2.
+    */
+    function updatePhase3Rate(uint256 _newPhase3Rate)
+    public onlyOwner
+    {
+        require(_newPhase3Rate > 0, "_newPhase3Rate has to be positive number");
+        require(resolveCurrentPhase() == PHASE2, "Phase 3 rate can be updated only when phase 2 is executing");
+        ratesByPhase[PHASE3] = _newPhase3Rate;
+    }
+
+    /**
     * @dev Appending purchase validation with checking minimal amount of wei invested.
     */
     function _preValidatePurchase(
@@ -70,8 +96,10 @@ contract ThreePhaseTimedCrowdsale is TimedCrowdsale {
     internal view returns (uint8)
     {
         uint256 currentTimestamp = block.timestamp;
+        if (currentTimestamp < openingTime) return INVALID_PHASE;
         if (currentTimestamp < phase1ToPhase2Date) return PHASE1;
-        if (currentTimestamp >= phase1ToPhase2Date && currentTimestamp < phase2ToPhase3Date) return PHASE2;
-        return  PHASE3;
+        if (currentTimestamp < phase2ToPhase3Date) return PHASE2;
+        if (currentTimestamp <= closingTime) return PHASE3;
+        return INVALID_PHASE;
     }
 }

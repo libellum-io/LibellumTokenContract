@@ -16,8 +16,8 @@ import "./ThreePhaseTimedCrowdsale.sol";
 */
 contract LibellumCrowdsale is
     PostDeliveryRefundableCrowdsale,
-    ThreePhaseTimedCrowdsale,
     IndividuallyCappedWhitelistedCrowdsale,
+    ThreePhaseTimedCrowdsale,
     MintedCrowdsale {
 
     LibellumTokenDistribution libellumTokenDistribution;
