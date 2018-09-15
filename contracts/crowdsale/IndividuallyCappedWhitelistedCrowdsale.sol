@@ -36,7 +36,7 @@ contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, 
         uint256 _cap) 
     external onlyOwner 
     {
-        // NOP
+        revert("User cap can't be changed");
     }
 
     /**
@@ -47,6 +47,6 @@ contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, 
         uint256 _cap)
     external onlyOwner
     {
-        // NOP
+        revert("Group cap can't be changed");
     }
 }
