@@ -4,7 +4,7 @@ import "./LockedTokenDistribution.sol";
 import "./UnlockedTokenDistribution.sol";
 
 /**
-* @dev Has ability to perform distribution of the 40 Mio LIB tokens to founders, advisors,
+* @dev Has ability to perform distribution of max 50 Mio LIB tokens to founders, advisors,
 * bounties, R&D and team reserve funds accounts. Distribution is done by using the minting operation
 * against LibellumToken. In order to enable minting, crowdsale contract needs to transfer ownership
 * of LibellumToken to this contract.
