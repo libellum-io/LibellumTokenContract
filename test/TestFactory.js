@@ -21,6 +21,8 @@ async function LibellumTestValuesFrom(accounts, goal, defaultIndividualCap) {
     values.increaseTimeToPhase2 = async function () { await increaseTimeTo(currentTime + duration.days(25)); }
     values.increaseTimeToPhase3 = async function () { await increaseTimeTo(currentTime + duration.days(35)); }
     values.increaseTimeToAfterTheEnd = async function () { await increaseTimeTo(currentTime + duration.days(45)); }
+    values.increaseTimeSixMonthsAfterTheEnd = async function () { await increaseTimeTo(currentTime + duration.days(45) + ((duration.years(1) + duration.days(1)) / 2)); }
+    values.increaseTimeOneYearAfterTheEnd = async function () { await increaseTimeTo(currentTime + duration.days(45) + duration.years(1)); }
 
     return values;
 }
