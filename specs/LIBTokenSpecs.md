@@ -29,7 +29,7 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 * Collect ETH after TGE
 
 ## Stage Phases
-![LIB Stages Timeline](../master/specs/LIBTokenStagesTimeline.jpg?raw=true)
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.jpg?raw=true)
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
 minimum amount 5 ETH  
@@ -75,7 +75,9 @@ do nothing
 If GOAL is not met and Crowdsale is not finished:
 do nothing
 
-##High-level Stage Flow
+## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
-![LIB Stages Flow 1](../master/specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)  
-![LIB Stages Flow 2](../master/specs/LIBStageFlow[Stage3-TGE].jpg?raw=true)  
+![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)  
+![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE].jpg?raw=true)  
+
+
