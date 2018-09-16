@@ -67,13 +67,6 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
 If GOAL is not met and Crowdsale is finished, tokens can't be minted (distributed), but ETH can be refunded when:
 each beneficiary calls claimRefund() function.
 
-### *Case 3: -*
-If GOAL is met and Crowdsale is not finished:
-do nothing
-### *Case 4: -*
-If GOAL is not met and Crowdsale is not finished:
-do nothing
-
 ## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
 ![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)  
