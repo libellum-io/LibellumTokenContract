@@ -1,24 +1,20 @@
 # LIB Specifications
 | Token Name & Symbol | Libellum Token, LIB |
 | ------------- | -----:|
+| Total supply | 100’000’000 LIB |
+| Total for sale | 50’000’000 LIB |
 | Phases | Private Presale, Public Presale, Crowdsale |
+| Hard cap | 3’700’000$ |
+| Soft cap | 50’000$ |
 | Refund | yes, if soft cap is not reached |
 | Tokens issued | Set at contract creation |
 | Minimum contribution | Set for each phase |
-| Maximum contribution | 1’000 ETH |
+| Default maximum contribution | 1’000 ETH (override with whitelist possible)|
 | Token Type | Utility Token |
 | Token Generation | Minted at TGE |
 | Vesting | None |
 | Pausable | Not Possible |
 | KYC | Whitelist |
-
-## Token Contract Construction
-Total supply: 100’000’000 tokens  
-Total tokens for sale: 50’000’000 tokens (private presale, public presale, public sale)  
-Hard Cap: 3’700’000$  
-
-Contribution cap: Default 1’000 ETH, individual override with whitelist possible  
-Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.  
 
 ## Contract Owner Functions
 * Change owner
@@ -26,7 +22,8 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 * setAirdropTotal() - only possible before stage 3 
 * updatePhase2Rate() - only possible before stage 2
 * updatePhase3Rate() - only possible before stage 3
-* Collect ETH after TGE
+* addAddressesToWhitelist() - with optional contribution cap override
+
 
 ## Stage Phases
 ![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.jpg?raw=true)
@@ -79,5 +76,3 @@ do nothing
 Following flows show which functions can/need to be called in which stage.  
 ![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)  
 ![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE].jpg?raw=true)  
-
-
