@@ -15,14 +15,6 @@ contract('MinimumWeiAmountsTests', function (accounts) {
         this.values = await LibellumTestValuesFrom(accounts, goal, defaultIndividualCap);
     });
 
-    describe('during entire crowdsale', function () {
-        it('Phase 1, 2 and 3 minimum WEI amounts are set', async function () {
-            (await this.values.libellumCrowdsale.minWeisByPhase.call(1)).should.be.bignumber.equal(ether(5));
-            (await this.values.libellumCrowdsale.minWeisByPhase.call(2)).should.be.bignumber.equal(ether(0.1));
-            (await this.values.libellumCrowdsale.minWeisByPhase.call(3)).should.be.bignumber.equal(ether(0.1));
-        });
-    });
-
     describe('crowdsale phase is 1 in progress', function () {
         beforeEach(async function () {
             await this.values.increaseTimeToPhase1();

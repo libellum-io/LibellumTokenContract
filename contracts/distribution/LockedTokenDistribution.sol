@@ -12,8 +12,6 @@ import "./TokenDistributionBase.sol";
 contract LockedTokenDistribution is TokenDistributionBase {
     uint256 constant FOUNDER_LOCK_TIME = 31536000; // 1 year (365 days)
     uint256 constant ADVISOR_LOCK_TIME = 15768000; // 6 months
-
-    
     
     // To simplify process of distribution both founders and advisors are put in single array.
     // Also each party has its token amount set in halfTokenAmounts array (one half goes directly to
