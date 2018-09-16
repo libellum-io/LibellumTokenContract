@@ -10,4 +10,4 @@
 1) Run all tests: truffle test
 
 # Specification
-High-level specifications can be found [specs](../master/specs) --> [LIBTokenSpecs.md](../master/specs/LIBTokenSpecs.md)
+High-level specifications can be found in [specs](../master/specs) --> [LIBTokenSpecs.md](../master/specs/LIBTokenSpecs.md)
