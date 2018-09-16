@@ -15,6 +15,10 @@ contract TokenDistributionBase is Ownable {
 
     /**
     * @dev Don't override this function to prevent loosing of validation.
+    * Note that everyone can execute this function, it is not only limited to contract owner.
+    * Since during crowdsale this contract will not have ownership on token, each call
+    * on this function will fail. Thus, only crowdsale contract can execute it during finalization,
+    * after transfering ownership of LibellumToken to this contract.
     */
     function distribute(LibellumToken _token, uint256 _crowdsaleClosingTime)
     public
