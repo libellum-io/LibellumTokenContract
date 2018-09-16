@@ -18,11 +18,12 @@
 
 ## Contract Owner Functions
 * Change owner
-* Initiate TGE finishPresale()
-* setAirdropTotal() - only possible before stage 3 
+* updateTokenAmountForAirdrop() - only possible before stage 3 
 * updatePhase2Rate() - only possible before stage 2
 * updatePhase3Rate() - only possible before stage 3
 * addAddressesToWhitelist() - with optional contribution cap override
+* Initiate TGE with finalization()
+* Distribute Airdrops with doAirdrop()
 
 
 ## Stage Phases
