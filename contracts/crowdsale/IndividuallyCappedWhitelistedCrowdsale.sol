@@ -4,7 +4,7 @@ import "openzeppelin-solidity/contracts/crowdsale/validation/WhitelistedCrowdsal
 import "openzeppelin-solidity/contracts/crowdsale/validation/IndividuallyCappedCrowdsale.sol";
 
 /**
-* @dev Uses the same individual cap for each whitelisted member and forbits owner to set custom cap.
+* @dev Uses the same individual cap for each whitelisted member and forbids owner to set custom cap.
 */
 contract IndividuallyCappedWhitelistedCrowdsale is IndividuallyCappedCrowdsale, WhitelistedCrowdsale {
 
