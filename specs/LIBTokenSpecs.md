@@ -27,7 +27,8 @@
 
 
 ## Stage Phases
-![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.jpg?raw=true)
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.jpg?raw=true)  
+*KYC, pledge and whitelist registration is covered by WeStart and therefore not part of this contract.*  
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
 minimum amount 5 ETH  
@@ -37,13 +38,13 @@ Rate: 0.05$, 4'175LIB/ETH - rate will be updated when initiating the contract
 ### II Stage: 16. October ----> 31. October (Public PreSale)
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
-Rate: 0.08$, 2609LIB/ETH - rate will be updated before stage 2 - updatePhase2Rate()
+Rate: 0.08$, 2609LIB/ETH - rate will be updated just before stage 2 - updatePhase2Rate()
 
 ### III Stage: 1. November ----> 20. November (Public Sale)
 End of public sale to be set until the 31. Oct - If no public sale, the date is set to the start date.  
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
-Rate: 0.10$, 2087LIB/ETH - rate will be updated before stage 3 - updatePhase3Rate()
+Rate: 0.10$, 2087LIB/ETH - rate will be updated just before stage 3 - updatePhase3Rate()
 
 ## Token Generation Event
 ### *Case 1: TGE*
