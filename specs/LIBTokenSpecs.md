@@ -29,7 +29,7 @@ Mint: Tokens only minted for sales and distribution, no tokens mintable after TG
 * Collect ETH after TGE
 
 ## Stage Phases
-![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline3.PNG?raw=true)
+![LIB Stages Timeline](../master/specs/LIBTokenStagesTimeline.jpg?raw=true)
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
 minimum amount 5 ETH  
@@ -49,7 +49,7 @@ Rate: 0.10$, 2087LIB/ETH - rate will be updated before stage 3 - updatePhase3Rat
 
 ## Token Generation Event
 ### *Case 1: TGE*
-Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finishPresale() only by contract owner;  
+Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finalization() only by contract owner;  
 
 -- Distribution of tokens:
 1. 10M total - to all founders (1/2 locked for 12 month)
@@ -75,3 +75,7 @@ do nothing
 If GOAL is not met and Crowdsale is not finished:
 do nothing
 
+##High-level Stage Flow
+Following flows show which functions can/need to be called in which stage.  
+![LIB Stages Flow 1](../master/specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)  
+![LIB Stages Flow 2](../master/specs/LIBStageFlow[Stage3-TGE].jpg?raw=true)  
