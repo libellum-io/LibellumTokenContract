@@ -14,37 +14,20 @@ contract('LockedTokenDistribution', function (accounts) {
 
     describe('validation during construction', function () {
         let owner = accounts[0];
+        let founder1 = accounts[1];
+        let founder2 = accounts[2];
+        let advisor1 = accounts[3];
+        let advisor2 = accounts[4];
 
         it('when two valid founders and advisors are passed contract is created', async function () {
-            let founders = [accounts[1], accounts[2]];
-            let advisors = [accounts[3], accounts[4]];
-            this.lockedTokenDistribution = await LockedTokenDistribution.new(founders, advisors, {from: owner});
-
-            this.lockedTokenDistribution.should.not.equal(ZeroAddress);
+            this.lockedTokenDistribution = await LockedTokenDistribution.new(founder1, founder2, advisor1, advisor2, {from: owner});
         });
 
-        it('when founders array length is not 2 transaction is reverted', async function () {
-            let founders = [accounts[1]];
-            let advisors = [accounts[3], accounts[4]];
-            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
-        });
-
-        it('when advisors array length is not 2 transaction is reverted', async function () {
-            let founders = [accounts[1], accounts[2]];
-            let advisors = [accounts[3], accounts[4], accounts[5]];
-            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
-        });
-
-        it('when founders array contains zero address transaction is reverted', async function () {
-            let founders = [accounts[1], ZeroAddress];
-            let advisors = [accounts[3], accounts[4]];
-            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
-        });
-
-        it('when founders array contains zero address transaction is reverted', async function () {
-            let founders = [accounts[1], accounts[2]];
-            let advisors = [ZeroAddress, accounts[4]];
-            await expectThrow(LockedTokenDistribution.new(founders, advisors, {from: owner}));
+        it('when any address is zero transaction is reverted', async function () {
+            await expectThrow(LockedTokenDistribution.new(ZeroAddress, founder2, advisor1, advisor2, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founder1, ZeroAddress, advisor1, advisor2, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founder1, founder2, ZeroAddress, advisor2, {from: owner}));
+            await expectThrow(LockedTokenDistribution.new(founder1, founder2, advisor1, ZeroAddress, {from: owner}));
         });
     });
 
@@ -69,7 +52,6 @@ contract('LockedTokenDistribution', function (accounts) {
                 await this.values.increaseTimeToPhase1();
                 await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
                 await this.values.increaseTimeToAfterTheEnd();
-                await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
                 await this.values.libellumCrowdsale.finalize();
             });
     
@@ -86,7 +68,6 @@ contract('LockedTokenDistribution', function (accounts) {
                 await this.values.increaseTimeToPhase1();
                 await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
                 await this.values.increaseTimeToAfterTheEnd();
-                await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
                 await this.values.libellumCrowdsale.finalize();
                 await this.values.libellumTokenDistribution.distribute();
             });

@@ -20,7 +20,7 @@ contract LibellumCrowdsale is
     ThreePhaseTimedCrowdsale,
     MintedCrowdsale {
 
-    LibellumTokenDistribution libellumTokenDistribution;
+    LibellumTokenDistribution public libellumTokenDistribution;
 
     uint256 constant INVESTMENT_TOKEN_POOL = 50000000000000000000000000; // 50 Mio LIB
     uint256 currentlyMintedInvestmentTokens;
@@ -33,7 +33,7 @@ contract LibellumCrowdsale is
     * @param _phase2ToPhase3Date Transition date between crowdsale's phase 2 and phase 3.
     * @param _closingTime Crowdsale end date.
     * @param _wallet Destination wallet for all invested WEIs. (only in case when crowdsale is ended and if goal is reached)
-    * @param _libellumTokenDistribution Distribution contract that is triggered by this contract on finalization (only if goal is reached).
+    * @param _distributionAddresses Array of all distribution addresses (2 for founders, 2 for advisors, 1 for bounty, 1 for R&D and 1 for team reserve.
     */
     constructor(
         uint256 _goal,
@@ -43,15 +43,14 @@ contract LibellumCrowdsale is
         uint256 _phase2ToPhase3Date,
         uint256 _closingTime,
         address _wallet,
-        LibellumTokenDistribution _libellumTokenDistribution)
+        address[] _distributionAddresses)
         PostDeliveryRefundableCrowdsale(_goal)
         ThreePhaseTimedCrowdsale(_openingTime, _phase1ToPhase2Date, _phase2ToPhase3Date, _closingTime)
         IndividuallyCappedWhitelistedCrowdsale(_defaultIndividualCap)
         Crowdsale(1, _wallet, new LibellumToken())
     public
     {
-        require(_libellumTokenDistribution != address(0), "Libellum token distribution can't have 0 address");
-        libellumTokenDistribution = _libellumTokenDistribution;
+        libellumTokenDistribution = new LibellumTokenDistribution(_distributionAddresses, _phase2ToPhase3Date);
     }
 
     /**
@@ -64,6 +63,16 @@ contract LibellumCrowdsale is
         currentlyMintedInvestmentTokens = currentlyMintedInvestmentTokens.add(_tokenAmount);
         require(currentlyMintedInvestmentTokens <= INVESTMENT_TOKEN_POOL, "LIB pool reserved for investments is burned");
         super._processPurchase(_beneficiary, _tokenAmount);
+    }
+
+    /**
+    * @dev Updates the amount of tokens that will be distributed to airdrop contract.
+    * Note that call is just delegated to distribution contract because of ownership.
+    */
+    function updateTokenAmountForAirdrop(uint256 _airdropTokens)
+    public onlyOwner
+    {
+        libellumTokenDistribution.updateTokenAmountForAirdrop(_airdropTokens);
     }
 
     /**

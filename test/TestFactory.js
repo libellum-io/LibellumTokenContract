@@ -49,14 +49,7 @@ async function LibellumTestValuesFromInternal (
     this.teamReserveFund = accounts[10];
     this.fundsWallet = accounts[11];
 
-    this.libellumTokenDistribution = await LibellumTokenDistribution.new(
-        [this.founder1, this.founder2],
-        [this.advisor1, this.advisor2],
-        phase2ToPhase3Date,
-        this.bountyPool,
-        this.rAndDPool,
-        this.teamReserveFund,
-        {from: this.owner});
+    let distributionAddresses = [this.founder1, this.founder2, this.advisor1, this.advisor2, this.bountyPool, this.rAndDPool, this.teamReserveFund];
 
     this.libellumCrowdsale = await LibellumCrowdsale.new(
         goal,
@@ -66,8 +59,10 @@ async function LibellumTestValuesFromInternal (
         phase2ToPhase3Date,
         endDate,
         this.fundsWallet,
-        this.libellumTokenDistribution.address,
+        distributionAddresses,
         {from: this.owner});
+
+    this.libellumTokenDistribution = LibellumTokenDistribution.at(await this.libellumCrowdsale.libellumTokenDistribution.call());
 
     await this.libellumCrowdsale.addAddressToWhitelist(this.whitelistedBeneficiary, {from: this.owner});
 

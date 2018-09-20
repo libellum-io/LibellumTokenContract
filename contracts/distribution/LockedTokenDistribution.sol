@@ -37,26 +37,22 @@ contract LockedTokenDistribution is TokenDistributionBase {
         ADVISOR_LOCK_TIME  // advisor 2
     ];
 
-    constructor (address[] _founderAddresses, address[] _advisorsAddresses) 
+    constructor (
+        address _founderAddress1,
+        address _founderAddress2,
+        address _advisorsAddress1,
+        address _advisorsAddress2) 
     public
     {
-        require(_founderAddresses.length == 2, "Only 2 founders are allowed");
-        require(_advisorsAddresses.length == 2, "Only 2 advisors are allowed");
+        require(_founderAddress1 != address(0), "_founderAddress1 can't be 0");
+        require(_founderAddress2 != address(0), "_founderAddress2 can't be 0");
+        require(_advisorsAddress1 != address(0), "_advisorsAddress1 can't be 0");
+        require(_advisorsAddress2 != address(0), "_advisorsAddress2 can't be 0");
 
-        for (uint256 i = 0; i < _founderAddresses.length; i++)
-        {
-            require(_founderAddresses[i] != address(0), "Address can't be 0");
-            addresses.push(_founderAddresses[i]);
-        }
-
-        for (i = 0; i < _advisorsAddresses.length; i++)
-        {
-            require(_advisorsAddresses[i] != address(0), "Address can't be 0");
-            addresses.push(_advisorsAddresses[i]);
-        }
-
-        require (addresses.length == halfTokenAmounts.length, "halfTokenAmounts needs to have the same length as _addresses");
-        require (addresses.length == lockTimes.length, "lockTimes needs to have the same length as _addresses");
+        addresses.push(_founderAddress1);
+        addresses.push(_founderAddress2);
+        addresses.push(_advisorsAddress1);
+        addresses.push(_advisorsAddress2);
     }
 
     /**

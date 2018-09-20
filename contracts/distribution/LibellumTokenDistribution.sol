@@ -19,22 +19,12 @@ import "./UnlockedTokenDistribution.sol";
 contract LibellumTokenDistribution is LockedTokenDistribution, UnlockedTokenDistribution {
 
     /**
-    * @param _founderAddresses Array of founder addresses where tokens will be distributed to.
-    * @param _advisorsAddresses Array of advisor addresses where tokens will be distributed to.
+    * @param _distributionAddresses Array of all distribution addresses (2 for founders, 2 for advisors, 1 for bounty, 1 for R&D and 1 for team reserve.
     * @param _updateAirdropTokenAmountEndDate Till this date founder can update airdrop token amount
-    * @param _bountyPoolAddress Bounty pool address where tokens will be distributed to.
-    * @param _rAndDPoolAddress R&D pool address where tokens will be distributed to.
-    * @param _teamReserveFundAddress Team reserve fund address where tokens will be distributed to.
     */
-    constructor (
-        address[] _founderAddresses,
-        address[] _advisorsAddresses,
-        uint256 _updateAirdropTokenAmountEndDate,
-        address _bountyPoolAddress,
-        address _rAndDPoolAddress,
-        address _teamReserveFundAddress)
-        LockedTokenDistribution(_founderAddresses, _advisorsAddresses)
-        UnlockedTokenDistribution(_updateAirdropTokenAmountEndDate, _bountyPoolAddress, _rAndDPoolAddress, _teamReserveFundAddress)
+    constructor (address[] _distributionAddresses, uint256 _updateAirdropTokenAmountEndDate)
+        LockedTokenDistribution(_distributionAddresses[0], _distributionAddresses[1], _distributionAddresses[2], _distributionAddresses[3])
+        UnlockedTokenDistribution(_updateAirdropTokenAmountEndDate, _distributionAddresses[4], _distributionAddresses[5], _distributionAddresses[6])
     public
     {
     }

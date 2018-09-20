@@ -12,22 +12,15 @@ module.exports = function(deployer, network, accounts) {
     let owner = accounts[0];
     let founders = [accounts[1], accounts[2]]
     let advisors = [accounts[3], accounts[4]];
-    let updateAirdropTokenAmountEndDate = _1_11_2018_time;
     let bountyPool = accounts[5];
     let rAndDPoolAddress = accounts[6];
     let teamReserveFundAddress = accounts[7];
     let fundsWallet = accounts[9];
 
+    let distributionAddresses = [founders[0], founders[1], advisors[0], advisors[1], bountyPool, rAndDPoolAddress, teamReserveFundAddress];
+
     return deployer
         .then(() => {
-            return deployer.deploy(
-                LibellumTokenDistribution,
-                founders, advisors,
-                updateAirdropTokenAmountEndDate, bountyPool, rAndDPoolAddress, teamReserveFundAddress,
-                {from: owner}
-            );
-        })
-        .then((libellumTokenDistribution) => {
             return deployer.deploy(
                 LibellumCrowdsale,
                 goal,
@@ -37,7 +30,7 @@ module.exports = function(deployer, network, accounts) {
                 _1_11_2018_time,
                 _1_12_2018_time,
                 fundsWallet,
-                libellumTokenDistribution.address,
+                distributionAddresses,
                 {from: owner});
         });
 };

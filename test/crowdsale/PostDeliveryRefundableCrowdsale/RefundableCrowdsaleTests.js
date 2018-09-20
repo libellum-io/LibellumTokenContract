@@ -22,7 +22,6 @@ contract('RefundableCrowdsaleTests', function (accounts) {
         beforeEach(async function () {
             await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
             await this.values.increaseTimeToAfterTheEnd();
-            await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
             await this.values.libellumCrowdsale.finalize({from: this.values.owner});
         });
 
@@ -62,7 +61,6 @@ contract('RefundableCrowdsaleTests', function (accounts) {
         beforeEach(async function () {
             await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(20), from: this.values.whitelistedBeneficiary});
             await this.values.increaseTimeToAfterTheEnd();
-            await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
             await this.values.libellumCrowdsale.finalize({from: this.values.owner});
         });
 
