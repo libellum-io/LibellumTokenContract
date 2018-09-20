@@ -1,35 +1,34 @@
 # LIB Specifications
 | Token Name & Symbol | Libellum Token, LIB |
-| ------------- | -----:|
+| :------------- | -----:|
+| Total supply | 100’000’000 LIB |
+| Total for sale | 50’000’000 LIB |
 | Phases | Private Presale, Public Presale, Crowdsale |
+| Hard cap | 3’700’000$ |
+| Soft cap | 50’000$ |
 | Refund | yes, if soft cap is not reached |
 | Tokens issued | Set at contract creation |
 | Minimum contribution | Set for each phase |
-| Maximum contribution | 1’000 ETH |
+| Default maximum contribution | 1’000 ETH (override with whitelist possible)|
 | Token Type | Utility Token |
 | Token Generation | Minted at TGE |
 | Vesting | None |
 | Pausable | Not Possible |
 | KYC | Whitelist |
 
-## Token Contract Construction
-Total supply: 100’000’000 tokens  
-Total tokens for sale: 50’000’000 tokens (private presale, public presale, public sale)  
-Hard Cap: 3’700’000$  
-
-Contribution cap: Default 1’000 ETH, individual override with whitelist possible  
-Mint: Tokens only minted for sales and distribution, no tokens mintable after TGE.  
-
 ## Contract Owner Functions
 * Change owner
-* Initiate TGE finishPresale()
-* setAirdropTotal() - only possible before stage 3 
+* updateTokenAmountForAirdrop() - only possible before stage 3 
 * updatePhase2Rate() - only possible before stage 2
 * updatePhase3Rate() - only possible before stage 3
-* Collect ETH after TGE
+* addAddressesToWhitelist() - with optional contribution cap override
+* Initiate TGE with finalization()
+* Distribute Airdrops with doAirdrop()
+
 
 ## Stage Phases
-![LIB Stages Timeline](https://github.com/libellum-io/LibellumTokenContract/blob/master/specs/LIBTokenStagesTimeline3.PNG?raw=true)
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.jpg?raw=true)  
+*KYC, pledge and whitelist registration is covered by WeStart and therefore not part of this contract.*  
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
 minimum amount 5 ETH  
@@ -39,17 +38,17 @@ Rate: 0.05$, 4'175LIB/ETH - rate will be updated when initiating the contract
 ### II Stage: 16. October ----> 31. October (Public PreSale)
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
-Rate: 0.08$, 2609LIB/ETH - rate will be updated before stage 2 - updatePhase2Rate()
+Rate: 0.08$, 2609LIB/ETH - rate will be updated just before stage 2 - updatePhase2Rate()
 
 ### III Stage: 1. November ----> 20. November (Public Sale)
 End of public sale to be set until the 31. Oct - If no public sale, the date is set to the start date.  
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
-Rate: 0.10$, 2087LIB/ETH - rate will be updated before stage 3 - updatePhase3Rate()
+Rate: 0.10$, 2087LIB/ETH - rate will be updated just before stage 3 - updatePhase3Rate()
 
 ## Token Generation Event
 ### *Case 1: TGE*
-Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finishPresale() only by contract owner;  
+Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finalization() only by contract owner;  
 
 -- Distribution of tokens:
 1. 10M total - to all founders (1/2 locked for 12 month)
@@ -68,10 +67,7 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
 If GOAL is not met and Crowdsale is finished, tokens can't be minted (distributed), but ETH can be refunded when:
 each beneficiary calls claimRefund() function.
 
-### *Case 3: -*
-If GOAL is met and Crowdsale is not finished:
-do nothing
-### *Case 4: -*
-If GOAL is not met and Crowdsale is not finished:
-do nothing
-
+## High-level Stage Flow
+Following flows show which functions can/need to be called in which stage.  
+![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)  
+![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE].jpg?raw=true)  

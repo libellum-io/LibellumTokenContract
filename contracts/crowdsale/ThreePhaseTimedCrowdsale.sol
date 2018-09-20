@@ -17,8 +17,10 @@ contract ThreePhaseTimedCrowdsale is Ownable, TimedCrowdsale {
     uint8 constant PHASE2 = 2;
     uint8 constant PHASE3 = 3;
 
+    // Rates are kept public to allow user to fetch current rate,
+    // since phase 2 and phase 3 rates can change
     mapping(uint8 => uint256) public ratesByPhase;
-    mapping(uint8 => uint256) public minWeisByPhase;
+    mapping(uint8 => uint256) minWeisByPhase;
 
     uint256 phase1ToPhase2Date;
     uint256 phase2ToPhase3Date;
