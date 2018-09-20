@@ -66,7 +66,7 @@ contract LockedTokenDistribution is TokenDistributionBase {
 
         for (uint256 i = 0; i < addresses.length; i++)
         {
-            TokenTimelock tokenLockAddress = new TokenTimelock(token, addresses[i], crowdsaleClosingTime + lockTimes[i]);
+            TokenTimelock tokenLockAddress = new TokenTimelock(libellumToken, addresses[i], crowdsaleClosingTime + lockTimes[i]);
             tokenTimelocks.push(address(tokenLockAddress));
 
             _mintTokens(addresses[i], halfTokenAmounts[i]);

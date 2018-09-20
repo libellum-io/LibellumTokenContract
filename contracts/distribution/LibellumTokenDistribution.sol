@@ -1,5 +1,6 @@
 pragma solidity ^0.4.24;
 
+import "./TokenDistributionBase.sol";
 import "./LockedTokenDistribution.sol";
 import "./UnlockedTokenDistribution.sol";
 
@@ -20,11 +21,18 @@ contract LibellumTokenDistribution is LockedTokenDistribution, UnlockedTokenDist
 
     /**
     * @param _distributionAddresses Array of all distribution addresses (2 for founders, 2 for advisors, 1 for bounty, 1 for R&D and 1 for team reserve.
-    * @param _updateAirdropTokenAmountEndDate Till this date founder can update airdrop token amount
+    * @param _updateAirdropTokenAmountEndDate Till this date founder can update airdrop token amount.
+    * @param _libellumToken Libellum token will be distributed to the distribution addresses by minting of tokens.
+    * @param _crowdsaleClosingTime Crowdsale closing time used to determine the TokenTimelock release time.
     */
-    constructor (address[] _distributionAddresses, uint256 _updateAirdropTokenAmountEndDate)
+    constructor (
+        address[] _distributionAddresses,
+        uint256 _updateAirdropTokenAmountEndDate,
+        LibellumToken _libellumToken,
+        uint256 _crowdsaleClosingTime)
         LockedTokenDistribution(_distributionAddresses[0], _distributionAddresses[1], _distributionAddresses[2], _distributionAddresses[3])
         UnlockedTokenDistribution(_updateAirdropTokenAmountEndDate, _distributionAddresses[4], _distributionAddresses[5], _distributionAddresses[6])
+        TokenDistributionBase(_libellumToken, _crowdsaleClosingTime)
     public
     {
     }

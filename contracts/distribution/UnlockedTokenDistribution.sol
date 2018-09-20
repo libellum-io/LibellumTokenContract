@@ -73,7 +73,7 @@ contract UnlockedTokenDistribution is TokenDistributionBase {
     function distributeAirdropTokens()
     internal
     {
-        airdrop = new Airdrop(token);
+        airdrop = new Airdrop(libellumToken);
         _mintTokens(address(airdrop), airdropTokens);
         airdrop.transferOwnership(owner);
     }

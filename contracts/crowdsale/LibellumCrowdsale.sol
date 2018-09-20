@@ -50,7 +50,11 @@ contract LibellumCrowdsale is
         Crowdsale(1, _wallet, new LibellumToken())
     public
     {
-        libellumTokenDistribution = new LibellumTokenDistribution(_distributionAddresses, _phase2ToPhase3Date);
+        libellumTokenDistribution = new LibellumTokenDistribution(
+            _distributionAddresses,
+            _phase2ToPhase3Date,
+            LibellumToken(token),
+            closingTime);
     }
 
     /**
@@ -90,17 +94,15 @@ contract LibellumCrowdsale is
     }
 
     /**
-    * @dev In order to prepare distribution of token make sure that crowdsale contract is the owner of distribution contract.
-    * Token ownership is moved to distribution contract so the contract can mint new tokens during he distribution.
-    * After the distribution contract is prepared as a last step ownership of distribution contract is returned to crowdsale owner,
-    * so he can trigger the distribution.
+    * @dev Token ownership is moved to distribution contract so the contract can mint new tokens during he distribution.
+    * After the distribution contract is prepared as a last step ownership of distribution contract is moved to crowdsale owner,
+    * so he can trigger the distribution after the crowdsale is finalized.
     */
     function prepareTokenForDistribution()
     internal
     {
         LibellumToken libellumToken = LibellumToken(token);
         libellumToken.transferOwnership(address(libellumTokenDistribution));
-        libellumTokenDistribution.prepareForDistribution(libellumToken, closingTime);
         libellumTokenDistribution.transferOwnership(owner);
     }
 }

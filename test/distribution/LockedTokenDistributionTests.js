@@ -1,4 +1,4 @@
-var LockedTokenDistribution = artifacts.require("./distribution/LockedTokenDistribution.sol");
+var LibellumTokenDistribution = artifacts.require("./distribution/LibellumTokenDistribution.sol");
 var TokenTimelock = artifacts.require("openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol");
 
 const { LibellumTestValuesFrom, LIB, Mio, ZeroAddress } = require("../TestFactory.js");
@@ -20,14 +20,14 @@ contract('LockedTokenDistribution', function (accounts) {
         let advisor2 = accounts[4];
 
         it('when two valid founders and advisors are passed contract is created', async function () {
-            this.lockedTokenDistribution = await LockedTokenDistribution.new(founder1, founder2, advisor1, advisor2, {from: owner});
+            await LibellumTokenDistribution.new(founder1, founder2, advisor1, advisor2, {from: owner});
         });
 
         it('when any address is zero transaction is reverted', async function () {
-            await expectThrow(LockedTokenDistribution.new(ZeroAddress, founder2, advisor1, advisor2, {from: owner}));
-            await expectThrow(LockedTokenDistribution.new(founder1, ZeroAddress, advisor1, advisor2, {from: owner}));
-            await expectThrow(LockedTokenDistribution.new(founder1, founder2, ZeroAddress, advisor2, {from: owner}));
-            await expectThrow(LockedTokenDistribution.new(founder1, founder2, advisor1, ZeroAddress, {from: owner}));
+            await expectThrow(LibellumTokenDistribution.new(ZeroAddress, founder2, advisor1, advisor2, {from: owner}));
+            await expectThrow(LibellumTokenDistribution.new(founder1, ZeroAddress, advisor1, advisor2, {from: owner}));
+            await expectThrow(LibellumTokenDistribution.new(founder1, founder2, ZeroAddress, advisor2, {from: owner}));
+            await expectThrow(LibellumTokenDistribution.new(founder1, founder2, advisor1, ZeroAddress, {from: owner}));
         });
     });
 
