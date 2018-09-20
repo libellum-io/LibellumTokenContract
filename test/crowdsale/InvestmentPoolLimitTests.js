@@ -12,8 +12,8 @@ contract('InvestmentPoolLimitTests', function (accounts) {
     let defaultIndividualCap = ether(20000);
 
     // setting phase 2 custom rate so that maximal ETH amount for buying is 5000 ETH
-    // 5000 ETH = 50 000 000 LIB / 10000;
-    let phase2CustomRate = 10000;
+    // 50 ETH = 50 000 000 LIB / 1000000;
+    let phase2CustomRate = 1000000;
 
     beforeEach(async function () {
         this.values = await LibellumTestValuesFrom(accounts, goal, defaultIndividualCap);
@@ -31,10 +31,10 @@ contract('InvestmentPoolLimitTests', function (accounts) {
 
     describe('when investment pool of 50 Mio LIBs is filled', function () {
         it ('beneficiary is not able to buy LIBs', async function () {
-            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(4900), from: this.values.whitelistedBeneficiary});
-            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(50), from: this.values.whitelistedBeneficiary});
-            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(40), from: this.values.whitelistedBeneficiary});
-            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(49), from: this.values.whitelistedBeneficiary});
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(0.5), from: this.values.whitelistedBeneficiary});
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(0.4), from: this.values.whitelistedBeneficiary});
+            await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(0.1), from: this.values.whitelistedBeneficiary});
             await expectThrow(this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(0.1), from: this.values.whitelistedBeneficiary}));
         });
     });
