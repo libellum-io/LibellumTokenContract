@@ -69,6 +69,7 @@ contract('LockedTokenDistribution', function (accounts) {
                 await this.values.increaseTimeToPhase1();
                 await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: ether(10), from: this.values.whitelistedBeneficiary});
                 await this.values.increaseTimeToAfterTheEnd();
+                await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
                 await this.values.libellumCrowdsale.finalize();
             });
     
@@ -80,12 +81,14 @@ contract('LockedTokenDistribution', function (accounts) {
             });
         });
     
-        describe('when corwdsale is finalized and goal is reached', function () {
+        describe('when crowdsale is finalized and goal is reached', function () {
             beforeEach(async function () {
                 await this.values.increaseTimeToPhase1();
                 await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
                 await this.values.increaseTimeToAfterTheEnd();
+                await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
                 await this.values.libellumCrowdsale.finalize();
+                await this.values.libellumTokenDistribution.distribute();
             });
     
             it('founders and advisors balances contain correct number of LIBs', async function () {

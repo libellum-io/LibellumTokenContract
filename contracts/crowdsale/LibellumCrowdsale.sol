@@ -67,7 +67,7 @@ contract LibellumCrowdsale is
     }
 
     /**
-    * @dev As the last step of finalization is to trigger distribution of tokens only if goal is reached.
+    * @dev As the last step of finalization is to prepare the token for distribution.
     */
     function finalization() 
     internal
@@ -76,20 +76,22 @@ contract LibellumCrowdsale is
 
         if (goalReached())
         {
-            distributeTokens();
+            prepareTokenForDistribution();
         }
     }
 
     /**
-    * @dev Before token distribution is triggered make sure to transfer the ownership
-    * of token to the distribution contract. Only in that case contract will be able to
-    * to distribute (mint) new tokens.
+    * @dev In order to prepare distribution of token make sure that crowdsale contract is the owner of distribution contract.
+    * Token ownership is moved to distribution contract so the contract can mint new tokens during he distribution.
+    * After the distribution contract is prepared as a last step ownership of distribution contract is returned to crowdsale owner,
+    * so he can trigger the distribution.
     */
-    function distributeTokens()
+    function prepareTokenForDistribution()
     internal
     {
         LibellumToken libellumToken = LibellumToken(token);
         libellumToken.transferOwnership(address(libellumTokenDistribution));
-        libellumTokenDistribution.distribute(libellumToken, closingTime);
+        libellumTokenDistribution.prepareForDistribution(libellumToken, closingTime);
+        libellumTokenDistribution.transferOwnership(owner);
     }
 }

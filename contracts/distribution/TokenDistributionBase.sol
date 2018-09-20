@@ -11,24 +11,38 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 contract TokenDistributionBase is Ownable {
     LibellumToken public token;
     uint256 public crowdsaleClosingTime;
+    bool public isPreparedForDistribution = false;
     bool public isDistributed = false;
 
     /**
     * @dev Don't override this function to prevent loosing of validation.
-    * Note that everyone can execute this function, it is not only limited to contract owner.
-    * Since during crowdsale this contract will not have ownership on token, each call
-    * on this function will fail. Thus, only crowdsale contract can execute it during finalization,
-    * after transfering ownership of LibellumToken to this contract.
+    * This function should only be called by the crowdsale contract during finalization, so the ownership of
+    * distribution contract needs first to be transfered to crowdsale contract.
+    * WARNING: Any other owner that is not crowdsale contract should never call this function!
     */
-    function distribute(LibellumToken _token, uint256 _crowdsaleClosingTime)
-    public
+    function prepareForDistribution(LibellumToken _token, uint256 _crowdsaleClosingTime)
+    public onlyOwner
     {
-        require(!isDistributed, "Tokens are already distributed");
+        require(!isPreparedForDistribution, "Contract is already prepared for distribution");
         require(_token != address(0), "Passed token can't have 0 address");
         require(_token.owner() == address(this), "Contract needs to be the owner of the token to be able to distribute tokens");
         require(_crowdsaleClosingTime <= block.timestamp, "Crowdsale closing time is from the future");
         token = _token;
         crowdsaleClosingTime = _crowdsaleClosingTime;
+        isPreparedForDistribution = true;
+    }
+
+    /**
+    * @dev Don't override this function to prevent loosing of validation.
+    * Distribution can be executed after the crowdsale finalization is complited so the contract
+    * is prepared for distribution (contract is owner of the token and the owner of the contract is
+    * transfered to original owner). This function will triggerer all implemented distributions of the token.
+    */
+    function distribute()
+    public onlyOwner
+    {
+        require(isPreparedForDistribution, "Contract first needs to be prepared for distribution");
+        require(!isDistributed, "Tokens are already distributed");
         _distribute();
         isDistributed = true;
     }

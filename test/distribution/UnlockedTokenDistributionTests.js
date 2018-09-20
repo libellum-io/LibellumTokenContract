@@ -50,9 +50,11 @@ contract('UnlockedTokenDistribution', function (accounts) {
             await this.values.increaseTimeToPhase1();
             await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
             await this.values.increaseTimeToAfterTheEnd();
+            await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
+            await this.values.libellumCrowdsale.finalize();
         });
     
-        describe('before crowdsale is finalized', function () {
+        describe('before token distribution is triggered', function () {
             describe('Airdrop', function () {
                 beforeEach(async function () {
                     this.airdrop = Airdrop.at(await this.values.libellumTokenDistribution.airdrop.call());
@@ -64,9 +66,9 @@ contract('UnlockedTokenDistribution', function (accounts) {
             });
         });
     
-        describe('after crowdsale is finalized', function () {
+        describe('after token distribution is triggered', function () {
             beforeEach(async function () {
-                await this.values.libellumCrowdsale.finalize();
+                await this.values.libellumTokenDistribution.distribute();
             });
     
             describe('Airdrop', function () {
@@ -132,7 +134,9 @@ contract('UnlockedTokenDistribution', function (accounts) {
                 await this.values.libellumTokenDistribution.updateTokenAmountForAirdrop(2 * Mio * LIB, {from: this.values.owner});
                 await this.values.libellumCrowdsale.buyTokens(this.values.whitelistedBeneficiary, {value: goal, from: this.values.whitelistedBeneficiary});
                 await this.values.increaseTimeToAfterTheEnd();
+                await this.values.libellumTokenDistribution.transferOwnership(this.values.libellumCrowdsale.address, {from: this.values.owner});
                 await this.values.libellumCrowdsale.finalize();
+                await this.values.libellumTokenDistribution.distribute();
                 let airdrop = Airdrop.at(await this.values.libellumTokenDistribution.airdrop.call());
                 (await this.values.libellumToken.balanceOf(airdrop.address)).should.be.bignumber.equal(2.0 * Mio * LIB);
             });
