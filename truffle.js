@@ -16,6 +16,7 @@ module.exports = {
         port: 8545,
         from: "0x0784b65432c5A5a75474BBdceeA2eDde45a19eE3",
         network_id: 4,
+        gasPrice: 20000000000,
         gas: 7000000 // Gas limit used for deploys
       }
   }
