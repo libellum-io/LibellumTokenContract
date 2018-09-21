@@ -22,8 +22,10 @@ contract ThreePhaseTimedCrowdsale is Ownable, TimedCrowdsale {
     mapping(uint8 => uint256) public ratesByPhase;
     mapping(uint8 => uint256) minWeisByPhase;
 
-    uint256 phase1ToPhase2Date;
-    uint256 phase2ToPhase3Date;
+    // Exposing both dates as public variables since both opening and closing
+    // crowdsale dates are exposed, thus the costumers have clear picture of all dates.
+    uint256 public phase1ToPhase2Date;
+    uint256 public phase2ToPhase3Date;
 
     constructor(
         uint256 _openingTime,
