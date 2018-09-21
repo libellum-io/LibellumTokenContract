@@ -28,6 +28,7 @@ contract('LockedTokenDistribution', function (accounts) {
                 [founder1, founder2, advisor1, advisor2, accounts[0], accounts[0], accounts[0]],
                 futureTime,
                 (await LibellumToken.new({from: owner})).address,
+                accounts[0],
                 futureTime,
                 {from: owner});
         }

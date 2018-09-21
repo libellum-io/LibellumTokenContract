@@ -29,6 +29,7 @@ contract('UnlockedTokenDistribution', function (accounts) {
                 updateAirdropTokenAmountEndDate,
                 (await LibellumToken.new({from: owner})).address,
                 futureTime,
+                accounts[0],
                 {from: owner});
         }
 

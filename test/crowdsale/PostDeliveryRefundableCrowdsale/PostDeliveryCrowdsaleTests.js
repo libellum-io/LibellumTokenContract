@@ -49,5 +49,27 @@ contract('TokenBuyingTests', function (accounts) {
             await this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary});
             (await this.values.libellumToken.balanceOf(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(ether(20) * InitPhase1Rate);
         });
+
+        describe('after crowdsale is finalized', function () {
+            beforeEach(async function () {
+                await this.values.libellumCrowdsale.finalize({from: owner});
+            });
+
+            it('beneficiary should not be able to withdraw tokens since owner of the token is distribution tokens', async function () {
+                await expectThrow(this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary}));
+                (await this.values.libellumToken.balanceOf(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(0);
+            });
+
+            describe('after tokens are distributed', function () {
+                beforeEach(async function () {
+                    await this.values.libellumTokenDistribution.distribute({from: owner});
+                });
+
+                it('beneficiary should be able to withdraw tokens', async function () {
+                    await this.values.libellumCrowdsale.withdrawTokens({from: this.values.whitelistedBeneficiary});
+                    (await this.values.libellumToken.balanceOf(this.values.whitelistedBeneficiary)).should.be.bignumber.equal(ether(20) * InitPhase1Rate);
+                });
+            })
+        });
     });
 });

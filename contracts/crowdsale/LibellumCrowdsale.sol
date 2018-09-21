@@ -54,7 +54,8 @@ contract LibellumCrowdsale is
             _distributionAddresses,
             _phase2ToPhase3Date,
             LibellumToken(token),
-            closingTime);
+            closingTime,
+            address(this));
     }
 
     /**

@@ -19,19 +19,23 @@ contract('TokenDistributionBase', function (accounts) {
         this.libellumToken = await LibellumToken.new({from: owner});
     });
 
-    describe('token distribution preparation validation', function () {
+    describe('token distribution construction validation', function () {
         it('if crowdsale closing time is zero transaction is reverted', async function () {
-            await expectThrow(TokenDistributionBase.new(this.libellumToken.address, 0, {from: owner}));
+            await expectThrow(TokenDistributionBase.new(this.libellumToken.address, 0, owner, {from: owner}));
         });
 
         it('if token address is zero transaction is reverted', async function () {
-            await expectThrow(TokenDistributionBase.new(ZeroAddress, this.crowdsaleClosingTime, {from: owner}));
+            await expectThrow(TokenDistributionBase.new(ZeroAddress, this.crowdsaleClosingTime, owner, {from: owner}));
+        });
+
+        it('if crowdsale contract address is 0 address transaction is reverted', async function () {
+            await expectThrow(TokenDistributionBase.new(this.libellumToken.address, this.crowdsaleClosingTime, ZeroAddress, {from: owner}));
         });
     });
 
     describe('when contract is created', function () {
         beforeEach(async function () {
-            this.distributionBase = await TokenDistributionBase.new(this.libellumToken.address, this.crowdsaleClosingTime, {from: owner});
+            this.distributionBase = await TokenDistributionBase.new(this.libellumToken.address, this.crowdsaleClosingTime, owner, {from: owner});
         });
 
         it('token address is set correctly', async function () {
@@ -46,17 +50,27 @@ contract('TokenDistributionBase', function (accounts) {
             (await this.distributionBase.isDistributed.call()).should.be.equal(false);
         });
 
-        describe("when distribution is triggered", function () {
+        it('distribution is not possible since owner of the token is not distribution contract', async function () {
+            await expectThrow(this.distributionBase.distribute());
+        });
+
+        describe("when ownership of token is transferred to distribution contract", function () {
             beforeEach(async function () {
-                await this.distributionBase.distribute();
+                await this.libellumToken.transferOwnership(this.distributionBase.address);
             });
 
-            it ('isDistributed flag is set to true', async function () {
-                (await this.distributionBase.isDistributed.call()).should.be.equal(true);
-            });
-
-            it ('second call of distribute will be reverted', async function () {
-                await expectThrow(this.distributionBase.distribute());
+            describe("when distribution is triggered", function () {
+                beforeEach(async function () {
+                    await this.distributionBase.distribute();
+                });
+    
+                it ('isDistributed flag set to true', async function () {
+                    (await this.distributionBase.isDistributed.call()).should.be.equal(true);
+                });
+    
+                it ('second call of distribute will be reverted', async function () {
+                    await expectThrow(this.distributionBase.distribute());
+                });
             });
         });
     });
