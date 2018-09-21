@@ -1,9 +1,12 @@
 var LibellumTokenDistribution = artifacts.require("./distribution/LibellumTokenDistribution.sol");
+var LibellumToken = artifacts.require("./LibellumToken.sol");
 var TokenTimelock = artifacts.require("openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol");
 
 const { LibellumTestValuesFrom, LIB, Mio, ZeroAddress } = require("../TestFactory.js");
 const { expectThrow } = require('../helpers/expectThrow.js');
 const { ether } = require('../helpers/ether.js');
+const { latestTime } = require('../helpers/latestTime');
+const { duration } = require('../helpers/increaseTime');
 const BigNumber = web3.BigNumber;
 
 require('chai')
@@ -19,15 +22,25 @@ contract('LockedTokenDistribution', function (accounts) {
         let advisor1 = accounts[3];
         let advisor2 = accounts[4];
 
+        async function LibellumTokenDistributionFrom(founder1, founder2, advisor1, advisor2) {
+            let futureTime = (await latestTime()) + duration.days(10);
+            return  LibellumTokenDistribution.new(
+                [founder1, founder2, advisor1, advisor2, accounts[0], accounts[0], accounts[0], accounts[0]],
+                futureTime,
+                (await LibellumToken.new({from: owner})).address,
+                futureTime,
+                {from: owner});
+        }
+
         it('when two valid founders and advisors are passed contract is created', async function () {
-            await LibellumTokenDistribution.new(founder1, founder2, advisor1, advisor2, {from: owner});
+            await LibellumTokenDistributionFrom(founder1, founder2, advisor1, advisor2);
         });
 
         it('when any address is zero transaction is reverted', async function () {
-            await expectThrow(LibellumTokenDistribution.new(ZeroAddress, founder2, advisor1, advisor2, {from: owner}));
-            await expectThrow(LibellumTokenDistribution.new(founder1, ZeroAddress, advisor1, advisor2, {from: owner}));
-            await expectThrow(LibellumTokenDistribution.new(founder1, founder2, ZeroAddress, advisor2, {from: owner}));
-            await expectThrow(LibellumTokenDistribution.new(founder1, founder2, advisor1, ZeroAddress, {from: owner}));
+            await expectThrow(LibellumTokenDistributionFrom(ZeroAddress, founder2, advisor1, advisor2));
+            await expectThrow(LibellumTokenDistributionFrom(founder1, ZeroAddress, advisor1, advisor2));
+            await expectThrow(LibellumTokenDistributionFrom(founder1, founder2, ZeroAddress, advisor2));
+            await expectThrow(LibellumTokenDistributionFrom(founder1, founder2, advisor1, ZeroAddress));
         });
     });
 
