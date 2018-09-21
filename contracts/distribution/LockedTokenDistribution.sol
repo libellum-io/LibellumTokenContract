@@ -56,8 +56,8 @@ contract LockedTokenDistribution is TokenDistributionBase {
     }
 
     /**
-    * @dev Goes thru addresses array and distribute (mint) half of the tokens for a party directly to the address
-    * and second half goes to newly created TokenTimelock.
+    * @dev Goes thru addresses array and distributes (mints) half of the tokens for a party directly to the address
+    * and second half goes to a newly created TokenTimelock.
     */
     function _distribute()
     internal
