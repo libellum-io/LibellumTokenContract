@@ -25,7 +25,7 @@ contract('LockedTokenDistribution', function (accounts) {
         async function LibellumTokenDistributionFrom(founder1, founder2, advisor1, advisor2) {
             let futureTime = (await latestTime()) + duration.days(10);
             return  LibellumTokenDistribution.new(
-                [founder1, founder2, advisor1, advisor2, accounts[0], accounts[0], accounts[0], accounts[0]],
+                [founder1, founder2, advisor1, advisor2, accounts[0], accounts[0], accounts[0]],
                 futureTime,
                 (await LibellumToken.new({from: owner})).address,
                 futureTime,

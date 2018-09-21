@@ -1,5 +1,5 @@
-var UnlockedTokenDistribution = artifacts.require("./distribution/UnlockedTokenDistribution.sol");
-
+var LibellumTokenDistribution = artifacts.require("./distribution/LibellumTokenDistribution.sol");
+var LibellumToken = artifacts.require("./LibellumToken.sol");
 const { LibellumTestValuesFrom, LIB, Mio, ZeroAddress } = require("../TestFactory.js");
 var Airdrop = artifacts.require("./distribution/Airdrop.sol");
 const { expectThrow } = require('../helpers/expectThrow.js');
@@ -22,26 +22,36 @@ contract('UnlockedTokenDistribution', function (accounts) {
         let rAndDPool = accounts[2];
         let teamReserveFund = accounts[3];
 
-        // it('when valid addresses and date are passed contract is created', async function () {
-        //     this.unlockedTokenDistribution = await UnlockedTokenDistribution.new(await latestTime() + duration.days(1), bountyPool, rAndDPool, teamReserveFund, {from: owner});
-        //     this.unlockedTokenDistribution.should.not.equal(ZeroAddress);
-        // });
+        async function LibellumTokenDistributionFrom(updateAirdropTokenAmountEndDate, bountyPool, rAndDPool, teamReserveFund) {
+            let futureTime = (await latestTime()) + duration.days(10);
+            return  LibellumTokenDistribution.new(
+                [accounts[0], accounts[0], accounts[0], accounts[0], bountyPool, rAndDPool, teamReserveFund],
+                updateAirdropTokenAmountEndDate,
+                (await LibellumToken.new({from: owner})).address,
+                futureTime,
+                {from: owner});
+        }
 
-        // it('when zero bounty pool address is passed transaction is reverted', async function () {
-        //     await expectThrow(UnlockedTokenDistribution.new(await latestTime() + duration.days(1), ZeroAddress, rAndDPool, teamReserveFund, {from: owner}));
-        // });
+        it('when valid addresses and date are passed contract is created', async function () {
+            this.unlockedTokenDistribution = await LibellumTokenDistributionFrom(await latestTime() + duration.days(1), bountyPool, rAndDPool, teamReserveFund);
+            this.unlockedTokenDistribution.should.not.equal(ZeroAddress);
+        });
 
-        // it('when zero R&D pool address is passed transaction is reverted', async function () {
-        //     await expectThrow(UnlockedTokenDistribution.new(await latestTime() + duration.days(1), bountyPool, ZeroAddress, teamReserveFund, {from: owner}));
-        // });
+        it('when zero bounty pool address is passed transaction is reverted', async function () {
+            await expectThrow(LibellumTokenDistributionFrom(await latestTime() + duration.days(1), ZeroAddress, rAndDPool, teamReserveFund));
+        });
 
-        // it('when zero team reserve fund address is passed transaction is reverted', async function () {
-        //     await expectThrow(UnlockedTokenDistribution.new(await latestTime() + duration.days(1), bountyPool, rAndDPool, ZeroAddress, {from: owner}));
-        // });
+        it('when zero R&D pool address is passed transaction is reverted', async function () {
+            await expectThrow(LibellumTokenDistributionFrom(await latestTime() + duration.days(1), bountyPool, ZeroAddress, teamReserveFund));
+        });
 
-        // it('when updateAirdropTokenAmountEndDate is from the past transaction is reverted', async function () {
-        //     await expectThrow(UnlockedTokenDistribution.new(await latestTime() - duration.days(1), bountyPool, rAndDPool, teamReserveFund, {from: owner}));
-        // });
+        it('when zero team reserve fund address is passed transaction is reverted', async function () {
+            await expectThrow(LibellumTokenDistributionFrom(await latestTime() + duration.days(1), bountyPool, rAndDPool, ZeroAddress));
+        });
+
+        it('when updateAirdropTokenAmountEndDate is from the past transaction is reverted', async function () {
+            await expectThrow(LibellumTokenDistributionFrom(await latestTime() - duration.days(1), bountyPool, rAndDPool, teamReserveFund));
+        });
     });
 
     describe("token distribution", function () {
