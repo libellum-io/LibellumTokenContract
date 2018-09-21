@@ -3,11 +3,11 @@ const LibellumTokenDistribution = artifacts.require('./contracts/distribution/Li
 
 module.exports = function(deployer, network, accounts) {
     let goal = 200000000000000000000; // 200 ether
-    let defaultIndividualCap = 10000000000000000000; // 10 ether
-    let _1_10_2018_time = 1538352000;
-    let _15_10_2018_time = 1539561600;
-    let _1_11_2018_time = 1541030400;
-    let _1_12_2018_time = 1543622400;
+    let defaultIndividualCap = 1000000000000000000000; // 1000 ether
+    let openingTime = 1538352000; // 1-Oct-18
+    let phase1ToPhase2Time = 1539561600; // 15-Oct-18
+    let phase2ToPhase3Time = 1541030400; // 1-Nov-18
+    let closingTime = 1543622400; // 1-Dec-18
 
     let owner = accounts[0];
     let founders = [accounts[1], accounts[2]]
@@ -25,10 +25,10 @@ module.exports = function(deployer, network, accounts) {
                 LibellumCrowdsale,
                 goal,
                 defaultIndividualCap,
-                _1_10_2018_time,
-                _15_10_2018_time,
-                _1_11_2018_time,
-                _1_12_2018_time,
+                openingTime,
+                phase1ToPhase2Time,
+                phase2ToPhase3Time,
+                closingTime,
                 fundsWallet,
                 distributionAddresses,
                 {from: owner});
