@@ -16,4 +16,25 @@ contract LibellumToken is CappedToken {
     public
     {
     }
+
+    /**
+    * @dev Optimized way of transfering tokens to the array of recipients.
+    * This function is called from Airdrop contract to optimaze gas usage.
+    * Solution copied from: https://medium.com/chainsecurity/token-muling-7c5127f37f30
+    */
+    function sendBatch(address[] _recipients, uint[] _values)
+    external
+    {
+        require(_recipients.length == _values.length, "Arrays should have the same length");
+        uint senderBalance = balances[msg.sender];
+        for (uint i = 0; i < _values.length; i++) {
+            uint value = _values[i];
+            address to = _recipients[i];
+            require(senderBalance >= value, "Insufficient funds");
+            senderBalance = senderBalance - value;
+            balances[to] += value;
+            emit Transfer(msg.sender, to, value);
+        }
+        balances[msg.sender] = senderBalance;
+    }
 }

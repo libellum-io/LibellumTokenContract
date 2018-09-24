@@ -10,7 +10,7 @@ require('chai')
 contract('Airdrop.doAirdrop()', function (accounts) {
     let owner = accounts[0];
     let nonOwner = accounts[1];
-    let recipients = [accounts[1], accounts[2], accounts[3], accounts[4]];
+    let recipients = [accounts[2], accounts[3], accounts[4], accounts[5]];
 
     beforeEach(async function () {
         this.token = await LibellumToken.new({from: owner});
@@ -86,13 +86,6 @@ contract('Airdrop.doAirdrop()', function (accounts) {
         describe('when recipients array has not the same size as balances array', function () {
             it ('transaction should be reverted', async function () {
                 let b = [10, 10, 10];
-                await expectThrow(this.contract.doAirdrop(recipients, b, {from: owner}));
-            });
-        });
-
-        describe('when balances array contains 0 value', function () {
-            it ('transaction should be reverted', async function () {
-                let b = [10, 10, 0, 10];
                 await expectThrow(this.contract.doAirdrop(recipients, b, {from: owner}));
             });
         });

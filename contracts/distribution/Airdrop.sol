@@ -20,13 +20,6 @@ contract Airdrop is Ownable {
     function doAirdrop(address[] _recipients, uint256[] _balances)
     public onlyOwner
     {
-        require(_recipients.length == _balances.length, "Arrays should have the same length");
-
-        for (uint i = 0; i < _recipients.length; i++) 
-        {
-            require(_recipients[i] != address(0), "Recipient address can't be 0");
-            require(_balances[i] > 0, "Balance has to be greater than 0");
-            token.transfer(_recipients[i], _balances[i]);
-        }
+        token.sendBatch(_recipients, _balances);
     }
 }
