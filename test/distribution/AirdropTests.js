@@ -9,6 +9,7 @@ require('chai')
 
 contract('Airdrop.doAirdrop()', function (accounts) {
     let owner = accounts[0];
+    let nonOwner = accounts[1];
     let recipients = [accounts[1], accounts[2], accounts[3], accounts[4]];
 
     beforeEach(async function () {
@@ -21,19 +22,23 @@ contract('Airdrop.doAirdrop()', function (accounts) {
             this.contractBalance = 100;
             this.balances = [10, 20, 30, 40];
             await this.token.mint(this.contract.address, this.contractBalance, {from: owner});
-
-            await this.contract.doAirdrop(recipients, this.balances, {from: owner});
         });
 
         it ('contract balance should be empty', async function () {
+            await this.contract.doAirdrop(recipients, this.balances, {from: owner});
             (await this.token.balanceOf(this.contract.address)).should.be.bignumber.equal(0);
         });
 
         it ('recipients should have correct balances', async function () {
+            await this.contract.doAirdrop(recipients, this.balances, {from: owner});
             (await this.token.balanceOf(recipients[0])).should.be.bignumber.equal(this.balances[0]);
             (await this.token.balanceOf(recipients[1])).should.be.bignumber.equal(this.balances[1]);
             (await this.token.balanceOf(recipients[2])).should.be.bignumber.equal(this.balances[2]);
             (await this.token.balanceOf(recipients[3])).should.be.bignumber.equal(this.balances[3]);
+        });
+
+        it ('transaction should be reverted if non-owner is executor', async function () {
+            await expectThrow(this.contract.doAirdrop(recipients, this.balances, {from: nonOwner}));
         });
     });
 
