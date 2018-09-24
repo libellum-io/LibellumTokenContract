@@ -31,7 +31,7 @@ contract TokenDistributionBase is Ownable {
     /**
     * @dev Don't override this function to prevent loosing of validation.
     * Distribution can be executed after the crowdsale finalization is complited so the contract
-    * is prepared for distribution (contract is owner of the token and the owner of the contract is
+    * is prepared for distribution (contract is owner of the token and the ownership of the contract is
     * transfered to original owner). This function will trigger all implemented distributions of the token.
     * As the last step token ownershep is returned to the crowdsale contract to allow beneficiaries to withdraw
     * their tokens.

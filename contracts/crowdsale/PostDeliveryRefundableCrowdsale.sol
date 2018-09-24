@@ -9,7 +9,12 @@ import "openzeppelin-solidity/contracts/crowdsale/distribution/PostDeliveryCrowd
 * tokens withdraw in case if goal is not reached and crowdsale has ended.
 */
 contract PostDeliveryRefundableCrowdsale is PostDeliveryCrowdsale, RefundableCrowdsale {
-
+    
+    /**
+    * @param _goal Goal (soft cap) of the crowdsale campaign. Note that it is fixed value,
+    * so Libellum crowdsale contract doesn't have a function to update it in case if during the
+    * crowdsale ETH to USD price changes.
+    */
     constructor(uint256 _goal)
         RefundableCrowdsale(_goal)
     public

@@ -11,3 +11,6 @@
 
 # Specification
 High-level specifications can be found in [specs](../master/specs) --> [LIBTokenSpecs.md](../master/specs/LIBTokenSpecs.md)
+
+# Notes
+1) The newest Solidity compiler (version 0.4.25) is not used since the latest truffle doesn't support it yet. Because of that version 0.4.24 is used instead.

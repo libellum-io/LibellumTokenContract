@@ -96,6 +96,11 @@ contract ThreePhaseTimedCrowdsale is Ownable, TimedCrowdsale {
         return _weiAmount.mul(currentRate);
     }
 
+    /**
+    * @dev In our case it is safe to use block.timestamp since we tolerate a 30-second drift in time.
+    * Nothing critical can't happen since only the minimal amount and rate can change and our phases
+    * will take at least 15 days so beneficiaries will have plenty of time to buy tokens.
+    */
     function resolveCurrentPhase()
     internal view returns (uint8)
     {
