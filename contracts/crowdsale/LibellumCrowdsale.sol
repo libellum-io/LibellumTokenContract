@@ -59,6 +59,16 @@ contract LibellumCrowdsale is
     }
 
     /**
+    * @dev Updates the amount of tokens that will be distributed to airdrop contract.
+    * Note that call is just delegated to distribution contract because of ownership.
+    */
+    function updateTokenAmountForAirdrop(uint256 _airdropTokens)
+    public onlyOwner
+    {
+        libellumTokenDistribution.updateTokenAmountForAirdrop(_airdropTokens);
+    }
+
+    /**
     * @dev Appending validation to check if investment pool is still available for new purchases.
     * If not, transaction will be reverted.
     */
@@ -68,16 +78,6 @@ contract LibellumCrowdsale is
         currentlyMintedInvestmentTokens = currentlyMintedInvestmentTokens.add(_tokenAmount);
         require(currentlyMintedInvestmentTokens <= INVESTMENT_TOKEN_POOL, "LIB pool reserved for investments is burned");
         super._processPurchase(_beneficiary, _tokenAmount);
-    }
-
-    /**
-    * @dev Updates the amount of tokens that will be distributed to airdrop contract.
-    * Note that call is just delegated to distribution contract because of ownership.
-    */
-    function updateTokenAmountForAirdrop(uint256 _airdropTokens)
-    public onlyOwner
-    {
-        libellumTokenDistribution.updateTokenAmountForAirdrop(_airdropTokens);
     }
 
     /**

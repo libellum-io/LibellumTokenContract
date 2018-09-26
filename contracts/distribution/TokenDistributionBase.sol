@@ -47,16 +47,6 @@ contract TokenDistributionBase is Ownable {
     }
 
     /**
-    * @dev This step is needed to allow investors to withdrow their tokens from crowdsale contract
-    * since withdrowTokens() operation triggers minting of new tokens.
-    */
-    function transferTokenOwnershipToCrowdsaleContract()
-    private
-    {
-        libellumToken.transferOwnership(libellumCrowdsaleContractAddress);
-    }
-
-    /**
     * @dev Override this function in order to distribute the tokens.
     */
     function _distribute()
@@ -71,5 +61,15 @@ contract TokenDistributionBase is Ownable {
     internal
     {
         libellumToken.mint(_beneficiary, _tokenAmount);
+    }
+
+    /**
+    * @dev This step is needed to allow investors to withdrow their tokens from crowdsale contract
+    * since withdrowTokens() operation triggers minting of new tokens.
+    */
+    function transferTokenOwnershipToCrowdsaleContract()
+    private
+    {
+        libellumToken.transferOwnership(libellumCrowdsaleContractAddress);
     }
 }
