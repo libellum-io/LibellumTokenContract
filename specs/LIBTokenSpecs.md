@@ -69,5 +69,5 @@ each beneficiary calls claimRefund() function.
 
 ## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
-![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2].jpg?raw=true)
-![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE].jpg?raw=true)
+![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2]_v2.jpg?raw=true)
+![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v2.jpg?raw=true)
