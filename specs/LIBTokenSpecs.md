@@ -1,6 +1,6 @@
 # LIB Specifications
 | Token Name & Symbol | Libellum Token, LIB |
-| ------------- | -----:|
+| :------------- | -----:|
 | Total supply | 100’000’000 LIB |
 | Total for sale | 50’000’000 LIB |
 | Phases | Private Presale, Public Presale, Crowdsale |
