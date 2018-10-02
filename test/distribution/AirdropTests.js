@@ -40,6 +40,13 @@ contract('Airdrop.doAirdrop()', function (accounts) {
         it ('transaction should be reverted if non-owner is executor', async function () {
             await expectThrow(this.contract.doAirdrop(recipients, this.balances, {from: nonOwner}));
         });
+
+        describe('when airdrop contract is in the list of recipients', function () {
+            it ('should not be able to do an airdrop', async function () {
+                let r = [this.contract.address, accounts[2], accounts[3], accounts[4]]
+                await expectThrow(this.contract.doAirdrop(r, this.balances, {from: owner}));
+            });
+        });
     });
 
     describe('when contract has more amount of tokens than sum of recipient balances', function () {

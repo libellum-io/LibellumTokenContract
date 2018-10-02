@@ -21,6 +21,8 @@ contract LibellumToken is CappedToken {
     * @dev Optimized way of transfering tokens to the array of recipients.
     * This function is called from Airdrop contract to optimaze gas usage.
     * Solution copied from: https://medium.com/chainsecurity/token-muling-7c5127f37f30
+    * Added additional validation that sender can't be in the list of recipiens,
+    * since in that case there is race condition problem.
     */
     function sendBatch(address[] _recipients, uint[] _values)
     external
@@ -31,6 +33,7 @@ contract LibellumToken is CappedToken {
             uint value = _values[i];
             address to = _recipients[i];
             require(senderBalance >= value, "Insufficient funds");
+            require(to != msg.sender, "Sender can't distribute tokens to himself");
             senderBalance = senderBalance - value;
             balances[to] += value;
             emit Transfer(msg.sender, to, value);

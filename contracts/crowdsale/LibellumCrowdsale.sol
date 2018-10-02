@@ -82,6 +82,9 @@ contract LibellumCrowdsale is
 
     /**
     * @dev As the last step of finalization is to prepare the token for distribution.
+    * Note that in case if goal is not reached investors will not be able to claim refund
+    * if finalize() function is not called by the owner. This is built-in behavior of
+    * open zeppelin library so finalize() is not made accessible to non-owners.
     */
     function finalization() 
     internal
