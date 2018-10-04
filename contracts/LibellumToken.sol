@@ -1,8 +1,9 @@
 pragma solidity ^0.4.24;
 
 import 'openzeppelin-solidity/contracts/token/ERC20/CappedToken.sol';
+import 'openzeppelin-solidity/contracts/token/ERC20/BurnableToken.sol';
 
-contract LibellumToken is CappedToken {
+contract LibellumToken is CappedToken, BurnableToken {
     // This minting cap is not necessary since minting will be limited by
     // crowdsale and distribution contracts. It is left here just as an assertation.
     uint256 MINTING_CAP = 100000000000000000000000000; // 100 Mio LIB

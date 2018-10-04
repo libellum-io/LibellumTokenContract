@@ -30,4 +30,32 @@ contract('LibellumToken', function (accounts) {
             (await this.libbelumToken.cap()).should.be.bignumber.equal(100 * Mio * LIB);
         });
     });
+
+    describe('when minted 100 LIBs to owners balance', function () {
+        beforeEach(async function () {
+            this.libbelumToken.mint(owner, 100 * LIB, {from: owner});
+        });
+
+        it('owner should have balance of 100 LIBs', async function () {
+            (await this.libbelumToken.balanceOf(owner)).should.be.bignumber.equal(100 * LIB);
+        });
+
+        it('should have total supply of 100 LIbs', async function () {
+            (await this.libbelumToken.totalSupply()).should.be.bignumber.equal(100 * LIB);
+        });
+
+        describe('after burning 50 LIBs', function () {
+            beforeEach(async function () {
+                this.libbelumToken.burn(50 * LIB, {from: owner});
+            });
+
+            it('owner should have balance of 50 LIBs', async function () {
+                (await this.libbelumToken.balanceOf(owner)).should.be.bignumber.equal(50 * LIB);
+            });
+    
+            it('should have total supply of 50 LIbs', async function () {
+                (await this.libbelumToken.totalSupply()).should.be.bignumber.equal(50 * LIB);
+            });
+        })
+    });
 });
