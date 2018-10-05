@@ -27,7 +27,7 @@
 
 
 ## Stage Phases
-![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.jpg?raw=true)  
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v2.JPG?raw=true)  
 *KYC, pledge and whitelist registration is covered by WeStart and therefore not part of this contract.*  
 
 ### I Stage: 1. October ----> 15. October (Private PreSale)
@@ -65,7 +65,8 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
 
 ### *Case 2: Refund*
 If GOAL is not met and Crowdsale is finished, tokens can't be minted (distributed), but ETH can be refunded when:
-each beneficiary calls claimRefund() function.
+1. finalize() has been called by Libellum
+2. each beneficiary calls claimRefund() function
 
 ## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
