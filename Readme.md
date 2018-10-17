@@ -6,7 +6,7 @@
 4) Install all required packages: npm install
 
 # Running tests
-0) Required: genache-cli to run (ganache-cli -a 20 --defaultBalanceEther 10000)
+0) Required: ganache-cli to run (ganache-cli -a 20 --defaultBalanceEther 10000)
 1) Run all tests: truffle test
 
 # Specification
