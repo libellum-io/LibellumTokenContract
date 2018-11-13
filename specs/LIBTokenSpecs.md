@@ -27,24 +27,23 @@
 
 
 ## Stage Phases
-![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v2.JPG?raw=true)  
-*KYC, pledge and whitelist registration is covered by WeStart and therefore not part of this contract.*  
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v3.JPG?raw=true)  
+*KYC, pledge and whitelist registration is covered in a separate process and therefore not part of this contract.*  
 
-### I Stage: 1. October ----> 15. October (Private PreSale)
+### I Stage: 15. November ----> 23. November (Private PreSale)
 minimum amount 5 ETH  
 WhiteList lookup (hardcoded) / added by owner  
-Rate: 0.05$, 4'175LIB/ETH - rate will be updated when initiating the contract  
+Rate: 0.05$, 4198.60  LIB/ETH - rate will be updated when initiating the contract  
 
-### II Stage: 16. October ----> 31. October (Public PreSale)
+### II Stage: 24. November ----> 5. December (Public PreSale)
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
-Rate: 0.08$, 2609LIB/ETH - rate will be updated just before stage 2 - updatePhase2Rate()
+Rate: 0.08$, 2624.13 LIB/ETH - rate will be updated just before stage 2 - updatePhase2Rate()
 
-### III Stage: 1. November ----> 20. November (Public Sale)
-End of public sale to be set until the 31. Oct - If no public sale, the date is set to the start date.  
+### III Stage: 6. December ----> 15. December (Public Sale)
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
-Rate: 0.10$, 2087LIB/ETH - rate will be updated just before stage 3 - updatePhase3Rate()
+Rate: 0.10$, 2099.30 LIB/ETH - rate will be updated just before stage 3 - updatePhase3Rate()
 
 ## Token Generation Event
 ### *Case 1: TGE*
@@ -71,4 +70,4 @@ If GOAL is not met and Crowdsale is finished, tokens can't be minted (distribute
 ## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
 ![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2]_v2.jpg?raw=true)  
-![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v2.jpg?raw=true)  
+![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v2.jpg?raw=true)
