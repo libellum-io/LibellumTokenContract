@@ -80,9 +80,9 @@ LIB = (10 ** 18);
 Mio = 1000000;
 ZeroAddress = '0x0000000000000000000000000000000000000000';
 
-InitPhase1Rate = 4175;
-InitPhase2Rate = 2609;
-InitPhase3Rate = 2087;
+InitPhase1Rate = 4199;
+InitPhase2Rate = 2624;
+InitPhase3Rate = 2099;
 
 module.exports = {
     LibellumTestValuesFrom,

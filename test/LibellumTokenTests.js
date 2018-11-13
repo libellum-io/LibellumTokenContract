@@ -33,7 +33,7 @@ contract('LibellumToken', function (accounts) {
 
     describe('when minted 100 LIBs to owners balance', function () {
         beforeEach(async function () {
-            this.libbelumToken.mint(owner, 100 * LIB, {from: owner});
+            await this.libbelumToken.mint(owner, 100 * LIB, {from: owner});
         });
 
         it('owner should have balance of 100 LIBs', async function () {
@@ -46,7 +46,7 @@ contract('LibellumToken', function (accounts) {
 
         describe('after burning 50 LIBs', function () {
             beforeEach(async function () {
-                this.libbelumToken.burn(50 * LIB, {from: owner});
+                await this.libbelumToken.burn(50 * LIB, {from: owner});
             });
 
             it('owner should have balance of 50 LIBs', async function () {

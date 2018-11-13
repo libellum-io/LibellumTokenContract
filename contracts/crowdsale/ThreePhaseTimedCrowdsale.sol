@@ -41,9 +41,9 @@ contract ThreePhaseTimedCrowdsale is Ownable, TimedCrowdsale {
         phase1ToPhase2Date = _phase1ToPhase2Date;
         phase2ToPhase3Date = _phase2ToPhase3Date;
 
-        ratesByPhase[PHASE1] = 4175;
-        ratesByPhase[PHASE2] = 2609;
-        ratesByPhase[PHASE3] = 2087;
+        ratesByPhase[PHASE1] = 4199;
+        ratesByPhase[PHASE2] = 2624;
+        ratesByPhase[PHASE3] = 2099;
 
         minWeisByPhase[PHASE1] = 5000000000000000000; // 5 ether
         minWeisByPhase[PHASE2] = 100000000000000000; // 0.1 ether

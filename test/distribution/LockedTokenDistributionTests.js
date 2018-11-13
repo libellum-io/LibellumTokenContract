@@ -94,8 +94,8 @@ contract('LockedTokenDistribution', function (accounts) {
                 it('founders and advisors balances contain correct number of LIBs', async function () {
                     (await this.values.libellumToken.balanceOf(this.values.founder1)).should.be.bignumber.equal(2.5 * Mio * LIB);
                     (await this.values.libellumToken.balanceOf(this.values.founder2)).should.be.bignumber.equal(2.5 * Mio * LIB);
-                    (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(1.25 * Mio * LIB);
-                    (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(1.25 * Mio * LIB);
+                    (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(0.75 * Mio * LIB);
+                    (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(0.25 * Mio * LIB);
                 });
         
                 describe('tocken timelocks', function () {
@@ -109,8 +109,8 @@ contract('LockedTokenDistribution', function (accounts) {
                     it('founders and advisors timelocks contain correct funds', async function () {
                         (await this.values.libellumToken.balanceOf(this.founder1TockenTimelock.address)).should.be.bignumber.equal(2.5 * Mio * LIB);
                         (await this.values.libellumToken.balanceOf(this.founder2TockenTimelock.address)).should.be.bignumber.equal(2.5 * Mio * LIB);
-                        (await this.values.libellumToken.balanceOf(this.advisor1TockenTimelock.address)).should.be.bignumber.equal(1.25 * Mio * LIB);
-                        (await this.values.libellumToken.balanceOf(this.advisor2TockenTimelock.address)).should.be.bignumber.equal(1.25 * Mio * LIB);
+                        (await this.values.libellumToken.balanceOf(this.advisor1TockenTimelock.address)).should.be.bignumber.equal(0.75 * Mio * LIB);
+                        (await this.values.libellumToken.balanceOf(this.advisor2TockenTimelock.address)).should.be.bignumber.equal(0.25 * Mio * LIB);
                     });
     
                     describe('no time passed after the crowdsale', function () {
@@ -124,8 +124,8 @@ contract('LockedTokenDistribution', function (accounts) {
                         it('advisors are not able to release tokens', async function () {
                             await expectThrow(this.advisor1TockenTimelock.release({from: this.values.founder1}));
                             await expectThrow(this.advisor2TockenTimelock.release({from: this.values.founder2}));
-                            (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(1.25 * Mio * LIB);
-                            (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(1.25 * Mio * LIB);
+                            (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(0.75 * Mio * LIB);
+                            (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(0.25 * Mio * LIB);
                         });
                     });
     
@@ -137,8 +137,8 @@ contract('LockedTokenDistribution', function (accounts) {
                         it('advisors are able to release tokens', async function () {
                             await this.advisor1TockenTimelock.release({from: this.values.founder1});
                             await this.advisor2TockenTimelock.release({from: this.values.founder2});
-                            (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(2.5 * Mio * LIB);
-                            (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(2.5 * Mio * LIB);
+                            (await this.values.libellumToken.balanceOf(this.values.advisor1)).should.be.bignumber.equal(1.5 * Mio * LIB);
+                            (await this.values.libellumToken.balanceOf(this.values.advisor2)).should.be.bignumber.equal(0.5 * Mio * LIB);
                         });
                     });
     

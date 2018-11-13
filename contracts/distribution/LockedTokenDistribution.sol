@@ -21,8 +21,8 @@ contract LockedTokenDistribution is TokenDistributionBase {
     [
         2500000000000000000000000, // founder 1: 2.5 Mio LIB (unlocked) => 5 Mio LIB overall
         2500000000000000000000000, // founder 2: 2.5 Mio LIB (unlocked) => 5 Mio LIB overall
-        1250000000000000000000000, // advisor 1: 1.25 Mio LIB (unlocked) => 2.5 Mio LIB overall
-        1250000000000000000000000  // advisor 2: 1.25 Mio LIB (unlocked) => 2.5 Mio LIB overall
+        750000000000000000000000, // advisor 1: 0.75 Mio LIB (unlocked) => 1.5 Mio LIB overall
+        250000000000000000000000  // advisor 2: 0.25 Mio LIB (unlocked) => 0.5 Mio LIB overall
     ];
 
     // Array where TokenTimelock contract addresses are kept.
