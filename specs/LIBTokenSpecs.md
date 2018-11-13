@@ -27,7 +27,7 @@
 
 
 ## Stage Phases
-![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v3.JPG?raw=true)  
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v4.JPG?raw=true)  
 *KYC, pledge and whitelist registration is covered in a separate process and therefore not part of this contract.*  
 
 ### I Stage: 15. November ----> 23. November (Private PreSale)
