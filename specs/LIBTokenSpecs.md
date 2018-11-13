@@ -5,7 +5,7 @@
 | Total for sale | 50’000’000 LIB |
 | Phases | Private Presale, Public Presale, Crowdsale |
 | Hard cap | 3’700’000$ |
-| Soft cap | 200 ETH (50’000$ depending on ETH rate) |
+| Soft cap | 1 ETH (Libellum decided to not have a soft cap but not change the contract) |
 | Refund | yes, if soft cap is not reached |
 | Tokens issued | Set at contract creation |
 | Minimum contribution | Set for each phase |
@@ -47,7 +47,7 @@ Rate: 0.10$, 2099.30 LIB/ETH - rate will be updated just before stage 3 - update
 
 ## Token Generation Event
 ### *Case 1: TGE*
-Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is finished. It is distributed with function finalization() only by contract owner;  
+Distribution will happen ~~only if GOAL (soft cap) is met and~~ when Crowdsale is finished. It is distributed with function finalization() only by contract owner;  
 
 -- Distribution of tokens:
 1. 10M total - to all founders (1/2 locked for 12 month)
@@ -63,11 +63,12 @@ Distribution will happen only if GOAL (soft cap) is met and when Crowdsale is fi
    1. Rest of the tokens will be burned
 
 ### *Case 2: Refund*
-If GOAL is not met and Crowdsale is finished, tokens can't be minted (distributed), but ETH can be refunded when:
-1. finalize() has been called by Libellum
-2. each beneficiary calls claimRefund() function
+As there is no real soft cap, refund is not an option anymore. TGE will happen for sure.
+~~If GOAL is not met and Crowdsale is finished, tokens can't be minted (distributed), but ETH can be refunded when:~~
+1. ~~finalize() has been called by Libellum~~
+2. ~~each beneficiary calls claimRefund() function~~
 
 ## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
 ![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2]_v2.jpg?raw=true)  
-![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v2.jpg?raw=true)
+![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v2.jpg?raw=true)  
