@@ -30,7 +30,7 @@
 ![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.JPG?raw=true)  
 *KYC, pledge and whitelist registration is covered in a separate process and therefore not part of this contract.*  
 
-### I Stage: 15. November 9:00 AM UTC  --> 23. November 12:00 PM UTC (Private PreSale)
+### I Stage: 16. November 11:00 AM UTC  --> 23. November 12:00 PM UTC (Private PreSale)
 minimum amount 5 ETH  
 WhiteList lookup (hardcoded) / added by owner  
 Rate: 0.05$, 4198.60  LIB/ETH - rate will be updated when initiating the contract  
