@@ -27,20 +27,20 @@
 
 
 ## Stage Phases
-![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v4.JPG?raw=true)  
+![LIB Stages Timeline](../specs/LIBTokenStagesTimeline_v5.JPG?raw=true)  
 *KYC, pledge and whitelist registration is covered in a separate process and therefore not part of this contract.*  
 
-### I Stage: 15. November ----> 23. November (Private PreSale)
+### I Stage: 15. November 9:00 AM UTC  --> 23. November 12:00 PM UTC (Private PreSale)
 minimum amount 5 ETH  
 WhiteList lookup (hardcoded) / added by owner  
 Rate: 0.05$, 4198.60  LIB/ETH - rate will be updated when initiating the contract  
 
-### II Stage: 24. November ----> 5. December (Public PreSale)
+### II Stage: 24. November 0:00 AM UTC --> 5. December 12:00 PM UTC (Public PreSale)
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
 Rate: 0.08$, 2624.13 LIB/ETH - rate will be updated just before stage 2 - updatePhase2Rate()
 
-### III Stage: 6. December ----> 15. December (Public Sale)
+### III Stage: 6. December 0:00 AM UTC --> 15. December 11:00 AM (Public Sale)
 minimum amount 0.1 ETH  
 Whitelist can only be added by owner  
 Rate: 0.10$, 2099.30 LIB/ETH - rate will be updated just before stage 3 - updatePhase3Rate()
