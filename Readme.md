@@ -14,3 +14,8 @@ High-level specifications can be found in [specs](../master/specs) --> [LIBToken
 
 # Notes
 1) The newest Solidity compiler (version 0.4.25) is not used since the latest truffle doesn't support it yet. Because of that version 0.4.24 is used instead.
+
+# Deploying to main network
+1) Start geth: geth --cache=1024 --datadir <path_to_a_folder> --rpc --rpcapi db,eth,net,web3,personal --rpcaddr <ip_address> --rpcport <port_number> --unlock="<from_address>"
+2) Wait for geth to sync with the network (check from truffle console with: 'web3.eth.syncing' until it prints 'false')
+3) Deploy the contract by running: truffle migrate --network live

@@ -9,7 +9,7 @@ module.exports = function(deployer, network, accounts) {
     let phase2ToPhase3Time = 1544054400; // 6-Dec-18, 0:00 AM GMT
     let closingTime = 1544871600; // 15-Dec-18, 11:00 AM GMT
 
-    let owner = accounts[0]; // use this for main network: '0x1C0b052eD15D706b4f954437403D17646a5c96C4';
+    let owner = accounts[0];
     let founders = ['0xc8907621675711ed05b56d5f1ca98199d5EF13ba', '0xfE8Ff8d8d9F7d4357aD310f713A3CC770f16A079']
     let advisors = ['0x4c6Bc852930B46b5A8b4dF230cA7f37b84b1b0a9', '0x310dB8285Cb7eA7262EEbEb415694B54CC9Be101'];
     let bountyPool = '0x3471A914dD139B2358e56467d961f7Df2E6e5290';
