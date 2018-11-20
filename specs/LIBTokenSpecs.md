@@ -30,7 +30,7 @@
 ![LIB Stages Timeline](../specs/LIBTokenStagesTimeline.JPG?raw=true)  
 *KYC, pledge and whitelist registration is covered in a separate process and therefore not part of this contract.*  
 
-### I Stage: 16. November 11:00 AM UTC  --> 23. November 12:00 PM UTC (Private PreSale)
+### I Stage: 15. November 11:00 AM UTC  --> 23. November 12:00 PM UTC (Private PreSale)
 minimum amount 5 ETH  
 WhiteList lookup (hardcoded) / added by owner  
 Rate: 0.05$, 4198.60  LIB/ETH - rate will be updated when initiating the contract  
@@ -70,5 +70,5 @@ As there is no real soft cap, refund is not an option anymore. TGE will happen f
 
 ## High-level Stage Flow
 Following flows show which functions can/need to be called in which stage.  
-![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2]_v2.jpg?raw=true)  
-![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v2.jpg?raw=true)  
+![LIB Stages Flow 1](../specs/LIBStageFlow[Initiation-Stage1-Stage2]_v3.jpg?raw=true)  
+![LIB Stages Flow 2](../specs/LIBStageFlow[Stage3-TGE]_v3.jpg?raw=true)  
